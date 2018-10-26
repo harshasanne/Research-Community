@@ -1,1 +1,13 @@
+.DS_Storea
+.idea/*
+frontend/.idea/*
+frontend/target/*
+backend/.idea/*
+backend/target/*
+frontend/logs/*
+backend/logs/*
 .DS_Store
+backend/project/project/
+backend/project/target/
+frontend/project/project/
+frontend/project/target/
