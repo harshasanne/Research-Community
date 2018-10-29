@@ -9,34 +9,48 @@ import java.util.List;
 import java.net.URLDecoder;
 import java.lang.*;
 import com.google.gson.Gson;
+import java.lang.*;
 
-public class UserLoginController {
-    public boolean createUser(String userId, String password, String ri) throws Exception{
-        userId = URLDecoder.decode(userId, "UTF-8");
-        password = URLDecoder.decode(password, "UTF-8");
+public class UserLoginController implements AutoCloseable{
+    private Driver driver = null;
+    @Override
+    public void close() throws Exception
+    {
+        driver.close();
+    }
+
+    public String createUser(String userId, String password, String ri) throws Exception{
+       // userId = URLDecoder.decode(userId, "UTF-8");
+       // password = URLDecoder.decode(password, "UTF-8");
         ri = URLDecoder.decode(ri, "UTF-8");
-        String query1 = "MATCH(a:user{userId:'" + userId +"'}) RETURN a.userId";
-        String query2 = "create (a:User{userId:'" + userId + "', password:'"+ password + "',ri:'" + ri + "'})";
+        String query1 = "MATCH(a:User{userId:'" + userId +"'}) RETURN a.userId";
+        String query2 = "create (a:User{userId:'" + userId + "', password:'"+ password + "',ri:'" + ri + "'}) RETURN a.userId";
 
-        System.out.println(query);
-        Driver driver = GraphDatabase.driver(
+        System.out.println(query1);
+        System.out.print(query2);
+        driver = GraphDatabase.driver(
                 "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
-        boolean greeting = false;
+        String greeting = null;
         try ( Session session = driver.session() )
         {
 
             greeting =  session.readTransaction( new TransactionWork<String>()
             {
                 @Override
-                public boolean execute( Transaction tx )
+                public String execute( Transaction tx )
                 {
                     StatementResult result1 = tx.run( query1 );
-                    if(result1 == null) {
+
+                    if(!result1.hasNext()) {
+
                         StatementResult result2 = tx.run(query2);
-                        return true;
+
+                        return null;
                     }
-                    else
-                        return false;
+                    else {
+
+                        return null;
+                    }
                 }
             } );
 
@@ -47,28 +61,30 @@ public class UserLoginController {
     }
 
 
-    public boolean MatchUserPassword(String userId, String password) throws Exception{
-        userId = URLDecoder.decode(userId, "UTF-8");
-        password = URLDecoder.decode(password, "UTF-8");
+    public String MatchUserPassword(String userId, String password) throws Exception{
+        //userId = URLDecoder.decode(userId, "UTF-8");
+         //password = URLDecoder.decode(password, "UTF-8");
 
 
         //String query = "create (a:User{userId:'" + userId + "', password:'"+ password + "',ri:'" + ri + "'})";
-        String query = "MATCH(a:user{userId:'" + userId +"'}) RETURN a.password";
+        String query = "MATCH(a:User{userId:'" + userId +"'}) RETURN a.password";
         System.out.println(query);
-        Driver driver = GraphDatabase.driver(
+        driver = GraphDatabase.driver(
                 "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
-        boolean greeting = false;
-        String getPassword = null;
+        String greeting = "";
+
         try ( Session session = driver.session() )
         {
 
             greeting =  session.readTransaction( new TransactionWork<String>()
             {
                 @Override
-                public boolean execute( Transaction tx )
+                public String execute( Transaction tx )
                 {
+                    String getPassword = "";
 
                     StatementResult result = tx.run( query );
+                    //System.out.println(result.next().get(0).asString());
                     while(result.hasNext())
                     {
                         Record record = result.next();
@@ -78,10 +94,11 @@ public class UserLoginController {
                     }
                     if(getPassword.equals(password))
                     {
-                        return true;
+                        System.out.print("ok");
+                        return getPassword;
                     }
                     else
-                        return false;
+                        return "";
                 }
             } );
 
@@ -94,8 +111,11 @@ public class UserLoginController {
     {
         try(UserLoginController ulc = new UserLoginController())
         {
-            System.out.println(ulc.createUser("ptf", "ptf", "ptf"));
+            System.out.println(ulc.MatchUserPassword("pfff", "ptf"));
 
+        }catch(Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

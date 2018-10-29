@@ -28,4 +28,5 @@ public class LoginUser {
 
     public void setRI(String ri) {
         this.ri = ri;
+    }
 }
