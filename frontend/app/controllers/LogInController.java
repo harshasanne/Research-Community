@@ -1,5 +1,5 @@
 package controllers;
-
+import play.libs.Json;
 //import models.User;
 import play.libs.ws.*;
 import play.data.Form;
@@ -11,7 +11,7 @@ import forms.*;
 
 import java.util.concurrent.CompletionStage;
 
-import views.html.login;
+import views.html.*;
 
 public class LogInController extends Controller {
     private final WSClient ws;
@@ -23,39 +23,28 @@ public class LogInController extends Controller {
         this.formFactory = formFactory;
     }
 
-    public Result login() { return ok(views.html.login.render()); }
+    public Result login() { return ok(views.html.login.render(false)); }
 
+    public Result index() {
+        return ok(views.html.index.render(true));
+    }
 
     public CompletionStage<Result> loginResult() {
         Form<LogInForm> form = formFactory.form(LogInForm.class).bindFromRequest();
-        LogInForm info = form.get();
-        System.out.println(Json.toJson(info).toString());
-
-        System.out.println("stop here");
-
-        //WSRequest request = ws.url("http://localhost:9000/dummy");
-
-        return request.addHeader("Content-Type", "application/json")
-                .post(Json.toJson(info).toString())
-                .thenApply((WSResponse r) -> {
-                    if (r.getStatus() == 200) {
-                        JsonNode jsonNode = r.asJson();
-
-                        System.out.println("fax===");
-
-                        LogInForm lf = new LogInForm();
-                        lf.setUserId(jsonNode.get("userid").asText());
-                        lf.setPassword(jsonNode.get("password").asText());
-                        lf.setRI(jsonNode.get("ri").asText());
-                        // p.setFax(jsonNode.get("fx").asText());
-                        //p.
-                        // u.setPassword(jsonNode.get("password").asText());
-                        return ok(views.html.dashboard.render(lf));
-                    } else {
-                        System.out.println("error connect");
-                        //return ok(resetprofile.render(true));
-                    }
-                });
-
+        LogInForm userInfor = form.get();
+        System.out.println("fdjs");
+        System.out.println(Json.toJson(userInfor).toString());
+        return null;
+//        return LogInForm.createUser(userInfor)
+//                .thenApply((WSResponse r) -> {
+//                    System.out.println(r.asJson().get("body"));
+//                    if (r.asJson().get("isSuccessfull").asBoolean()){
+//                        System.out.println(" Profile created : Sending him back to login page");
+//                        return created(login.render(false));
+//                    } else {
+//                        System.out.println(" Profile not created : Sending him back to signup page");
+//                        return badRequest(login.render(true));
+//                    }
+//                });
     }
 }

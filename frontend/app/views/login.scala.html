@@ -1,3 +1,5 @@
+@(signupFail : Boolean)
+
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -14,24 +16,25 @@
 <body>
 
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-
-
+    @helper.form(action = routes.LogInController.loginResult()) {
 <div class="box">
-    @helper.form(action = routes.LogInController.login()) {
+
         <h1>Login Page</h1>
 
-        <input type="text" class = "textbox" value="user id" name="userid" required/>
+        <input type="text" class = "textbox" placeholder="Enter User ID" name="userId">
 
-        <input type="text" class=  "textbox" value="password" name="password" required/>
+        <input type="text" class = "textbox" placeholder="Enter password" name="password">
 
-        <input type="text" class=  "textbox" value="Research Interests" name="ri" required/>
+        <input type="text" class = "textbox" placeholder="Enter Research Interests" name="RI">
+
+
 
         <button type="submit" id="btn">Sign in</button>
 
-    }
+
 
 </div>
-
+    }
 
 
 
