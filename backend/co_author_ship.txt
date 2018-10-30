@@ -1,0 +1,1 @@
+MATCH (a:Author)-[:WRITES]->(p)<-[:WRITES]-(aa:Author) where a.authorName<>aa.authorName create unique (a)-[:CO_AUTHOR]-(aa)
