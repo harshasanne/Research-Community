@@ -8,6 +8,12 @@ GET     /                           controllers.HomeController.index
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
 
+# Authorship
+GET     /autho/:name           controllers.yearController.getPapersYear(name: String, from, to)
+# Authorship
+GET     /journal/:name           controllers.JournalHistogramController.getJournalAuthors(name: String)
+
+
 
 #Reference
 GET     /reference/:name        controllers.PaperController.getPapers(name:String)
