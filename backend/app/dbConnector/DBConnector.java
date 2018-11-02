@@ -7,18 +7,14 @@ import models.Keyword;
 import models.Paper;
 
 import org.neo4j.driver.v1.*;
-import org.neo4j.ogm.config.Configuration;
-import org.neo4j.ogm.session.Session;
-import org.neo4j.ogm.session.SessionFactory;
-import org.neo4j.ogm.transaction.Transaction;
 
 public class DBConnector {
 
-    private final URL = "bolt://localhost:7687";
-    private final USERNAME = "neo4j";
-    private final PASSWORD = "123456";
+    private final String URL = "bolt://localhost:7687";
+    private final String USERNAME = "neo4j";
+    private final String PASSWORD = "123456";
 
-    private static instance = null;
+    private static DBConnector instance = null;
     private static Driver driver = null;
     private static Session session = null;
 

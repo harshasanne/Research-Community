@@ -3,11 +3,13 @@ package controllers;
 import models.Paper;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
+import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;
 
 import com.google.gson.Gson;
+import javax.inject.*;
 
 public class PaperController extends Controller {
 
@@ -19,7 +21,7 @@ public class PaperController extends Controller {
     public PaperController() {
         dbConnector = DBConnector.getInstance();
         driver = dbConnector.getDriver();
-        session = db.getSession();
+        session = dbConnector.getSession();
     }
 
     public Result getPapers(String name) throws Exception{
@@ -46,61 +48,6 @@ public class PaperController extends Controller {
         }
     }
 
-    public Result createPaper() {
-        Map<String, String[]> form = request().body().asFormUrlEncoded();
-
-        String author = form.get("username");
-        String title = form.get("title");
-        String abstract_ = form.get("abstract");
-        String journal = form.get("journal");
-        String year = form.get("year");
-
-        Paper paper = new Paper(title, abstract_, journal, year, author);
-        Transaction transaction = session.beginTransaction();
-        session.save(paper);
-        transaction.commit();
-        transaction.close();
-
-        return ok();
-    }
-
-
-    private insert() {
-        Transaction transaction = session.beginTransaction();
-        int cnt = 0;
-        for (Author author : authorMap.values()) {
-            session.save(author, 1);
-            cnt++;
-            if (cnt % 500 == 0) {
-                transaction.commit();
-                transaction = session.beginTransaction();
-                System.out.println("Write " + cnt + " authors.");
-            }
-        }
-        transaction.commit();
-        transaction.close();
-
-        JsonNode requestJson = request().body().asJson();
-
-        Session session = dbConnector.getSession();
-        Filter filter = new Filter("username", ComparisonOperator.EQUALS, username);
-        User user = session.loadAll(User.class, filter).iterator().next();
-        user.removeAllInterests();
-
-        for (JsonNode researchInterest : requestJson.findPath("researchInterests")) {
-            String interest = researchInterest.toString().replaceAll("\"", "");
-            filter = new Filter("keyword", ComparisonOperator.EQUALS, interest);
-            Keyword keyword = session.loadAll(Keyword.class, filter).iterator().next();
-
-            Transaction transaction = session.beginTransaction();
-            user.hasInterestIn(keyword);
-            session.save(user);
-            transaction.commit();
-            transaction.close();
-        }
-        return ok(Json.toJson(user));
-    }
-
     private static List<String> matchPaperNodes(Transaction tx, String query)
     {
         List<String> papers = new ArrayList<>();
@@ -111,4 +58,36 @@ public class PaperController extends Controller {
         }
         return papers;
     }
+
+    public Result createPaper() throws Exception {
+        Map<String, String[]> form = request().body().asFormUrlEncoded();
+
+        String author = form.get("username")[0];
+        String title = form.get("title")[0];
+        String abstract_ = form.get("abstract")[0];
+        String journal = form.get("journal")[0];
+        String year = form.get("year")[0];
+
+        String query = "create (:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: " + year + "});)";
+
+        try ( Session session = driver.session() )
+        {
+            session.writeTransaction( new TransactionWork<Void>()
+            {
+                @Override
+                public Void execute( Transaction tx )
+                {
+                    return createPaperNode( tx, query );
+                }
+            } );
+            return ok();
+        }
+    }
+
+    private static Void createPaperNode( Transaction tx, String query )
+    {
+        tx.run( query );
+        return null;
+    }
+
 }
