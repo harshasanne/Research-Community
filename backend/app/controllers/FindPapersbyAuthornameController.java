@@ -10,7 +10,7 @@ import java.net.URLDecoder;
 import java.io.*;
 import com.google.gson.Gson;
 
-public class yearController extends Controller {
+public class FindPapersbyAuthornameController extends Controller {
 
     public Result getPapersYear(String name, String from, String to) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
@@ -32,7 +32,7 @@ public class yearController extends Controller {
             } );
               try {
                 System.out.println(year);
-            FileWriter writer = new FileWriter("output2.json"); 
+            FileWriter writer = new FileWriter("PapersByYear.json"); 
              writer.write(year.toString());
             
             writer.close();

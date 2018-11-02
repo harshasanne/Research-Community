@@ -1,5 +1,5 @@
 
-@(authForm: Form[author], paperForm: Form[Paper])
+@(authForm: Form[Author], paperForm: Form[Paper])
     @import helper._
 
 @main("PublicationPerYear"){       
@@ -9,28 +9,28 @@
 <div class="container">
   <div class="row">
      <div class="col s12 l10 offset-l1">
-        <div class="card-panel z-depth-0">
+        <div class="card-panel">
             <h4 class="form-signin-heading center">Author Histogram</h4>
               <form class="form-signin" action="/autho/" method="GET">
                    <div class="row">
-                      <div class="input-field col s12 m4">
+                      <div class="input-field col s12">
                           <input type="text" name="name" id="name" value="@authForm("name").value">
                            <label for="name" class="active">Author Name</label>
                       </div>
                     </div>
                    <div class="row">
-                      <div class="input-field col s12 m4">
+                      <div class="input-field col s12">
                           <input type="text" name="startYear" id="startYear" value="@paperForm("startYear").value">
                            <label for="startYear"class="active">Start Year</label>
                       </div>
                     </div>
                    <div class="row">
-                      <div class="input-field col s12 m4">
+                      <div class="input-field col s12">
                           <input type="text" name="endYear" id="endYear" value="@paperForm("endYear").value">
                            <label for="endYear"class="active">End Year</label>
                       </div>
                     </div>
-                      <div class="actions row">
+                      <div class="row center">
                          <div class="input-field col s12">
                            <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create">
                                             Submit</button>
