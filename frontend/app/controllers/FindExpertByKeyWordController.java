@@ -33,4 +33,10 @@ public class FindExpertByKeyWordController extends Controller {
         }
         return ok(views.html.expertByKeyword.render(name,keyword));
     }
+
+
+    public Result getForm() throws Exception {
+
+        return ok(views.html.singleInput.render("expertByKeyword","Keyword","Find Expert for a keyord"));
+    }
 }
