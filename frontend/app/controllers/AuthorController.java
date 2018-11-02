@@ -40,16 +40,16 @@ public class AuthorController extends Controller {
         return ok(views.html.author.render(paperList));
     }
     public Result publicationPerYear() {
-        Form<author> authorForm = formFactory.form(author.class);
+        Form<Author> authorForm = formFactory.form(Author.class);
         Form<Paper> paperForm = formFactory.form(Paper.class);
         return ok(views.html.paperYear.render(authorForm,paperForm));
     }
       public Result getPapersYear() throws Exception {
-        Form<author> authName = formFactory.form(author.class).bindFromRequest();
+        Form<Author> authName = formFactory.form(Author.class).bindFromRequest();
         Paper paperForm = formFactory.form(Paper.class).bindFromRequest().get();
         String authorName = authName.get().name.replace(" ", "%20");
        //System.out.println(paperForm.startYear+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/autho" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/authorName" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
     
         return ok();
     }
@@ -61,8 +61,7 @@ public class AuthorController extends Controller {
       public Result getJournalAuthors() throws Exception {
         Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
         String name = paperForm.get().journalName.replace(" ", "%20");
-       System.out.println(name+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journal" + "/" + name);
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journalName" + "/" + name);
     
         return redirect(routes.HomeController.index());
     }

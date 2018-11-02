@@ -1,6 +1,6 @@
 package models;
 
-public class author {
+public class Author {
    public Long id;
 
    public String name;
