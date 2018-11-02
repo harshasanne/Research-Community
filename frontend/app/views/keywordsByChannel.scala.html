@@ -1,0 +1,18 @@
+@(keywords: List[Keyword],channel: String)
+
+@main("Welcome to Play") {
+    <body>
+    <h1>Showing all keyword for channel @channel</h1>
+    <table>
+        <th><th>Keyword</th><th>Count</th></tr>
+
+        @for(keyword <- keywords){
+        <tr>
+            <td>@keyword.getName()</td>
+            <td>@keyword.getCount()</td>
+        </tr>
+        }
+
+    </table>
+    </body>
+}
