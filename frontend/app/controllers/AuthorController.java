@@ -70,9 +70,7 @@ public class AuthorController extends Controller {
         Author author = new Author();
         author.setName("Jia Zhang");
 
-        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/author" + "/" + URLEncoder.encode(name, "UTF-8"));
-        // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
+        JsonNode nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(name, "UTF-8"));
         String jstring = nodes.toString();
         String p = new String();
         List<String> paperList = new ArrayList<String>();

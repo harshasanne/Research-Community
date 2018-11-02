@@ -60,7 +60,7 @@ public class PaperController extends Controller {
     public Result createPaper() throws Exception {
         Map<String, String[]> form = request().body().asFormUrlEncoded();
 
-        String author = form.get("username")[0];
+        String author = form.get("author")[0];
         String title = form.get("title")[0];
         String abstract_ = form.get("abstract")[0];
         String journal = form.get("journal")[0];

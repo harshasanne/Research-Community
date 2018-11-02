@@ -1,10 +1,14 @@
 package models;
 
+import javax.Inject.*;
+
 public class Paper {
     private String title;
+    public String journalName;
+
     public int startYear;
     public int endYear;
-    public String journalName;
+    public String publishedYear;
 
     public String abstract_;
 
@@ -42,6 +46,14 @@ public class Paper {
 
     public void setjournalName(String journalName) {
         this.journalName = journalName;
+    }
+
+    public String getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(String year) {
+        this.publishedYear = year;
     }
 
     public String getAbstract() {
