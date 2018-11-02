@@ -21,7 +21,8 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 #Find Expert by keyword
 GET /expertByKeyword/:keyword controllers.FindExpertByKeyWordController.getExpert(keyword: String)
-
+GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
 
 #Find topics by channel
 GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
+GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
