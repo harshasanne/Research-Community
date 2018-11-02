@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Simple HTML & CSS Login Form</title>
+
+
+
+
+
+    </head>
+
+    <body>
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/login.css")">
+        @helper.form(action = routes.UserLoginController.loginResult()) {
+            <div class="box">
+
+                <h1>Login Page</h1>
+
+                <input type="text" class = "textbox" placeholder="Enter User ID" name="username">
+
+                <input type="text" class = "textbox" placeholder="Enter password" name="password">
+
+                <input type="text" class = "textbox" placeholder="Enter Research Interests" name="RI">
+
+
+
+                <button type="submit" id="btn">Sign in</button>
+
+
+
+            </div>
+        }
+
+
+
+
+
+
+
+
+    </body>
+
+</html>
