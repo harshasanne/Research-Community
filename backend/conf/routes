@@ -17,9 +17,9 @@ GET     /topicsByChannel/:channel           controllers.FindTopicsByChannelContr
 
 # Find Papers by Author name
 
-GET     /autho/:name           controllers.yearController.getPapersYear(name: String, from, to)
+GET     /authorName/:name           controllers.FindPapersbyAuthornameController.getPapersYear(name: String, from, to)
 # Find Authors by Journal name
-GET     /journal/:name           controllers.JournalHistogramController.getJournalAuthors(name: String)
+GET     /journalName/:name           controllers.JournalHistogramController.getJournalAuthors(name: String)
 
 
 
