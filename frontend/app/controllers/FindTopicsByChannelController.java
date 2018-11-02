@@ -36,4 +36,9 @@ public class FindTopicsByChannelController extends Controller {
         }
         return ok(views.html.keywordsByChannel.render(keywordList,channel));
     }
+
+    public Result getForm() throws Exception {
+
+        return ok(views.html.singleInput.render("topicsByChannel","Channel","Find Topics for a channel"));
+    }
 }
