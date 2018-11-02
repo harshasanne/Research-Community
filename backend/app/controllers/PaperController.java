@@ -15,13 +15,11 @@ public class PaperController extends Controller {
 
     private static DBConnector dbConnector;
     private static Driver driver;
-    private static Session session;
 
     @Inject
     public PaperController() {
         dbConnector = DBConnector.getInstance();
         driver = dbConnector.getDriver();
-        session = dbConnector.getSession();
     }
 
     public Result getPapers(String name) throws Exception{
@@ -68,7 +66,7 @@ public class PaperController extends Controller {
         String journal = form.get("journal")[0];
         String year = form.get("year")[0];
 
-        String query = "create (:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: " + year + "});)";
+        String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: " + year + "});";
 
         try ( Session session = driver.session() )
         {
