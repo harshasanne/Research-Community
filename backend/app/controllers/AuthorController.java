@@ -12,10 +12,11 @@ import com.google.gson.Gson;
 
 public class AuthorController extends Controller {
     public Result getPapers(String name) throws Exception{
+        System.out.println("reached the controller");
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (a:Author)-[:WRITES]->(p:Paper) where a.authorName = '" + name + "' return p.title";
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
         try ( Session session = driver.session() )
         {
             List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()

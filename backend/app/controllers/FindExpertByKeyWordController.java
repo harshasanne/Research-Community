@@ -19,7 +19,7 @@ public class FindExpertByKeyWordController extends Controller {
                 "ORDER BY c desc\n" +
                 "limit 1";
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
         try ( Session session = driver.session() )
         {
             List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
