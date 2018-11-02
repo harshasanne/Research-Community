@@ -7,11 +7,11 @@ GET     /                           controllers.HomeController.index
 
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
-# Authorship
-GET     /autho           controllers.AuthorController.publicationPerYear
-POST     /autho           controllers.AuthorController.getPapersYear
+# Find Papers by Author name
+GET     /authorName           controllers.AuthorController.publicationPerYear
+POST     /authorName           controllers.AuthorController.getPapersYear
 
-# Journal
+# Find Author by Journal name
 GET     /journalName           controllers.AuthorController.journalAuthors
 POST     /journalName           controllers.AuthorController.getJournalAuthors
 

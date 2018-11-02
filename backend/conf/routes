@@ -15,10 +15,11 @@ GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordContr
 GET     /topicsByChannel/:channel           controllers.FindTopicsByChannelController.getTopics(channel: String)
 
 
-# Authorship
-GET     /autho/:name           controllers.yearController.getPapersYear(name: String, from, to)
-# Authorship
-GET     /journal/:name           controllers.JournalHistogramController.getJournalAuthors(name: String)
+# Find Papers by Author name
+
+GET     /authorName/:name           controllers.FindPapersbyAuthornameController.getPapersYear(name: String, from, to)
+# Find Authors by Journal name
+GET     /journalName/:name           controllers.JournalHistogramController.getJournalAuthors(name: String)
 
 
 
