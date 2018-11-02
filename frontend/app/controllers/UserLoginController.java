@@ -28,6 +28,15 @@ public class UserLoginController extends Controller {
 
     public Result loginResult()
     {
+        String username = session().get("username");
+        String password = session().get("password");
+        System.out.print("username:" + username);
+        String jsonString = "{" +
+                "\"username\":\"" + username + "\"," +
+                "\"password\":\"" + password +"\""+
+                "}";
+
+        JsonNode nodes = apiCall.callAPIPost(Constants.BACKEND + "/loginResult",jsonString );
          return null;
     }
 }

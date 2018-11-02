@@ -30,7 +30,17 @@ public class APICall {
         }
     }
 
-
+    public JsonNode callAPIPost(String apiString, String jsonString) {
+        Logger.info(apiString);
+        Logger.info(jsonString);
+        CompletionStage<JsonNode> jsonPromise = ws.url(apiString).post(jsonString)
+                .thenApply(r -> r.asJson());
+        try {
+            return jsonPromise.toCompletableFuture().get();
+        } catch (Exception e) {
+            return createResponse(ResponseType.TIMEOUT);
+        }
+    }
 
     public JsonNode createResponse(ResponseType type) {
         ObjectNode jsonData = Json.newObject();
