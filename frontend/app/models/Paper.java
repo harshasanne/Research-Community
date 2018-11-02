@@ -6,7 +6,7 @@ public class Paper {
     public int endYear;
     public String journalName;
 
-
+    public String abstract_;
 
     public Paper() {
         
@@ -35,12 +35,21 @@ public class Paper {
     public void setendYear(int endYear) {
         this.endYear = endYear;
     }
-     public String getjournalName() {
+
+    public String getjournalName() {
         return journalName;
     }
 
     public void setjournalName(String journalName) {
         this.journalName = journalName;
+    }
+
+    public String getAbstract() {
+        return abstract_;
+    }
+
+    public void setAbstract(String a) {
+        abstract_ = a;
     }
 }
 
