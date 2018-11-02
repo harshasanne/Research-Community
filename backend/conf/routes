@@ -8,6 +8,12 @@ GET     /                           controllers.HomeController.index
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
 
+#Find Expert by keyword
+GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordController.getExpert(keyword: String)
+
+#Find topics by channel
+GET     /topicsByChannel/:channel           controllers.FindTopicsByChannelController.getTopics(channel: String)
+
 # Authorship
 GET     /autho/:name           controllers.yearController.getPapersYear(name: String, from, to)
 # Authorship

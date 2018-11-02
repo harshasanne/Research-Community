@@ -1,6 +1,5 @@
 package controllers;
-import play.data.Form;
-import play.data.FormFactory;
+
 import javax.inject.Inject;
 import java.net.URLEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,6 +8,9 @@ import util.APICall;
 import util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
+import play.data.Form;
+import play.data.FormFactory;
+import java.net.URLEncoder;
 import views.html.paperYear;
 import models.*;
 
