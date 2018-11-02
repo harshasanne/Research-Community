@@ -28,3 +28,9 @@ GET     /reference/:name        controllers.PaperController.getPapers(name:Strin
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
+
+GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+
+GET   /loginResult/:username_with_password               controllers.UserLoginController.createUser(username_with_password)
