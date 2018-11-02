@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.Paper;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
@@ -10,24 +11,28 @@ import java.net.URLDecoder;
 import java.lang.*;
 import com.google.gson.Gson;
 import java.lang.*;
+import utils.loginUtils;
 
-public class UserLoginController implements AutoCloseable{
-    private Driver driver = null;
-    @Override
-    public void close() {
-        driver.close();
-    }
+public class UserLoginController  extends Controller{
 
-    public String createUser(String userId, String password, String ri) throws Exception{
+    //public Result getResearcher(String keywords) throws Exception
+    public Result createUser(String username_with_password) throws Exception{
         // userId = URLDecoder.decode(userId, "UTF-8");
         // password = URLDecoder.decode(password, "UTF-8");
-        ri = URLDecoder.decode(ri, "UTF-8");
-        String query1 = "MATCH(a:User{userId:'" + userId +"'}) RETURN a.userId";
-        String query2 = "create (a:User{userId:'" + userId + "', password:'"+ password + "',ri:'" + ri + "'}) RETURN a.userId";
+
+        String username = username_with_password.split(",")[0];
+        String pwd = username_with_password.split(",")[1];
+        String ri = username_with_password.split(",")[2];
+        //System.out.println("be infor:"+ userId + password + ri);
+        //request().body().asFormUrlEncoded().get("username")[0];
+        //ri = URLDecoder.decode(ri, "UTF-8");
+        //JsonNode json = request().body().asJson();
+        String query1 = "MATCH(a:User{userId:'" + username +"'}) RETURN a.userId";
+        String query2 = "create (a:User{userId:'" + username + "', password:'"+ pwd + "', ri:'"+ ri+"'}) RETURN a.userId";
 
         System.out.println(query1);
         System.out.print(query2);
-        driver = GraphDatabase.driver(
+        Driver driver = GraphDatabase.driver(
                 "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
         String greeting = null;
         try ( Session session = driver.session() )
@@ -44,78 +49,39 @@ public class UserLoginController implements AutoCloseable{
 
                         StatementResult result2 = tx.run(query2);
                         System.out.println("sign up and log in succuss");
-                        return null;
+                        return "0";
                     }
                     else {
-                        System.out.println("username exists");
-                        return null;
+                        String getPassword = "";
+                        //System.out.println(result.next().get(0).asString());
+                        while(result1.hasNext())
+                        {
+                            Record record = result1.next();
+
+                            getPassword = record.get(0).asString();
+                            break;
+                        }
+                        if(getPassword.equals(pwd))
+                        {
+                            System.out.print("login success");
+                            return "[\"Status\":0]";
+                        }
+                        else {
+                            System.out.println("error password or username");
+                            return "[\"Status\":1]";
+                        }
+                        //System.out.println("username exists");
+
                     }
                 }
             } );
 
         }
-        return greeting;
+        return ok(greeting);
 
 
     }
 
 
-    public String MatchUserPassword(String userId, String password) throws Exception{
-        //userId = URLDecoder.decode(userId, "UTF-8");
-        //password = URLDecoder.decode(password, "UTF-8");
 
-
-        //String query = "create (a:User{userId:'" + userId + "', password:'"+ password + "',ri:'" + ri + "'})";
-        String query = "MATCH(a:User{userId:'" + userId +"'}) RETURN a.password";
-        System.out.println(query);
-        driver = GraphDatabase.driver(
-                "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
-        String greeting = "";
-
-        try ( Session session = driver.session() )
-        {
-
-            greeting =  session.readTransaction( new TransactionWork<String>()
-            {
-                @Override
-                public String execute( Transaction tx )
-                {
-                    String getPassword = "";
-
-                    StatementResult result = tx.run( query );
-                    //System.out.println(result.next().get(0).asString());
-                    while(result.hasNext())
-                    {
-                        Record record = result.next();
-
-                        getPassword = record.get(0).asString();
-                        break;
-                    }
-                    if(getPassword.equals(password))
-                    {
-                        System.out.print("login success");
-                        return getPassword;
-                    }
-                    else
-                        System.out.println("error password or username");
-                        return "";
-                }
-            } );
-
-        }
-        return greeting;
-
-    }
-
-    public static void main(String[] args)
-    {
-        try(UserLoginController ulc = new UserLoginController())
-        {
-            System.out.println(ulc.createUser("pffffff", "ptf","aaa"));
-
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 }

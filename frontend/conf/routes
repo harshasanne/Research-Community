@@ -30,7 +30,7 @@ GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
 GET /researcherByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 
-GET     /login                  controllers.UserLoginController.login
-GET     /loginResult                  controllers.UserLoginController.loginResult
+GET     /login                  controllers.UserLoginController.login()
+POST     /loginResult                  controllers.UserLoginController.loginResult()
 
 

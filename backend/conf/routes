@@ -32,3 +32,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
 
 GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+
+GET   /loginResult/:username_with_password               controllers.UserLoginController.createUser(username_with_password)

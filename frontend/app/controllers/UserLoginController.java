@@ -26,17 +26,20 @@ public class UserLoginController extends Controller {
 
     public Result login() { return ok(views.html.login.render()); }
 
-    public Result loginResult()
+    public Result loginResult () throws  Exception
     {
-        String username = session().get("username");
-        String password = session().get("password");
-        System.out.print("username:" + username);
-        String jsonString = "{" +
-                "\"username\":\"" + username + "\"," +
-                "\"password\":\"" + password +"\""+
-                "}";
+        System.out.print("called");
+        String username = request().body().asFormUrlEncoded().get("username")[0];
+        String pwd = request().body().asFormUrlEncoded().get("password")[0];
+        String ri = request().body().asFormUrlEncoded().get("RI")[0];
+        String results = username + "," + pwd + ","+ ri;
+        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/loginResult" + "/" + URLEncoder.encode(results, "UTF-8"));
+        // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
+        //String jstring = nodes.toString();
+        Integer status;
+        status = nodes.findPath("Status").asInt();
 
-        JsonNode nodes = apiCall.callAPIPost(Constants.BACKEND + "/loginResult",jsonString );
-         return null;
+        return ok(views.html.index.render());
     }
 }
