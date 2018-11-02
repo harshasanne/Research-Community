@@ -65,4 +65,5 @@ public class AuthorController extends Controller {
     
         return redirect(routes.HomeController.index());
     }
+    
 }
