@@ -8,12 +8,20 @@ import util.APICall;
 import util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
+import play.data.Form;
+import play.data.FormFactory;
+import java.net.URLEncoder;
+import views.html.paperYear;
+import models.*;
+
 public class AuthorController extends Controller {
     private APICall apiCall;
+    private final FormFactory formFactory;
 
     @Inject
-    public AuthorController(APICall apiCall) {
+    public AuthorController(FormFactory formFactory,APICall apiCall) {
         this.apiCall = apiCall;
+        this.formFactory = formFactory;
     }
 
     public Result getPapers(String name) throws Exception {
@@ -23,10 +31,38 @@ public class AuthorController extends Controller {
         String jstring = nodes.toString();
         String p = new String();
         List<String> paperList = new ArrayList<String>();
+        if(nodes != null){
         for(int i = 0;i < nodes.size();i++){
            p = nodes.get(i).findPath("title").asText();
            paperList.add(p);
         }
+    }
         return ok(views.html.author.render(paperList));
+    }
+    public Result publicationPerYear() {
+        Form<Author> authorForm = formFactory.form(Author.class);
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.paperYear.render(authorForm,paperForm));
+    }
+      public Result getPapersYear() throws Exception {
+        Form<Author> authName = formFactory.form(Author.class).bindFromRequest();
+        Paper paperForm = formFactory.form(Paper.class).bindFromRequest().get();
+        String authorName = authName.get().name.replace(" ", "%20");
+       //System.out.println(paperForm.startYear+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/authorName" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
+    
+        return ok();
+    }
+
+     public Result journalAuthors() {
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.journalHistogram.render(paperForm));
+    }
+      public Result getJournalAuthors() throws Exception {
+        Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
+        String name = paperForm.get().journalName.replace(" ", "%20");
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journalName" + "/" + name);
+    
+        return redirect(routes.HomeController.index());
     }
 }

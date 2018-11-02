@@ -7,5 +7,22 @@ GET     /                           controllers.HomeController.index
 
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
+# Find Papers by Author name
+GET     /authorName           controllers.AuthorController.publicationPerYear
+POST     /authorName           controllers.AuthorController.getPapersYear
+
+# Find Author by Journal name
+GET     /journalName           controllers.AuthorController.journalAuthors
+POST     /journalName           controllers.AuthorController.getJournalAuthors
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+
+#Find Expert by keyword
+GET /expertByKeyword/:keyword controllers.FindExpertByKeyWordController.getExpert(keyword: String)
+GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
+
+#Find topics by channel
+GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
+GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
