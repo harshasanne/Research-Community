@@ -13,13 +13,13 @@ import com.google.gson.Gson;
 public class FindExpertByKeyWordController extends Controller {
     public Result getExpert(String keyword) throws Exception{
         keyword = URLDecoder.decode(keyword, "UTF-8");
-        String query = "MATCH (a:Author)-[:WRITES]->(p:Paper)\n" +
-                "WHERE p.abstract =~ '.*"+keyword+".*'\n" +
+        String query = "MATCH(a:Author)-[:WRITES]->(p:Paper)-[:HAS_KEYWORD]->" +
+                "(k:Keyword{keyword:'"+ keyword + "'})" +
                 "RETURN a.authorName, count(a.authorName) as c\n" +
                 "ORDER BY c desc\n" +
                 "limit 1";
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
         try ( Session session = driver.session() )
         {
             List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()

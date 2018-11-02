@@ -26,3 +26,11 @@ GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
 #Find topics by channel
 GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
 GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
+
+GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
+GET /researcherByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+
+GET     /login                  controllers.UserLoginController.login
+GET     /loginResult                  controllers.UserLoginController.loginResult
+
+
