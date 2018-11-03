@@ -51,7 +51,7 @@ public class AuthorController extends Controller {
        //System.out.println(paperForm.startYear+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/authorName" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
     
-        return ok();
+        return redirect(routes.HomeController.index());
     }
 
      public Result journalAuthors() {
@@ -63,7 +63,7 @@ public class AuthorController extends Controller {
         String name = paperForm.get().journalName.replace(" ", "%20");
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journalName" + "/" + name);
     
-        return redirect(routes.HomeController.index());
+        return ok(views.html.successDownload.render());
     }
-    
+
 }
