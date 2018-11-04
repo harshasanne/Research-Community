@@ -7,6 +7,7 @@ GET     /                           controllers.HomeController.index
 
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
+GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
 # Find Papers by Author name
 GET     /authorName           controllers.AuthorController.publicationPerYear
 POST     /authorName           controllers.AuthorController.getPapersYear
