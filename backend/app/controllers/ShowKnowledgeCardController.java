@@ -1,5 +1,6 @@
 package controllers;
 
+import com.typesafe.config.Config;
 import models.Paper;
 import models.PaperMeta;
 import org.neo4j.driver.v1.*;
@@ -11,16 +12,25 @@ import java.util.List;
 import java.net.URLDecoder;
 
 import com.google.gson.*;
+import utils.DBDriver;
+
+import javax.inject.Inject;
 import java.io.*;
 
 
 public class ShowKnowledgeCardController extends Controller{
+    private com.typesafe.config.Config config;
+
+    @Inject
+    public ShowKnowledgeCardController(Config config) {
+        this.config = config;
+    }
     public Result getCard(String title) throws Exception{
+
         title = URLDecoder.decode(title, "UTF-8");
         String query1 = "match (p:Paper) where p.title = '" + title + "' return p";
 //3D Medical Volume Reconstruction Using Web Services.
-        Driver driver = GraphDatabase.driver(
-                "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
+        Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
             List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
@@ -31,12 +41,17 @@ public class ShowKnowledgeCardController extends Controller{
                     return matchPaperNodes( tx, query1 );
                 }
             } );
-            List<PaperMeta> paperObjects = new ArrayList<PaperMeta>();
+            //List<PaperMeta> paperObjects = new ArrayList<PaperMeta>();
+           // System.out.println(papers.get(0));
+            //PaperMeta paperObjects = new PaperMeta(papers.get(0));
+            //System.out.println(new Gson().toJson(paperObjects));
             //System.out.println(papers);
-            for (String p : papers) {
-                paperObjects.add(new PaperMeta(p));
-            }
-            return ok(new Gson().toJson(paperObjects));
+//            for (String p : papers) {
+//                paperObjects.add(new PaperMeta(p));
+//            }
+            //System.out.println(papers.get(0));
+
+            return ok(papers.get(0).toString()).as("applications/json");
         }
     }
 
@@ -51,11 +66,16 @@ public class ShowKnowledgeCardController extends Controller{
             //papers.add(result.next().get(0).asString());
             Record record = result.next();
             String recordString = gson.toJson(record.asMap());
+            //System.out.println(recordString);
             metaDatas.add(recordString);
-            System.out.println(recordString);
+            //System.out.println(recordString);
 
 
         }
         return metaDatas;
+    }
+
+    public static void main(String[] args) {
+
     }
 }

@@ -3,6 +3,8 @@ package controllers;
 import javax.inject.Inject;
 import java.net.URLEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
+import play.libs.concurrent.HttpExecutionContext;
+import play.libs.ws.WSResponse;
 import play.mvc.*;
 import util.APICall;
 import util.Constants;
@@ -11,13 +13,20 @@ import java.util.*;
 import play.data.Form;
 import play.data.FormFactory;
 import java.net.URLEncoder;
+import java.util.concurrent.CompletionStage;
+
+import views.html.login;
+import views.html.index;
 import views.html.paperYear;
 import models.*;
+import forms.*;
 
 public class UserLoginController extends Controller {
     private APICall apiCall;
     private final FormFactory formFactory;
 
+    @Inject
+    HttpExecutionContext ec;
     @Inject
     public UserLoginController(FormFactory formFactory,APICall apiCall) {
         this.apiCall = apiCall;
@@ -26,20 +35,26 @@ public class UserLoginController extends Controller {
 
     public Result login() { return ok(views.html.login.render()); }
 
-    public Result loginResult () throws  Exception
+    public CompletionStage<Result> loginResult () throws  Exception
     {
-        System.out.print("called");
-        String username = request().body().asFormUrlEncoded().get("username")[0];
-        String pwd = request().body().asFormUrlEncoded().get("password")[0];
-        String ri = request().body().asFormUrlEncoded().get("RI")[0];
-        String results = username + "," + pwd + ","+ ri;
-        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/loginResult" + "/" + URLEncoder.encode(results, "UTF-8"));
-        // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
-        //String jstring = nodes.toString();
-        Integer status;
-        status = nodes.findPath("Status").asInt();
 
-        return ok(views.html.index.render());
+        Form<LoginForm> form = formFactory.form(LoginForm.class).bindFromRequest();
+        LoginForm userForm = form.get();
+        System.out.println("role:" + userForm.getUsername());
+        return User.createUser(userForm)
+                .thenApplyAsync((WSResponse r) -> {
+                    System.out.println(r.asJson());
+                    if (r.asJson().get("isSuccessful").asBoolean()) {
+                        System.out.println(" Login Success ");
+
+                        return created(index.render());
+                    } else {
+                        System.out.println(" Login failed");
+                        return badRequest(login.render());
+                    }
+                }, ec.current());
+
+
+
     }
 }

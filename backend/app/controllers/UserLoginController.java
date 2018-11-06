@@ -1,46 +1,88 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.typesafe.config.Config;
 import models.Paper;
 import org.neo4j.driver.v1.*;
+import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
-
+import play.data.FormFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URLDecoder;
 import java.lang.*;
 import com.google.gson.Gson;
 import java.lang.*;
+
+import utils.DBDriver;
 import utils.loginUtils;
+//import form.*;
+import models.*;
+
+
+import javax.inject.Inject;
 
 public class UserLoginController  extends Controller{
 
     //public Result getResearcher(String keywords) throws Exception
-    public Result createUser(String username_with_password) throws Exception{
-        // userId = URLDecoder.decode(userId, "UTF-8");
-        // password = URLDecoder.decode(password, "UTF-8");
 
-        String username = username_with_password.split(",")[0];
-        String pwd = username_with_password.split(",")[1];
-        String ri = username_with_password.split(",")[2];
-        //System.out.println("be infor:"+ userId + password + ri);
-        //request().body().asFormUrlEncoded().get("username")[0];
-        //ri = URLDecoder.decode(ri, "UTF-8");
-        //JsonNode json = request().body().asJson();
+//    public Result addUser() {
+//        Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+//        System.out.println(userForm.get().toString());
+//        int res = User.addUser(userForm);
+//        System.out.println(res);
+//        if(res == Const.DATA_FORMAT_ERROR) {
+//            return badRequest(Util.createResponse("Expecting Json data", false));
+//        }
+//        if (res == Const.ADD_USER_ERROR) {
+//            return forbidden(Util.createResponse("Sorry, username is used", false));
+//        }
+//        System.out.println(userForm.get().username);
+//        User u = User.findUserByName(userForm.get().username);
+//        if (u == null){
+//            return ok(Util.createResponse("",false));
+//        } else {
+//            JsonNode userObj = Json.toJson(u);
+//            return created(Util.createResponse(userObj, true));
+//        }
+//    }
+private com.typesafe.config.Config config;
+
+    @Inject
+
+    private FormFactory formFactory;
+
+    @Inject
+    public UserLoginController(FormFactory formFactory,Config config) {
+        this.formFactory = formFactory;
+        this.config = config;
+    }
+    public Result createUser() throws Exception{
+
+        Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+        User user = userForm.get();
+
+
+
+        String username = user.getUsername();
+        String pwd = user.getPassword();
+        String ri = user.getRI();
         String query1 = "MATCH(a:User{userId:'" + username +"'}) RETURN a.userId";
         String query2 = "create (a:User{userId:'" + username + "', password:'"+ pwd + "', ri:'"+ ri+"'}) RETURN a.userId";
 
         System.out.println(query1);
         System.out.print(query2);
-        Driver driver = GraphDatabase.driver(
-                "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
-        String greeting = null;
+        Driver driver = DBDriver.getDriver(this.config);
+        //int res = 0;
+        String res = null;
         try ( Session session = driver.session() )
         {
 
-            greeting =  session.readTransaction( new TransactionWork<String>()
+            res =  session.readTransaction( new TransactionWork<String>()
             {
                 @Override
+
                 public String execute( Transaction tx )
                 {
                     StatementResult result1 = tx.run( query1 );
@@ -48,8 +90,8 @@ public class UserLoginController  extends Controller{
                     if(!result1.hasNext()) {
 
                         StatementResult result2 = tx.run(query2);
-                        System.out.println("sign up and log in succuss");
-                        return "0";
+                        System.out.println("sign up succuss");
+                        return "2";
                     }
                     else {
                         String getPassword = "";
@@ -64,11 +106,11 @@ public class UserLoginController  extends Controller{
                         if(getPassword.equals(pwd))
                         {
                             System.out.print("login success");
-                            return "[\"Status\":0]";
+                            return "0";
                         }
                         else {
                             System.out.println("error password or username");
-                            return "[\"Status\":1]";
+                            return "1";
                         }
                         //System.out.println("username exists");
 
@@ -77,7 +119,23 @@ public class UserLoginController  extends Controller{
             } );
 
         }
-        return ok(greeting);
+        JsonNode userObj = Json.toJson(user);
+
+        int resInt = Integer.valueOf(res);
+        if(resInt == loginUtils.LOGIN_SUCCESS)
+        {
+
+            return created(loginUtils.createResponse(userObj, true));
+        }
+        if(resInt == loginUtils.LOGIN_FAILURE)
+        {
+
+            return created(loginUtils.createResponse(userObj, false));
+        }
+        else
+        {
+            return created(loginUtils.createResponse(userObj, true));
+        }
 
 
     }

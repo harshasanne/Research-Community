@@ -29,12 +29,17 @@ public class FindResearcherByKeywordController extends Controller{
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/ResearcherByKeyword" + "/" + URLEncoder.encode(keyword, "UTF-8"));
         // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
         //String jstring = nodes.toString();
-        String name="";
-        List<Keyword> keywordList = new ArrayList<>();
-        for(int i = 0;i < nodes.size();i++){
-            name = nodes.get(i).findPath("name").asText();
-        }
-        return ok(views.html.researcherByKeyword.render(name,keyword));
+        System.out.println(nodes);
+
+
+
+
+        return ok(views.html.researcherByKeyword.render(nodes,keyword));
+    }
+
+    public Result getForm() throws Exception {
+
+        return ok(views.html.singleInput.render("researcherByKeyword","keyword","Find researchers by keyword and interests"));
     }
 }
 

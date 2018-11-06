@@ -1,5 +1,6 @@
 package controllers;
 
+import com.typesafe.config.Config;
 import models.Author;
 import models.Paper;
 import models.PaperMeta;
@@ -12,19 +13,28 @@ import java.util.List;
 import java.net.URLDecoder;
 
 import com.google.gson.*;
+import utils.DBDriver;
+
+import javax.inject.Inject;
 import java.io.*;
 
 public class FindResearcherByKeywordController extends Controller{
+    private com.typesafe.config.Config config;
+
+    @Inject
+    public FindResearcherByKeywordController(Config config) {
+        this.config = config;
+    }
+
     public Result getResearcher(String keywords) throws Exception{
         keywords = URLDecoder.decode(keywords, "UTF-8");
         String query  = "MATCH (a:Author)-[:WRITES]->(p:Paper)\n" +
                 "WHERE p.abstract =~ '.*"+keywords+".*'\n" +
                 "RETURN a.authorName, count(a.authorName) as c\n" +
                 "ORDER BY c desc\n" +
-                "limit 1";;
+                "limit 10";;
 //3D Medical Volume Reconstruction Using Web Services.
-        Driver driver = GraphDatabase.driver(
-                "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
+        Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
             List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()

@@ -29,9 +29,14 @@ GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopic
 GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
 
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
+GET /showKnowledgeCard/form/         controllers.ShowKnowledgeCardController.getForm()
+
 GET /researcherByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordController.getForm()
 
 GET     /login                  controllers.UserLoginController.login()
 POST     /loginResult                  controllers.UserLoginController.loginResult()
+
+
 
 

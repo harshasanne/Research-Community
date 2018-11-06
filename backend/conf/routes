@@ -34,4 +34,4 @@ GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardControl
 
 GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 
-GET   /loginResult/:username_with_password               controllers.UserLoginController.createUser(username_with_password)
+POST    /loginResult                      controllers.UserLoginController.createUser()
