@@ -25,28 +25,6 @@ import javax.inject.Inject;
 
 public class UserLoginController  extends Controller{
 
-    //public Result getResearcher(String keywords) throws Exception
-
-//    public Result addUser() {
-//        Form<User> userForm = formFactory.form(User.class).bindFromRequest();
-//        System.out.println(userForm.get().toString());
-//        int res = User.addUser(userForm);
-//        System.out.println(res);
-//        if(res == Const.DATA_FORMAT_ERROR) {
-//            return badRequest(Util.createResponse("Expecting Json data", false));
-//        }
-//        if (res == Const.ADD_USER_ERROR) {
-//            return forbidden(Util.createResponse("Sorry, username is used", false));
-//        }
-//        System.out.println(userForm.get().username);
-//        User u = User.findUserByName(userForm.get().username);
-//        if (u == null){
-//            return ok(Util.createResponse("",false));
-//        } else {
-//            JsonNode userObj = Json.toJson(u);
-//            return created(Util.createResponse(userObj, true));
-//        }
-//    }
 private com.typesafe.config.Config config;
 
     @Inject

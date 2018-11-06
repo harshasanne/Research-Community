@@ -1,3 +1,5 @@
+@(signinFail:Boolean)
+
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -26,7 +28,12 @@
                 <input type="text" class = "textbox" placeholder="Enter Research Interests" name="RI">
 
 
-
+                @if(signinFail) {
+                    <div class="alert alert-danger fade in">
+                        <b>Login failed</b><br>
+                        Invalid username/password. Please try again.
+                    </div>
+                }
                 <button type="submit" id="btn">Sign in</button>
 
 

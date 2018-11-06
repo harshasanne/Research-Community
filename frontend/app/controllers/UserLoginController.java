@@ -33,7 +33,7 @@ public class UserLoginController extends Controller {
         this.formFactory = formFactory;
     }
 
-    public Result login() { return ok(views.html.login.render()); }
+    public Result login() { return ok(views.html.login.render(false)); }
 
     public CompletionStage<Result> loginResult () throws  Exception
     {
@@ -50,7 +50,7 @@ public class UserLoginController extends Controller {
                         return created(index.render());
                     } else {
                         System.out.println(" Login failed");
-                        return badRequest(login.render());
+                        return badRequest(login.render(true));
                     }
                 }, ec.current());
 

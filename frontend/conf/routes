@@ -34,7 +34,7 @@ GET /showKnowledgeCard/form/         controllers.ShowKnowledgeCardController.get
 GET /researcherByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordController.getForm()
 
-GET     /login                  controllers.UserLoginController.login()
+GET     /login                  controllers.UserLoginController.login
 POST     /loginResult                  controllers.UserLoginController.loginResult()
 
 
