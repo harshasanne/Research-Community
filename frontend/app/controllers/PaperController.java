@@ -48,6 +48,7 @@ public class PaperController extends Controller {
         info.put("journal", paperInfo.getJournal());
         info.put("year", String.valueOf(paperInfo.getYear()));
         System.out.println("test from frontend" + info.get("title"));
+        System.out.println(apiString);
 
         return ws.url(apiString)
                 .addHeader("Content-Type", "application/json")

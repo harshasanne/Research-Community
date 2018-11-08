@@ -7,10 +7,11 @@ import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;
-import play.data.FormFactory;
-import play.data.Form;
 
 import com.google.gson.Gson;
+
+import play.data.DynamicForm;
+import play.data.FormFactory;
 
 import utils.DBDriver;
 import javax.inject.Inject;
@@ -63,14 +64,14 @@ public class PaperController extends Controller {
     }
 
     public Result createPaper() throws Exception {
-        Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
-        Paper paper = paperForm.get();
+        DynamicForm requestData = formFactory.form().bindFromRequest();
+        System.out.println("test" + requestData.get("author"));
 
-        String author = paper.getAuthor();
-        String title = paper.getTitle();
-        String abstract_ = paper.getAbstract();
-        String journal = paper.getJournal();
-        String year = paper.getYear();
+        String author = requestData.get("author");
+        String title = requestData.get("title");
+        String abstract_ = requestData.get("abstract_");
+        String journal = requestData.get("journal");
+        String year = requestData.get("year");
 
         String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: '" + year + "'});";
         System.out.println(query);

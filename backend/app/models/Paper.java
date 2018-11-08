@@ -8,7 +8,7 @@ public class Paper {
 
     private String author;
     private String title;
-    private String abstact;
+    private String abstract_;
     private String journal;
     private String year;
 
@@ -27,7 +27,7 @@ public class Paper {
     }
 
     public String getAbstract() {
-        return abstact;
+        return abstract_;
     }
 
     public String getJournal() {
@@ -47,7 +47,7 @@ public class Paper {
     }
 
     public void setAbstract(String abstract_) {
-        this.abstact = abstract_;
+        this.abstract_ = abstract_;
     }
 
     public void setJournal(String journal) {
