@@ -28,7 +28,6 @@ public class AuthorController extends Controller {
         // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/author" + "/" + URLEncoder.encode(name, "UTF-8"));
         // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
-        String jstring = nodes.toString();
         String p = new String();
         List<String> paperList = new ArrayList<String>();
         if(nodes != null){
@@ -39,6 +38,18 @@ public class AuthorController extends Controller {
     }
         return ok(views.html.author.render(paperList));
     }
+
+    public Result getCollaborators(String name) throws Exception {
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/collaborator" + "/" +URLEncoder.encode(name, "UTF-8"));
+        List<String> collaborators = new ArrayList<String>();
+        for (int i = 0; i < nodes.size(); i++) {
+            collaborators.add(nodes.get(i).findPath("name").asText());
+        }
+
+        //TODO: Harsha, change the return type however suitable for your graph
+        return ok(views.html.author.render(collaborators));
+    }
+
     public Result publicationPerYear() {
         Form<Author> authorForm = formFactory.form(Author.class);
         Form<Paper> paperForm = formFactory.form(Paper.class);
@@ -51,7 +62,7 @@ public class AuthorController extends Controller {
        //System.out.println(paperForm.startYear+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/authorName" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
     
-        return ok();
+        return redirect(routes.HomeController.index());
     }
 
      public Result journalAuthors() {
@@ -63,7 +74,7 @@ public class AuthorController extends Controller {
         String name = paperForm.get().journalName.replace(" ", "%20");
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journalName" + "/" + name);
     
-        return redirect(routes.HomeController.index());
+        return ok(views.html.successDownload.render());
     }
 
     public Result getAuthor(String name) throws Exception {

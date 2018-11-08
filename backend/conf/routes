@@ -7,6 +7,7 @@ GET     /                           controllers.HomeController.index
 
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
+GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
 
 #Find Expert by keyword
 GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordController.getExpert(keyword: String)
@@ -31,3 +32,9 @@ POST    /paper                  controllers.PaperController.createPaper()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
+
+GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+
+POST    /loginResult                      controllers.UserLoginController.createUser()

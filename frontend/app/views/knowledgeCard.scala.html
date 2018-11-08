@@ -1,0 +1,40 @@
+@import com.fasterxml.jackson.databind.JsonNode
+@(jsonNode: JsonNode)
+
+@main("Expert") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/table.css")">
+    <body>
+        <div class="container">
+            <div class="col s12 l10 offset-l1">
+                <div class="card-panel z-depth-0">
+                    <h4 class="form-signin-heading center">Showing metadata and citation of a paper </h4>
+                    <table id="customers">
+                        <tr>
+                            <th>Attributes</th>
+                            <th>Value</th>
+
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>@jsonNode.get("p").get("properties").get("title").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>@jsonNode.get("p").get("id")</td>
+                        </tr>
+                        <tr>
+                            <td>journal</td>
+                            <td>@jsonNode.get("p").get("properties").get("journal").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>abstract</td>
+                            <td>@jsonNode.get("p").get("properties").get("abstract").get("val").asText()</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </body>
+}

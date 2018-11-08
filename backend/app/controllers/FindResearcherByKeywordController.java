@@ -1,23 +1,39 @@
 package controllers;
 
+import com.typesafe.config.Config;
 import models.Author;
+import models.Paper;
+import models.PaperMeta;
 import org.neo4j.driver.v1.*;
+
 import play.mvc.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URLDecoder;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
+import utils.DBDriver;
 
-public class FindExpertByKeyWordController extends Controller {
-    public Result getExpert(String keyword) throws Exception{
-        keyword = URLDecoder.decode(keyword, "UTF-8");
-        String query = "MATCH(a:Author)-[:WRITES]->(p:Paper)-[:HAS_KEYWORD]->" +
-                "(k:Keyword{keyword:'"+ keyword + "'})" +
+import javax.inject.Inject;
+import java.io.*;
+
+public class FindResearcherByKeywordController extends Controller{
+    private com.typesafe.config.Config config;
+
+    @Inject
+    public FindResearcherByKeywordController(Config config) {
+        this.config = config;
+    }
+
+    public Result getResearcher(String keywords) throws Exception{
+        keywords = URLDecoder.decode(keywords, "UTF-8");
+        String query  = "MATCH (a:Author)-[:WRITES]->(p:Paper)\n" +
+                "WHERE p.abstract =~ '.*"+keywords+".*'\n" +
                 "RETURN a.authorName, count(a.authorName) as c\n" +
                 "ORDER BY c desc\n" +
-                "limit 1";
+                "limit 10";;
+//3D Medical Volume Reconstruction Using Web Services.
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
@@ -26,7 +42,7 @@ public class FindExpertByKeyWordController extends Controller {
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return findExpert( tx, query );
+                    return findResearcher( tx, query );
                 }
             } );
             List<Author> authorObjects = new ArrayList<Author>();
@@ -37,7 +53,7 @@ public class FindExpertByKeyWordController extends Controller {
         }
     }
 
-    private static List<String> findExpert(Transaction tx, String query)
+    private static List<String> findResearcher(Transaction tx, String query)
     {
         List<String> authors = new ArrayList<>();
         StatementResult result = tx.run( query );
