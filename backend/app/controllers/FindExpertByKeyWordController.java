@@ -8,9 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.net.URLDecoder;
 
+import utils.DBDriver;
+import javax.inject.Inject;
+import com.typesafe.config.Config;
+
 import com.google.gson.Gson;
 
 public class FindExpertByKeyWordController extends Controller {
+    private Config config;
+
+    @Inject
+    public FindExpertByKeyWordController(Config config) {
+        this.config = config;
+    }
+
     public Result getExpert(String keyword) throws Exception{
         keyword = URLDecoder.decode(keyword, "UTF-8");
         String query = "MATCH(a:Author)-[:WRITES]->(p:Paper)-[:HAS_KEYWORD]->" +

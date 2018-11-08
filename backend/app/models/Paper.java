@@ -6,33 +6,27 @@ public class Paper {
 
     private Long index;
 
+    private String author;
     private String title;
     private String abstact;
     private String journal;
     private String year;
 
-    private List<String> authors;
+    public Paper() {}
 
     public Paper(String title) {
         this.title = title;
     }
 
-    public Paper(String title, String _abstract, String journal, String year, String... _authors) {
-        this.title = title;
-        this.abstact = _abstract;
-        this.journal = journal;
-        this.year = year;
-        this.authors = new ArrayList<String>();
-        for (String author : _authors) {
-            authors.add(author);
-        }
+    public String getAuthor() {
+        return author;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getAbstact() {
+    public String getAbstract() {
         return abstact;
     }
 
@@ -44,7 +38,23 @@ public class Paper {
         return year;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setAbstract(String abstract_) {
+        this.abstact = abstract_;
+    }
+
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }

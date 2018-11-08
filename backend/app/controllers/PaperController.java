@@ -7,19 +7,24 @@ import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;
+import play.data.FormFactory;
+import play.data.Form;
 
 import com.google.gson.Gson;
-import javax.inject.*;
+
+import utils.DBDriver;
+import javax.inject.Inject;
+import com.typesafe.config.Config;
 
 public class PaperController extends Controller {
 
-    private static DBConnector dbConnector;
-    private static Driver driver;
+    private FormFactory formFactory;
+    private Config config;
 
     @Inject
-    public PaperController() {
-        dbConnector = DBConnector.getInstance();
-        driver = dbConnector.getDriver();
+    public PaperController(FormFactory formFactory, Config config) {
+        this.formFactory = formFactory;
+        this.config = config;
     }
 
     public Result getPapers(String name) throws Exception{
@@ -58,18 +63,19 @@ public class PaperController extends Controller {
     }
 
     public Result createPaper() throws Exception {
-        JsonNode json = request().body().asJson();
-        if (json == null) {
-            System.out.println("User info not present, expecting json data");
-        }
-        String author = json.path("author").asText();
-        String title = json.path("title").asText();
-        String abstract_ = json.path("abstract").asText();
-        String journal = json.path("journal").asText();
-        String year = json.path("year").asText();
+        Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
+        Paper paper = paperForm.get();
 
-        String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: " + year + "});";
+        String author = paper.getAuthor();
+        String title = paper.getTitle();
+        String abstract_ = paper.getAbstract();
+        String journal = paper.getJournal();
+        String year = paper.getYear();
 
+        String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: '" + year + "'});";
+        System.out.println(query);
+        Driver driver = DBDriver.getDriver(this.config);
+        String res = null;
         try ( Session session = driver.session() )
         {
             session.writeTransaction( new TransactionWork<Void>()

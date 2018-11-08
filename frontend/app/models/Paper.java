@@ -1,7 +1,5 @@
 package models;
 
-import javax.Inject.*;
-
 public class Paper {
     private String title;
     public String journalName;
