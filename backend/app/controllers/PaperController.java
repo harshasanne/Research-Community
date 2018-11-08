@@ -58,13 +58,15 @@ public class PaperController extends Controller {
     }
 
     public Result createPaper() throws Exception {
-        Map<String, String[]> form = request().body().asFormUrlEncoded();
-
-        String author = form.get("author")[0];
-        String title = form.get("title")[0];
-        String abstract_ = form.get("abstract")[0];
-        String journal = form.get("journal")[0];
-        String year = form.get("year")[0];
+        JsonNode json = request().body().asJson();
+        if (json == null) {
+            System.out.println("User info not present, expecting json data");
+        }
+        String author = json.path("author").asText();
+        String title = json.path("title").asText();
+        String abstract_ = json.path("abstract").asText();
+        String journal = json.path("journal").asText();
+        String year = json.path("year").asText();
 
         String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: " + year + "});";
 
