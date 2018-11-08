@@ -14,6 +14,14 @@ public class Paper {
 
     public Paper() {}
 
+    public Paper(String author, String title, String abs, String journal, String year) {
+        this.author = author;
+        this.title = title;
+        this.abstract_ = abs;
+        this.journal = journal;
+        this.year = year;
+    }
+
     public Paper(String title) {
         this.title = title;
     }

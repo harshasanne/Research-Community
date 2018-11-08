@@ -84,17 +84,12 @@ public class PaperController extends Controller {
                 @Override
                 public Void execute( Transaction tx )
                 {
-                    return createPaperNode( tx, query );
+                    tx.run( query );
+                    return null;
                 }
             } );
-            return ok();
+            return created();
         }
-    }
-
-    private static Void createPaperNode( Transaction tx, String query )
-    {
-        tx.run( query );
-        return null;
     }
 
 }
