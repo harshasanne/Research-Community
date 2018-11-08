@@ -12,7 +12,7 @@ import play.data.Form;
 import play.data.FormFactory;
 import java.net.URLEncoder;
 import views.html.paper;
-import models.*;
+import forms.PaperForm;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.*;
 import play.libs.Json;
@@ -33,22 +33,21 @@ public class PaperController extends Controller {
     }
 
     public Result getForm() {
-        Form<Author> authorForm = formFactory.form(Author.class);
-        Form<Paper> paperForm = formFactory.form(Paper.class);
-        return ok(views.html.paper.render(authorForm, paperForm));
+        Form<PaperForm> paperForm = formFactory.form(PaperForm.class);
+        return ok(views.html.paper.render(paperForm));
     }
 
     public CompletionStage<Result> postPaper() {
         String apiString = Constants.postPaperURL;
-        Author authorInfo = formFactory.form(Author.class).bindFromRequest().get();
-        Paper paperInfo = formFactory.form(Paper.class).bindFromRequest().get();
+        PaperForm paperInfo = formFactory.form(PaperForm.class).bindFromRequest().get();
 
         Map<String, String> info = new HashMap<String, String>();
-        info.put("author", authorInfo.getName());
+        info.put("author", paperInfo.getAuthor());
         info.put("title", paperInfo.getTitle());
-        info.put("year", String.valueOf(paperInfo.getstartYear()));
-        info.put("journal", paperInfo.getjournalName());
-        info.put("abstract", paperInfo.getAbstract());
+        info.put("abstract_", paperInfo.getAbstract());
+        info.put("journal", paperInfo.getJournal());
+        info.put("year", String.valueOf(paperInfo.getYear()));
+        System.out.println("test from frontend" + info.get("title"));
 
         return ws.url(apiString)
                 .addHeader("Content-Type", "application/json")

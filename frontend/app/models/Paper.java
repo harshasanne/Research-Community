@@ -6,9 +6,6 @@ public class Paper {
 
     public int startYear;
     public int endYear;
-    public String publishedYear;
-
-    public String abstract_;
 
     public Paper() {
         
@@ -46,20 +43,5 @@ public class Paper {
         this.journalName = journalName;
     }
 
-    public String getPublishedYear() {
-        return publishedYear;
-    }
-
-    public void setPublishedYear(String year) {
-        this.publishedYear = year;
-    }
-
-    public String getAbstract() {
-        return abstract_;
-    }
-
-    public void setAbstract(String a) {
-        abstract_ = a;
-    }
 }
 

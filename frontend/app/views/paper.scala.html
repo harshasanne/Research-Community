@@ -1,5 +1,4 @@
-
-@(authForm: Form[Author], paperForm: Form[Paper])
+@(paperForm: Form[forms.PaperForm])
 @import helper._
 
 @main("PostPaper"){
@@ -9,35 +8,35 @@
                 <div class="row">
                     <div class="col s12 l10 offset-l1">
                         <div class="card-panel">
-                            <h4 class="form-signin-heading center">Author Histogram</h4>
-                            <form class="form-signin" action="/autho/" method="GET">
+                            <h4 class="form-signin-heading center">Post a publication</h4>
+                            <form class="form-signin" action="/paper" method="POST">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input type="text" name="name" id="name" value="@authForm("name").value">
+                                        <input type="text" name="author" id="author" value="@paperForm("author").value">
                                         <label for="name" class="active">Author Name</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input type="text" name="startYear" id="startYear" value="@paperForm("title").value">
+                                        <input type="text" name="title" id="title" value="@paperForm("title").value">
                                         <label for="startYear"class="active">Title</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input type="text" name="endYear" id="endYear" value="@paperForm("abstract_").value">
+                                        <input type="text" name="abstract" id="abstract" value="@paperForm("abstract_").value">
                                         <label for="endYear"class="active">Abstract</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input type="text" name="endYear" id="endYear" value="@paperForm("journalName").value">
+                                        <input type="text" name="journal" id="journal" value="@paperForm("journal").value">
                                         <label for="endYear"class="active">Journal</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input type="text" name="endYear" id="endYear" value="@paperForm("startYear").value">
+                                        <input type="text" name="year" id="year" value="@paperForm("year").value">
                                         <label for="endYear"class="active">Year</label>
                                     </div>
                                 </div>
