@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Paper;
+import models.Author;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
 import dbConnector.DBConnector;

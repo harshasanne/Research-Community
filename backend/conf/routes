@@ -34,7 +34,7 @@ GET     /following/news/:name   controllers.FollowController.getNews(name: Strin
 POST    /follow                 controllers.FollowController.postFollowship()
 POST    /unfollow               controllers.FollowController.postUnfollowship()
 GET     /follower/:name         controllers.FollowController.getAllFollowers(name: String)
-GET     /followering/:name      controllers.FollowController.getAllFollowerings(name: String)
+GET     /following/:name        controllers.FollowController.getAllFollowings(name: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
