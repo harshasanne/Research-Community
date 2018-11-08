@@ -14,12 +14,13 @@ import java.net.URLDecoder;
 
 import com.google.gson.*;
 import utils.DBDriver;
+import com.typesafe.config.Config;
 
 import javax.inject.Inject;
 import java.io.*;
 
 public class FindResearcherByKeywordController extends Controller{
-    private com.typesafe.config.Config config;
+    private Config config;
 
     @Inject
     public FindResearcherByKeywordController(Config config) {

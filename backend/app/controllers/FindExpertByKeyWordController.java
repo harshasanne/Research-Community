@@ -8,9 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.net.URLDecoder;
 
+import utils.DBDriver;
+import javax.inject.Inject;
+import com.typesafe.config.Config;
+
 import com.google.gson.Gson;
 
 public class FindExpertByKeyWordController extends Controller {
+    private Config config;
+
+    @Inject
+    public FindExpertByKeyWordController(Config config) {
+        this.config = config;
+    }
+
     public Result getExpert(String keyword) throws Exception{
         keyword = URLDecoder.decode(keyword, "UTF-8");
         String query = "MATCH(a:Author)-[:WRITES]->(p:Paper)-[:HAS_KEYWORD]->" +
@@ -18,8 +29,7 @@ public class FindExpertByKeyWordController extends Controller {
                 "RETURN a.authorName, count(a.authorName) as c\n" +
                 "ORDER BY c desc\n" +
                 "limit 1";
-        Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "ptf"));
+        Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
             List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()

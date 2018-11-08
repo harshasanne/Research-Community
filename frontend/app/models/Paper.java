@@ -2,11 +2,10 @@ package models;
 
 public class Paper {
     private String title;
-    public int startYear;
-    public int endYear;
     public String journalName;
 
-
+    public int startYear;
+    public int endYear;
 
     public Paper() {
         
@@ -35,12 +34,14 @@ public class Paper {
     public void setendYear(int endYear) {
         this.endYear = endYear;
     }
-     public String getjournalName() {
+
+    public String getjournalName() {
         return journalName;
     }
 
     public void setjournalName(String journalName) {
         this.journalName = journalName;
     }
+
 }
 
