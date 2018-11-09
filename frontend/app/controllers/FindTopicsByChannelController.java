@@ -21,10 +21,9 @@ public class FindTopicsByChannelController extends Controller {
     }
 
 
-    public Result getTopics(String channel) throws Exception {
-        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/topicsByChannel" + "/" + URLEncoder.encode(channel, "UTF-8"));
-        // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
+    public Result getTopics(String channel,String year) throws Exception {
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/topicsByChannel" + "/" + URLEncoder.encode(channel, "UTF-8")+
+                "/" + URLEncoder.encode(year, "UTF-8"));
 
         String name;
         Integer count;
@@ -34,11 +33,11 @@ public class FindTopicsByChannelController extends Controller {
             count = nodes.get(i).findPath("count").asInt();
             keywordList.add(new Keyword(name,count));
         }
-        return ok(views.html.keywordsByChannel.render(keywordList,channel));
+        return ok(views.html.keywordsByChannel.render(keywordList,channel,year));
     }
 
     public Result getForm() throws Exception {
 
-        return ok(views.html.singleInput.render("topicsByChannel","Channel","Find Topics for a channel"));
+        return ok(views.html.doubleInput.render("topicsByChannel","Channel","Year","Find Topics for a channel"));
     }
 }

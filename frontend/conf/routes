@@ -25,7 +25,7 @@ GET /expertByKeyword/:keyword controllers.FindExpertByKeyWordController.getExper
 GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
 
 #Find topics by channel
-GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
+GET     /topicsByChannel/:channel/:year   controllers.FindTopicsByChannelController.getTopics(channel: String,year: String)
 GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
 
 # Following author
