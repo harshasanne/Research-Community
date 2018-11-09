@@ -40,6 +40,7 @@ GET     /following/:name        controllers.FollowController.getAllFollowings(na
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
+GET     /showAuthorCard/:name           controllers.ShowAuthorCardController.getCard(name: String)
 
 GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 

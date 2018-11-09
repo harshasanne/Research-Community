@@ -1,0 +1,45 @@
+
+@import com.fasterxml.jackson.databind.JsonNode
+@(jsonNode: JsonNode)
+
+@main("Expert") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/table.css")">
+    <body>
+        <div class="container">
+            <div class="col s12 l10 offset-l1">
+                <div class="card-panel z-depth-0">
+                    <h4 class="form-signin-heading center">Showing metadata and publications of an author </h4>
+                    <table id="customers">
+                        <tr>
+                            <th>Attributes</th>
+                            <th>Value</th>
+
+                        </tr>
+                        <tr>
+                            <td>authorName</td>
+                            <td>@jsonNode.get("a").get("properties").get("authorName").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>@jsonNode.get("a").get("properties").get("title").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>affliation</td>
+                            <td>@jsonNode.get("a").get("properties").get("affliation").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>@jsonNode.get("a").get("properties").get("email").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>Research Interests</td>
+                            <td>@jsonNode.get("a").get("properties").get("RI").get("val").asText()</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </body>
+}

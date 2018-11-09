@@ -6,4 +6,5 @@ public class RouteToBackEnd {
     public static String getLoginURL() {
         return BackendURL + "loginResult";
     }
+    public static String getUserProfileURL(){return BackendURL + "userProfile";}
 }

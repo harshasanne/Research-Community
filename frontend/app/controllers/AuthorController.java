@@ -142,7 +142,12 @@ public class AuthorController extends Controller {
         List<String> paperList = new ArrayList<String>();
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
+
+
+
+
                 String p = nodes.get(i).findPath("title").asText();
+
                 paperList.add(p);
             }
         }
