@@ -47,3 +47,5 @@ GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeyw
 POST    /loginResult                      controllers.UserLoginController.createUser()
 
 GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
+
+GET     /Collaboration/           controllers.FollowersStatistics.getCollaboration()
