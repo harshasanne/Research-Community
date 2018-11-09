@@ -14,14 +14,25 @@ import java.net.URLEncoder;
 import views.html.paperYear;
 import models.*;
 
+import java.util.concurrent.CompletionStage;
+import play.libs.concurrent.HttpExecutionContext;
+import play.libs.Json;
+import play.libs.ws.*;
+
+import play.data.DynamicForm;
+
 public class AuthorController extends Controller {
     private APICall apiCall;
     private final FormFactory formFactory;
+    private final WSClient ws;
+    private final HttpExecutionContext ec;
 
     @Inject
-    public AuthorController(FormFactory formFactory,APICall apiCall) {
-        this.apiCall = apiCall;
+    public AuthorController(FormFactory formFactory, WSClient ws, HttpExecutionContext ec, APICall apiCall) {
         this.formFactory = formFactory;
+        this.ws = ws;
+        this.ec = ec;
+        this.apiCall = apiCall;
     }
 
     public Result getPapers(String name) throws Exception {
@@ -90,25 +101,72 @@ public class AuthorController extends Controller {
     }
 
     public Result getAuthor(String name) throws Exception {
+        String username = "cxy"; //TODO
         Author author = new Author();
-        author.setName("Jia Zhang");
+        author.setName(name);
 
         JsonNode nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(name, "UTF-8"));
         String jstring = nodes.toString();
-        String p = new String();
         List<String> paperList = new ArrayList<String>();
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
-                p = nodes.get(i).findPath("title").asText();
+                String p = nodes.get(i).findPath("title").asText();
                 paperList.add(p);
             }
         }
 
-        return ok(views.html.profile.render(author, paperList));
+        nodes = apiCall.callAPI(Constants.getAllFollowingsURL + URLEncoder.encode(username, "UTF-8"));
+        Set<String> followings = new HashSet<String>();
+        if(nodes != null) {
+            for (int i = 0; i < nodes.size(); i++) {
+                String authorName = nodes.get(i).findPath("name").asText();
+                followings.add(authorName);
+            }
+        }
+        boolean alreadyFollowed = followings.contains(name);
+
+        return ok(views.html.profile.render(author, username, alreadyFollowed, paperList));
     }
 
-    public Result addFollower() {
-        return null;
+    public CompletionStage<Result> follow() {
+        DynamicForm requestData = formFactory.form().bindFromRequest();
+        System.out.println("test" + requestData.get("username"));
+
+        String username = requestData.get("username");
+        String name = requestData.get("author");
+
+        Map<String, String> info = new HashMap<String, String>();
+        info.put("author", name);
+        info.put("follower", username);
+        String apiString = Constants.followURL;
+
+        return ws.url(apiString)
+            .addHeader("Content-Type", "application/json")
+            .post(Json.toJson(info))
+            .thenApplyAsync((WSResponse r) -> {
+                //return redirect(routes.AuthorController.getAuthor(name));
+                return ok();
+            }, ec.current());
     }
 
+    public CompletionStage<Result> unfollow() {
+        DynamicForm requestData = formFactory.form().bindFromRequest();
+        System.out.println("test" + requestData.get("username"));
+
+        String username = requestData.get("username");
+        String name = requestData.get("author");
+
+        Map<String, String> info = new HashMap<String, String>();
+        info.put("author", name);
+        info.put("follower", username);
+        String apiString = Constants.unfollowURL;
+
+        return ws.url(apiString)
+            .addHeader("Content-Type", "application/json")
+            .post(Json.toJson(info))
+            .thenApplyAsync((WSResponse r) -> {
+                //return redirect(routes.AuthorController.getAuthor(name));
+                return ok();
+            }, ec.current());
+    }
 }

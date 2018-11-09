@@ -106,11 +106,13 @@ public class FollowController extends Controller {
 
     public Result postFollowship() throws Exception {
         DynamicForm requestData = formFactory.form().bindFromRequest();
-        System.out.println("test" + requestData.get("follower"));
 
         String follower = requestData.get("follower");
         String author = requestData.get("author");
-        String query = "MERGE (: Author {authorName: '" + follower + "'})-[:FOLLOWS]->(: Author {authorName: '" + author + "'});";
+        String query = "MERGE (a:Author {authorName:'" + author + "'})\n" +
+                "MERGE (b:Author {authorName:'" + follower + "'})\n" +
+                "ON CREATE SET a.authorName='" + author + "', b.authorauthorName='" + follower + "'\n" +
+                "CREATE UNIQUE (a) <- [:FOLLOWS] - (b)";
         System.out.println(query);
 
         return modifyFollowship(query);
@@ -118,8 +120,7 @@ public class FollowController extends Controller {
 
     public Result postUnfollowship() throws Exception {
         DynamicForm requestData = formFactory.form().bindFromRequest();
-        System.out.println("test" + requestData.get("follower"));
-
+        
         String follower = requestData.get("follower");
         String author = requestData.get("author");
         String query = "MATCH (: Author {authorName: '" + follower + "'})-[f:FOLLOWS]->(: Author {authorName: '" + author + "'}) DELETE f;";
