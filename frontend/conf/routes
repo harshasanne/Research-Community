@@ -43,3 +43,5 @@ GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordContro
 
 GET     /login                  controllers.UserLoginController.login
 POST     /loginResult                  controllers.UserLoginController.loginResult()
+
+GET     /showAuthorCard/:name      controllers.ShowAuthorCardController.getCard(name:String)

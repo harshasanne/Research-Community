@@ -88,6 +88,7 @@ public class AuthorController extends Controller {
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
                 p = nodes.get(i).findPath("title").asText();
+
                 paperList.add(p);
             }
         }
