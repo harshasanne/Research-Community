@@ -57,6 +57,10 @@ POST     /userProfile                  controllers.UserProfileController.setProf
 GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getCard(username:String)
 GET /showAuthorCard/form/         controllers.ShowAuthorCardController.getForm()
 
+# Find Networks of researcher
+GET     /collab           controllers.AuthorController.researcherNetwork
+POST     /collab           controllers.AuthorController.getResearcherNetwork
+
 
 
 ###### ADVANCE REQ STARTS HERE #######

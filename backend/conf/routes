@@ -49,6 +49,8 @@ POST    /loginResult                      controllers.UserLoginController.create
 GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
 
 
+GET     /Collaboration/:name           controllers.FollowersStatistics.getCollaboration(name: String)
+
 ###### ADVANCE REQ STARTS HERE #######
 
 
