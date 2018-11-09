@@ -22,11 +22,13 @@
                         <th>Year</th>
                     </tr>
                     @for(publication<- newsList) {
-                        <th>@publication.getAuthor()</th>
-                        <th>@publication.getTitle()</th>
-                        <th>@publication.getAbstract()</th>
-                        <th>@publication.getJournal()</th>
-                        <th>@publication.getYear()</th>
+                    <tr>
+                        <td>@publication.getAuthor()</td>
+                        <td>@publication.getTitle()</td>
+                        <td>@publication.getAbstract()</td>
+                        <td>@publication.getJournal()</td>
+                        <td>@publication.getYear()</td>
+                    </tr>
                     }
                 </table>
             </div>

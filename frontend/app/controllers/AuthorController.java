@@ -19,6 +19,8 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.libs.Json;
 import play.libs.ws.*;
 
+import play.data.DynamicForm;
+
 public class AuthorController extends Controller {
     private APICall apiCall;
     private final FormFactory formFactory;
@@ -115,8 +117,12 @@ public class AuthorController extends Controller {
     }
 
     public CompletionStage<Result> follow() {
-        String username = "cxy"; //TODO
-        String name = "yoyoxu";
+        DynamicForm requestData = formFactory.form().bindFromRequest();
+        System.out.println("test" + requestData.get("username"));
+
+        String username = requestData.get("username");
+        String name = requestData.get("author");
+
         Map<String, String> info = new HashMap<String, String>();
         info.put("author", name);
         info.put("follower", username);
@@ -132,8 +138,12 @@ public class AuthorController extends Controller {
     }
 
     public CompletionStage<Result> unfollow() {
-        String username = "cxy"; //TODO
-        String name = "yoyoxu";
+        DynamicForm requestData = formFactory.form().bindFromRequest();
+        System.out.println("test" + requestData.get("username"));
+
+        String username = requestData.get("username");
+        String name = requestData.get("author");
+
         Map<String, String> info = new HashMap<String, String>();
         info.put("author", name);
         info.put("follower", username);
