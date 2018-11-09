@@ -8,7 +8,7 @@
         <div class="container">
             <div class="col s12 l10 offset-l1">
                 <div class="card-panel z-depth-0">
-                    <h4 class="form-signin-heading center">Showing metadata and citation of a paper </h4>
+                    <h4 class="form-signin-heading center">Showing metadata and publications of an author </h4>
                     <table id="customers">
                         <tr>
                             <th>Attributes</th>
@@ -16,10 +16,25 @@
 
                         </tr>
                         <tr>
-                            <td>title</td>
+                            <td>authorName</td>
                             <td>@jsonNode.get("a").get("properties").get("authorName").get("val").asText()</td>
                         </tr>
-
+                        <tr>
+                            <td>title</td>
+                            <td>@jsonNode.get("a").get("properties").get("title").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>affliation</td>
+                            <td>@jsonNode.get("a").get("properties").get("affliation").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>@jsonNode.get("a").get("properties").get("email").get("val").asText()</td>
+                        </tr>
+                        <tr>
+                            <td>Research Interests</td>
+                            <td>@jsonNode.get("a").get("properties").get("RI").get("val").asText()</td>
+                        </tr>
 
                     </table>
 

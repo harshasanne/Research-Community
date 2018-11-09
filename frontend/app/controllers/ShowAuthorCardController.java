@@ -6,14 +6,12 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import util.APICall;
 import util.Constants;
+import views.html.authorCard;
 
 import javax.inject.Inject;
 import java.net.URLEncoder;
-import views.*;
-import views.html.authorCard;
 
 public class ShowAuthorCardController extends Controller {
-
     private APICall apiCall;
     private final FormFactory formFactory;
 
@@ -32,7 +30,7 @@ public class ShowAuthorCardController extends Controller {
         // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
 
         JsonNode p = nodes;
-        System.out.println(nodes);
+
         System.out.println(nodes.toString());
         //System.out.println(nodes.get("p").get("labels"));
 
@@ -41,6 +39,6 @@ public class ShowAuthorCardController extends Controller {
 
     public Result getForm() throws Exception {
 
-        return ok(views.html.singleInput.render("showAuthorCard","title","Show meta data of an author"));
+        return ok(views.html.singleInput.render("showAuthorCard","username","Show meta data of an author"));
     }
 }

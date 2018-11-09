@@ -1,0 +1,62 @@
+
+
+
+@(userProfileForm: Form[forms.UserProfileForm],setFail: Boolean)
+
+@import helper._
+@main("Set Profile"){
+    @helper.form(routes.UserProfileController.setProfile()) {
+        <body>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 l10 offset-l1">
+                        <div class="card-panel">
+                            <h4 class="form-signin-heading center">Set a profile for a user</h4>
+                            <form class="form-signin" action="/paper" method="POST">
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" name="title" id="title" value="@userProfileForm("title").value">
+                                        <label for="title"class="active">Title</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" name="email" id="email" value="@userProfileForm("email").value">
+                                        <label for="email"class="active">Email</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" name="affliation" id="affliation" value="@userProfileForm("affliation").value">
+                                        <label for="affliation"class="active">Affliation</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" name="RI" id="RI" value="@userProfileForm("RI").value">
+                                        <label for="RI"class="active">Research Interests</label>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div class="input-field col s12">
+                                        <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create">
+                                            Submit</button>
+                                    </div>
+                                </div>
+                                @if(setFail) {
+                                    <div class="alert alert-danger fade in">
+                                        <b>Set failed</b><br>
+                                        No this author or no authentication. Please try again.
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </body>
+    }
+
+}

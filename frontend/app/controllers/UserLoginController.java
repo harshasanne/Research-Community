@@ -41,17 +41,21 @@ public class UserLoginController extends Controller {
     {
         Form<LoginForm> form = formFactory.form(LoginForm.class).bindFromRequest();
         LoginForm userForm = form.get();
-        System.out.println("role:" + userForm.getUsername());
+        //System.out.println("role:" + userForm.getUsername());
         return User.createUser(userForm)
                 .thenApplyAsync((WSResponse r) -> {
                     System.out.println(r.asJson());
                     if (r.asJson().get("isSuccessful").asBoolean()) {
                         System.out.println(" Login Success ");
-
+                        session().clear();
                         /* Store user information in session */
                         session("username", userForm.getUsername());
 
-                        return created(index.render());
+
+
+
+                       // System.out.println("Session Username : "+ session().get("username"));
+                        return created(index.render(session().get("username")));
                     } else {
                         System.out.println(" Login failed");
                         return badRequest(login.render(true));
