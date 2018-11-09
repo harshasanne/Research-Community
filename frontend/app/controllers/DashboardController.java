@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Publication;
 import javax.inject.Inject;
 import java.net.URLEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,8 +18,15 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.*;
 import play.libs.Json;
 import java.util.concurrent.CompletionStage;
+import static play.mvc.Controller.session;
+import util.Constants;
 
-public class DashboardController {
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+
+public class DashboardController extends Controller {
 
     private APICall apiCall;
     private final FormFactory formFactory;
@@ -33,21 +41,62 @@ public class DashboardController {
         this.apiCall = apiCall;
     }
 
-    public Result getMyProfile() {
-        JsonNode nodes = apiCall.callAPI(Constants.getFolloweePublicationsURL + URLEncoder.encode(name, "UTF-8"));
-        String jstring = nodes.toString();
-        String p = new String(), a = new String();
-        List<String> paperList = new ArrayList<String>();
-        List<String> authorList = new ArrayList<String>();
-        if(nodes != null) {
-            for (int i = 0; i < nodes.size(); i++) {
-                p = nodes.get(i).findPath("title").asText();
-                paperList.add(p);
-                a = nodes.get(i).findPath("author").asText();
-                authorList.add(a);
+    public Result getMyProfile() throws Exception {
+
+        String username = session("username");
+        username = username == null ? "" : username;
+        username = "Jia Zhang";
+        System.out.println(username);
+        System.out.println(Constants.getFollowingNewsURL + URLEncoder.encode(username, "UTF-8"));
+
+        JsonNode nodes = apiCall.callAPI(Constants.getFollowingNewsURL + URLEncoder.encode(username, "UTF-8"));
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectReader reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
+        List<Publication> news = new ArrayList<Publication>();
+        try {
+            for (int i=0; i<nodes.size(); i++) {
+                Map<String, String> map = reader.readValue(nodes.get(i));
+                String author = map.get("author");
+                String title = map.get("title");
+                String abstract_ = map.get("abstract_");
+                String journal = map.get("journal");
+                String year = map.get("year");
+                Publication p = new Publication(author, title, abstract_, journal, year);
+                news.add(p);
             }
         }
+        catch (Exception e) {
+        }
 
-        return ok(views.html.dashboard.render(paperList, authorList));
+        List<Publication> publicationList = new ArrayList<Publication>();
+        nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(username, "UTF-8"));
+        mapper = new ObjectMapper();
+        reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
+//        List<String>
+//        try {
+//            for (int i=0; i<nodes.size(); i++) {
+//                Map<String, String> tmp = reader.readValue(nodes.get(i));
+//                news.add(tmp);
+//                System.out.println(tmp.get("author"));
+//            }
+//        }
+//        catch (Exception e) {
+//        }
+//
+//        String jstring = nodes.toString();
+//        System.out.println(jstring);
+//        List<Publication> publicationList = new ArrayList<Publication>();
+//        if(nodes != null) {
+//            for (int i = 0; i < nodes.size(); i++) {
+//                String author = nodes.get(i).findPath("author").asText();
+//                String title = nodes.get(i).findPath("title").asText();
+//                String abstract_ = nodes.get(i).findPath("abstract_").asText();
+//                String journal = nodes.get(i).findPath("journal").asText();
+//                String year = nodes.get(i).findPath("year").asText();
+//                publicationList.add(new Publication(author, title, abstract_, journal, year));
+//            }
+//        }
+return ok();
+        //return ok(views.html.dashboard.render(username, news, publications));
     }
 }

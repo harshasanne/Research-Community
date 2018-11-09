@@ -5,5 +5,5 @@ public class Constants {
 
     public final static String getAuthorPapersURL = Constants.BACKEND + "/author/";
     public final static String postPaperURL = Constants.BACKEND + "/paper";
-    public final static String getFolloweePublicationsURL = Constants.BACKEND + "/following/news";
+    public final static String getFollowingNewsURL = Constants.BACKEND + "/following/news/";
 }
