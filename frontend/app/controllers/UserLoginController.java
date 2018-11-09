@@ -21,6 +21,8 @@ import views.html.paperYear;
 import models.*;
 import forms.*;
 
+import static play.mvc.Controller.session;
+
 public class UserLoginController extends Controller {
     private APICall apiCall;
     private final FormFactory formFactory;
@@ -37,7 +39,6 @@ public class UserLoginController extends Controller {
 
     public CompletionStage<Result> loginResult () throws  Exception
     {
-
         Form<LoginForm> form = formFactory.form(LoginForm.class).bindFromRequest();
         LoginForm userForm = form.get();
         System.out.println("role:" + userForm.getUsername());
@@ -47,14 +48,14 @@ public class UserLoginController extends Controller {
                     if (r.asJson().get("isSuccessful").asBoolean()) {
                         System.out.println(" Login Success ");
 
+                        /* Store user information in session */
+                        session("username", userForm.getUsername());
+
                         return created(index.render());
                     } else {
                         System.out.println(" Login failed");
                         return badRequest(login.render(true));
                     }
                 }, ec.current());
-
-
-
     }
 }

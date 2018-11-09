@@ -1,4 +1,4 @@
-@(paperList: List[String], authorList: List[String])
+@(username: String, publicationList: List[Publication])
 
 @import helper._
 
@@ -9,22 +9,25 @@
     <body>
         <div class="container">
             <div class="row">
-                <h1>@author.getName() 's Homepage</h1>
+                <h1>@username 's Homepage</h1>
             </div>
             <div class="row">
                 <p>
                     <img align="left" src="https://www.google.com/url?sa=i&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwi14oecsrXeAhX1IDQIHfvNChoQjRx6BAgBEAU&url=https%3A%2F%2Fwww.fluigent.com%2Fabout-us%2Fattachment%2Fdefault-avatar-bw%2F&psig=AOvVaw10pM5OWShp0RjvNkN_C9Z4&ust=1541236888624367" width="160/">
-                    <span style="margin-top: 5px; margin-bottom: 5px;">@author.getName()</span>
-                    <span style="margin-top: 5px; margin-bottom: 5px;">@author.getFollowerCount()</span>
+                    <span style="margin-top: 5px; margin-bottom: 5px;">@username</span>
+                    <span style="margin-top: 5px; margin-bottom: 5px;"></span>
                     <br>
                     <button type="button" class="btn-small waves-effect waves-light blue darken-2" style="margin-top: 5px; margin-bottom: 5px;">Follow</button>
             </div>
             <div class="row">
                 <h2>Publications</h2>
                 <ul>
-                @for(paperTitle <- paperList){
+                @for(publication<- publicationList){
                     <li style="margin-top: 5px; margin-bottom: 5px;">
-                    @paperTitle
+                    @publication.getTitle()
+                    </li>
+                    <li style="margin-top: 5px; margin-bottom: 5px;">
+                    @publication.getAbstract()
                     </li>
                 }
                 </ul>
