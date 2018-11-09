@@ -55,13 +55,13 @@ public class JournalHistogramController extends Controller {
         List<String> year = new ArrayList<>();
         StatementResult result = tx.run( query );
         Gson gson = new Gson();
-
+        
         while ( result.hasNext() )
         {
              Record record = result.next();
+
             String d= gson.toJson(record.asMap());
             year.add(d);
-            System.out.println(d);
 
         }
         return year;

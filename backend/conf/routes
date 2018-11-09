@@ -45,4 +45,4 @@ GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeyw
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
 
-GET     /stats/          controllers.FollowersStatistics.getStats()
+GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
