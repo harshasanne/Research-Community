@@ -20,6 +20,11 @@ import play.libs.Json;
 import play.libs.ws.*;
 
 import play.data.DynamicForm;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+
 
 public class AuthorController extends Controller {
     private APICall apiCall;
@@ -96,10 +101,27 @@ public class AuthorController extends Controller {
         String name = paperForm.get().getName().replace(" ", "%20");
         System.out.println(name+"herheehrhe");
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectReader reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
+        List<Statistics> newsList = new ArrayList<Statistics>();
+        try {
+            for (int i=0; i<nodes.size(); i++) {
+                Map<String, String> map = reader.readValue(nodes.get(i));
+                String followerName = map.get("followerName");
+                String numberOfFollowers = map.get("numberOfFollowers");
+                String numberOfPapers = map.get("numberOfPapers");
+                String numberOfKeywords = map.get("numberOfKeywords");
+                String Keywords = map.get("Keywords");
+                Statistics p = new Statistics(followerName, numberOfFollowers, numberOfPapers, numberOfKeywords, Keywords);
+                newsList.add(p);
+            }
+        }
+        catch (Exception e) {
+        }
         System.out.println(nodes);
         System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
         
-        return ok(views.html.followerDetails.render(nodes));
+        return ok(views.html.followerDetails.render(newsList));
     }
 
     public Result getAuthor(String name) throws Exception {
