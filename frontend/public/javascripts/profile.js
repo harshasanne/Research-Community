@@ -1,7 +1,8 @@
-let username = $('#username').val();
-let author = $('#author').val();
-
 $('#follow-btn').click(function(){
+    console.log($('#author').text());
+    console.log($('#username').text())
+    let username = $('#username').text();
+    let author = $('#author').text();
     $.post("/follow",
         {
             username: username,
@@ -14,6 +15,10 @@ $('#follow-btn').click(function(){
 });
 
 $('#unfollow-btn').click(function(){
+    console.log($('#author').text());
+    console.log($('#username').text())
+    let username = $('#username').text();
+    let author = $('#author').text();
     $.post("/unfollow",
         {
             username: username,

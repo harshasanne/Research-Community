@@ -73,7 +73,10 @@ public class PaperController extends Controller {
         String journal = requestData.get("journal");
         String year = requestData.get("year");
 
-        String query = "MERGE (:Author {authorName: '" + author + "'})-[:WRITES]->(:Paper {title: '" + title + "', abstract: '" + abstract_ + "', journal: '" + journal + "', year: '" + year + "'});";
+        String query = "MERGE (a:Author {authorName:'" + author + "'})\n" +
+                "MERGE (p:Paper {title: '" + title + "'})\n" +
+                "ON CREATE SET p.title='" + title + "', p.abstract='" + abstract_ + "', p.journal='" + journal + "', p.year='" + year+ "'\n" +
+                "CREATE UNIQUE (a) - [:WRITES] -> (p);";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
         String res = null;

@@ -106,7 +106,6 @@ public class FollowController extends Controller {
 
     public Result postFollowship() throws Exception {
         DynamicForm requestData = formFactory.form().bindFromRequest();
-        System.out.println("test" + requestData.get("follower"));
 
         String follower = requestData.get("follower");
         String author = requestData.get("author");
@@ -121,8 +120,7 @@ public class FollowController extends Controller {
 
     public Result postUnfollowship() throws Exception {
         DynamicForm requestData = formFactory.form().bindFromRequest();
-        System.out.println("test" + requestData.get("follower"));
-
+        
         String follower = requestData.get("follower");
         String author = requestData.get("author");
         String query = "MATCH (: Author {authorName: '" + follower + "'})-[f:FOLLOWS]->(: Author {authorName: '" + author + "'}) DELETE f;";
