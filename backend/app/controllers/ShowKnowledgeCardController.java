@@ -41,15 +41,7 @@ public class ShowKnowledgeCardController extends Controller{
                     return matchPaperNodes( tx, query1 );
                 }
             } );
-            //List<PaperMeta> paperObjects = new ArrayList<PaperMeta>();
-           // System.out.println(papers.get(0));
-            //PaperMeta paperObjects = new PaperMeta(papers.get(0));
-            //System.out.println(new Gson().toJson(paperObjects));
-            //System.out.println(papers);
-//            for (String p : papers) {
-//                paperObjects.add(new PaperMeta(p));
-//            }
-            //System.out.println(papers.get(0));
+
 
             return ok(papers.get(0).toString()).as("applications/json");
         }
@@ -62,19 +54,14 @@ public class ShowKnowledgeCardController extends Controller{
         Gson gson = new Gson();
         while ( result.hasNext() )
         {
-            //System.out.println(result.next().get(0).get("journal").asString());
-            //papers.add(result.next().get(0).asString());
+
             Record record = result.next();
             String recordString = gson.toJson(record.asMap());
-            //System.out.println(recordString);
+
             metaDatas.add(recordString);
-            //System.out.println(recordString);
-
-
         }
         return metaDatas;
     }
-
     public static void main(String[] args) {
 
     }

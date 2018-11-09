@@ -45,3 +45,7 @@ GET     /showAuthorCard/:name           controllers.ShowAuthorCardController.get
 GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
+
+POST    /userProfile                     controllers.UserProfileController.setProfile()
+
+GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getCard(username:String)
