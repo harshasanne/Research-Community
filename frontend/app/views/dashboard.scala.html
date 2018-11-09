@@ -8,19 +8,24 @@
     </head>
     <body>
         <div class="container">
+            <div class="card-panel">
+
             <div class="row">
-                <h1>@username 's Homepage</h1>
+                <h3>@username 's Homepage</h3>
             </div>
             <div class="row">
-                <h2>Recent news</h2>
-                <table>
-                    <tr>
-                        <th>Author</th>
-                        <th>Title</th>
-                        <th>Abstract</th>
-                        <th>Journal</th>
-                        <th>Year</th>
-                    </tr>
+                <h4>Recent news</h4>
+                <table class="highlight striped">
+                    <thead>
+                        <tr>
+                            <th>Author</th>
+                            <th>Title</th>
+                            <th>Abstract</th>
+                            <th>Journal</th>
+                            <th>Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     @for(publication<- newsList) {
                     <tr>
                         <td>@publication.getAuthor()</td>
@@ -30,10 +35,11 @@
                         <td>@publication.getYear()</td>
                     </tr>
                     }
+                    </tbody>
                 </table>
             </div>
             <div class="row">
-                <h2>My Publications</h2>
+                <h4>My Publications</h4>
                 <ul>
                 @for(publication<- publicationList){
                     <li style="margin-top: 5px; margin-bottom: 5px;">
@@ -45,6 +51,8 @@
                 }
                 </ul>
             </div>
+        </div>
+    </div>
 
         </div>
         <script type="text/javascript" src='@routes.Assets.versioned("javascripts/d3.min.js")'>
