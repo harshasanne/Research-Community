@@ -19,7 +19,7 @@ public class JournalHistogramController extends Controller {
        String query = "match (a:Author)-[:WRITES]->(p:Paper) where p.journal = '" + name + "' return count(a.authorName),p.volume";
 
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
         try ( Session session = driver.session() )
         {
             List<String> year =  session.readTransaction( new TransactionWork<List<String>>()

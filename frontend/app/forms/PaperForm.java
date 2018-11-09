@@ -1,30 +1,12 @@
-package models;
+package forms;
 
-import java.util.*;
-
-public class Paper {
-
-    private Long index;
+public class PaperForm {
 
     private String author;
     private String title;
     private String abstract_;
     private String journal;
     private String year;
-
-    public Paper() {}
-
-    public Paper(String author, String title, String abs, String journal, String year) {
-        this.author = author;
-        this.title = title;
-        this.abstract_ = abs;
-        this.journal = journal;
-        this.year = year;
-    }
-
-    public Paper(String title) {
-        this.title = title;
-    }
 
     public String getAuthor() {
         return author;
@@ -65,4 +47,5 @@ public class Paper {
     public void setYear(String year) {
         this.year = year;
     }
+
 }

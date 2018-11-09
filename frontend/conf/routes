@@ -28,6 +28,13 @@ GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
 GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
 GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
 
+# Following author
+GET     /paper                      controllers.PaperController.getForm()
+POST    /paper                      controllers.PaperController.postPaper()
+GET     /author/profile/:name       controllers.AuthorController.getAuthor(name: String)
+POST    /author/follow              controllers.AuthorController.addFollower()
+GET     /dashboard                  controllers.DashboardController.getMyProfile()
+
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
 GET /showKnowledgeCard/form/         controllers.ShowKnowledgeCardController.getForm()
 
@@ -36,7 +43,3 @@ GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordContro
 
 GET     /login                  controllers.UserLoginController.login
 POST     /loginResult                  controllers.UserLoginController.loginResult()
-
-
-
-

@@ -19,7 +19,7 @@ public class FindPapersbyAuthornameController extends Controller {
        String query = "match (a:Author)-[:WRITES]->(p:Paper) where a.authorName = '" + name + "' and p.year >  '" + from + "' and p.year<  '" + to + "' return count(p.year),p.year order by p.year";
 
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
         try ( Session session = driver.session() )
         {
             List<String> year =  session.readTransaction( new TransactionWork<List<String>>()

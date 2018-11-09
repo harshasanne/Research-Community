@@ -58,7 +58,7 @@ public class AuthorController extends Controller {
       public Result getPapersYear() throws Exception {
         Form<Author> authName = formFactory.form(Author.class).bindFromRequest();
         Paper paperForm = formFactory.form(Paper.class).bindFromRequest().get();
-        String authorName = authName.get().name.replace(" ", "%20");
+        String authorName = authName.get().getName().replace(" ", "%20");
        //System.out.println(paperForm.startYear+"........");        // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/authorName" + "/" + authorName+"?from="+paperForm.startYear+"&to="+paperForm.endYear);
     
@@ -75,6 +75,28 @@ public class AuthorController extends Controller {
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/journalName" + "/" + name);
     
         return ok(views.html.successDownload.render());
+    }
+
+    public Result getAuthor(String name) throws Exception {
+        Author author = new Author();
+        author.setName("Jia Zhang");
+
+        JsonNode nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(name, "UTF-8"));
+        String jstring = nodes.toString();
+        String p = new String();
+        List<String> paperList = new ArrayList<String>();
+        if(nodes != null) {
+            for (int i = 0; i < nodes.size(); i++) {
+                p = nodes.get(i).findPath("title").asText();
+                paperList.add(p);
+            }
+        }
+
+        return ok(views.html.profile.render(author, paperList));
+    }
+
+    public Result addFollower() {
+        return null;
     }
 
 }
