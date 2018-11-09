@@ -59,8 +59,9 @@ public class FollowersStatistics extends Controller {
             // System.out.println(d);
         return stat;
     }
-    public Result getCollaboration() throws Exception {
-        String query = "match (author:Author{authorName:'Jia Zhang'})-[coauth:CO_AUTHOR*1..2]-(coauthor)Return collect(distinct author), collect(coauth), collect(distinct coauthor)";
+    public Result getCollaboration( String name) throws Exception {
+        name = URLDecoder.decode(name, "UTF-8");
+        String query = "match (author:Author{authorName:'"+name+"'})-[coauth:CO_AUTHOR*1..2]-(coauthor)Return collect(distinct author), collect(coauth) as relations, collect(distinct coauthor) as nodes";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
 
