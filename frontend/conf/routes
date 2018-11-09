@@ -43,3 +43,7 @@ GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordContro
 
 GET     /login                  controllers.UserLoginController.login
 POST     /loginResult                  controllers.UserLoginController.loginResult()
+
+# Find Stats of followers
+GET     /stats           controllers.AuthorController.statsFollowers
+POST     /stats           controllers.AuthorController.getstatsFollowers

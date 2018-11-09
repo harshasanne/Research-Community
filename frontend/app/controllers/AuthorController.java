@@ -76,6 +76,17 @@ public class AuthorController extends Controller {
     
         return ok(views.html.successDownload.render());
     }
+     public Result statsFollowers() {
+        Form<Author> authorForm = formFactory.form(Author.class);
+        return ok(views.html.statsFollowers.render(authorForm));
+    }
+      public Result getstatsFollowers() throws Exception {
+        Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
+        String name = paperForm.get().getName().replace(" ", "%20");
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
+    
+        return ok(views.html.successDownload.render());
+    }
 
     public Result getAuthor(String name) throws Exception {
         Author author = new Author();
