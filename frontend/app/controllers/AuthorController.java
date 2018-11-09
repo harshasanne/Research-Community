@@ -96,12 +96,12 @@ public class AuthorController extends Controller {
         List<String> paperList = new ArrayList<String>();
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
-<<<<<<< HEAD
 
 
-=======
+
+
                 String p = nodes.get(i).findPath("title").asText();
->>>>>>> e435441fb43b0f30219c74463339a5b33eb9f4d8
+
                 paperList.add(p);
             }
         }
