@@ -1,6 +1,8 @@
 package controllers;
 
-import com.google.gson.Gson;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.*;
+
 import com.typesafe.config.Config;
 import org.neo4j.driver.v1.*;
 import play.mvc.Controller;
@@ -24,6 +26,8 @@ public class ShowAuthorCardController extends Controller {
         name = URLDecoder.decode(name, "UTF-8");
         String query1 = "match (a:Author) where a.authorName = '" + name + "' return a";
         System.out.println(query1);
+        String query2 = "MATCH(a:Author{authorName:'" + name +"'})-[:WRITES]->(p:Paper) RETURN p.title";
+        System.out.println(query2);
 //3D Medical Volume Reconstruction Using Web Services.
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
@@ -35,10 +39,35 @@ public class ShowAuthorCardController extends Controller {
                 {
                     return matchAuthorNodes( tx, query1 );
                 }
-            } );
 
-            System.out.println(authors.get(0).toString());
-            return ok(authors.get(0).toString()).as("applications/json");
+            } );
+            List<String> papers =  session.readTransaction(new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    return matchPaperNodes( tx, query2 );
+                }
+
+            } );
+            System.out.println(papers);
+            JsonArray jArray = new JsonArray();
+            for(String p: papers)
+            {
+                JsonPrimitive element = new JsonPrimitive(p);
+                jArray.add(element);
+            }
+
+            //System.out.println(jArray);
+            JsonParser parser = new JsonParser();
+            JsonObject obj = parser.parse(authors.get(0)).getAsJsonObject();
+
+
+
+            obj.add("publications",jArray);
+            System.out.println(obj.toString());
+            //System.out.println("gson :" + gson);
+            return ok(new Gson().toJson(obj)).as("applications/json");
         }
     }
 
@@ -54,9 +83,20 @@ public class ShowAuthorCardController extends Controller {
             String recordString = gson.toJson(record.asMap());
 
             metaDatas.add(recordString);
+        }
+        return metaDatas;
+    }
 
+    private static List<String> matchPaperNodes(Transaction tx, String query)
+    {
+        List<String> metaDatas = new ArrayList<>();
+        StatementResult result = tx.run( query );
 
+        while ( result.hasNext() )
+        {
 
+            Record record = result.next();
+            metaDatas.add(record.get(0).asString());
         }
         return metaDatas;
     }

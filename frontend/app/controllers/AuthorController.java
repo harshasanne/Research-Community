@@ -20,6 +20,11 @@ import play.libs.Json;
 import play.libs.ws.*;
 
 import play.data.DynamicForm;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+
 
 public class AuthorController extends Controller {
     private APICall apiCall;
@@ -87,12 +92,51 @@ public class AuthorController extends Controller {
     
         return ok(views.html.successDownload.render());
     }
+     public Result statsFollowers() {
+        Form<Author> authorForm = formFactory.form(Author.class);
+        return ok(views.html.statsFollowers.render(authorForm));
+    }
+      public Result getstatsFollowers() throws Exception {
+        Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
+        String name = paperForm.get().getName().replace(" ", "%20");
+        System.out.println(name+"herheehrhe");
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectReader reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
+        List<Statistics> newsList = new ArrayList<Statistics>();
+        try {
+            for (int i=0; i<nodes.size(); i++) {
+                Map<String, String> map = reader.readValue(nodes.get(i));
+                String followerName = map.get("followerName");
+                String numberOfFollowers = map.get("numberOfFollowers");
+                String numberOfPapers = map.get("numberOfPapers");
+                String numberOfKeywords = map.get("numberOfKeywords");
+                String Keywords = map.get("Keywords");
+                Statistics p = new Statistics(followerName, numberOfFollowers, numberOfPapers, numberOfKeywords, Keywords);
+                newsList.add(p);
+            }
+        }
+        catch (Exception e) {
+        }
+        System.out.println(nodes);
+        System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
+        
+        return ok(views.html.followerDetails.render(newsList));
+    }
+    public Result getAuthorForm() {
+        Form<Author> authorForm = formFactory.form(Author.class);
+        return ok(views.html.getAuthorForm.render(authorForm));
+    }
 
-    public Result getAuthor(String name) throws Exception {
+
+    public Result getAuthor() throws Exception {
         String username = "cxy"; //TODO
+        
+        Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
+        String name = paperForm.get().getName();
         Author author = new Author();
         author.setName(name);
-
+        System.out.println(name);
         JsonNode nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(name, "UTF-8"));
         String jstring = nodes.toString();
         List<String> paperList = new ArrayList<String>();

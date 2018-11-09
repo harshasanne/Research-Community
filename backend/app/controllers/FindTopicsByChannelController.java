@@ -11,10 +11,10 @@ import java.net.URLDecoder;
 import com.google.gson.Gson;
 
 public class FindTopicsByChannelController extends Controller {
-    public Result getTopics(String channel) throws Exception{
+    public Result getTopics(String channel,String year) throws Exception{
         channel = URLDecoder.decode(channel, "UTF-8");
         String query = "MATCH (p:Paper)-[:HAS_KEYWORD]-(k:Keyword)\n" +
-                "WHERE p.journal = '"+channel+"'\n" +
+                "WHERE p.journal = '"+channel+"' and p.year='"+year+"'\n" +
                 "RETURN k.keyword, count(k.keyword) as c\n" +
                 "ORDER BY c desc";
         Driver driver = GraphDatabase.driver(

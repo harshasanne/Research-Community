@@ -1,0 +1,43 @@
+
+@( newsList: List[Statistics])
+    @import helper._
+
+@main("PublicationPerYear"){       
+<body>
+
+<div class="container">
+  <div class="row">
+     <div class="col s12 l10 offset-l1">
+        <div class="card-panel">
+            <h4 class="form-signin-heading center">Followers Statistics</h4>
+                   <div class="row">
+                    <table>
+                    <tr>
+                        <th>followerName</th>
+                        <th>numberOfFollowers</th>
+                        <th>numberOfPapers</th>
+                        <th>numberOfKeywords</th>
+                    </tr>
+                    @for(i<- newsList) {
+
+                    <tr>
+                        <td>@i.getfollowerName()</td>
+                        <td>@i.getnumberOfFollowers()</td>
+                        <td>@i.getnumberOfPapers()</td>
+                        <td>@i.getnumberOfKeywords()</td>
+                    </tr>
+                  }
+                   </table>
+
+                    
+                  </div>
+          </div>
+      </div>
+  </div>
+</div>
+ </body>
+
+     
+}
+
+

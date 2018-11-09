@@ -25,13 +25,14 @@ GET /expertByKeyword/:keyword controllers.FindExpertByKeyWordController.getExper
 GET /expertByKeyword/form/ controllers.FindExpertByKeyWordController.getForm()
 
 #Find topics by channel
-GET /topicsByChannel/:channel controllers.FindTopicsByChannelController.getTopics(channel: String)
+GET     /topicsByChannel/:channel/:year   controllers.FindTopicsByChannelController.getTopics(channel: String,year: String)
 GET /topicsByChannel/form/ controllers.FindTopicsByChannelController.getForm()
 
 # Following author
 GET     /paper                      controllers.PaperController.getForm()
 POST    /paper                      controllers.PaperController.postPaper()
-GET     /author/profile/:name       controllers.AuthorController.getAuthor(name: String)
+GET     /author                      controllers.AuthorController.getAuthorForm()
+POST     /author/profile/       controllers.AuthorController.getAuthor()
 POST    /follow                     controllers.AuthorController.follow()
 POST    /unfollow                   controllers.AuthorController.unfollow()
 GET     /dashboard                  controllers.DashboardController.getMyProfile()
@@ -45,6 +46,9 @@ GET /researcherByKeyword/form/         controllers.FindResearcherByKeywordContro
 GET     /login                  controllers.UserLoginController.login
 POST     /loginResult                  controllers.UserLoginController.loginResult()
 
+# Find Stats of followers
+GET     /stats           controllers.AuthorController.statsFollowers
+POST     /stats           controllers.AuthorController.getstatsFollowers
 
 GET     /userProfile/form/         controllers.UserProfileController.getForm()
 POST     /userProfile                  controllers.UserProfileController.setProfile()

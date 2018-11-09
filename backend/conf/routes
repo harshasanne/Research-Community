@@ -13,7 +13,7 @@ GET     /collaborator/:name     controllers.AuthorController.getCollaborators(na
 GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordController.getExpert(keyword: String)
 
 #Find topics by channel
-GET     /topicsByChannel/:channel           controllers.FindTopicsByChannelController.getTopics(channel: String)
+GET     /topicsByChannel/:channel/:year           controllers.FindTopicsByChannelController.getTopics(channel: String,year: String)
 
 
 # Find Papers by Author name
@@ -46,6 +46,10 @@ GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeyw
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
 
+
 POST    /userProfile                     controllers.UserProfileController.setProfile()
 
 GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getCard(username:String)
+
+GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
+

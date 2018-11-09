@@ -75,6 +75,7 @@ public class UserProfileController  extends Controller {
 
         }
         JsonNode userProfileObj = Json.toJson(userProfile);
+
         int resInt = Integer.valueOf(res);
         if(resInt == userProfileUtils.SET_SUCCESS)
         {
