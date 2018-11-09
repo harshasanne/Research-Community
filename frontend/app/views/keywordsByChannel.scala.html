@@ -1,11 +1,11 @@
-@(keywords: List[Keyword],channel: String)
+@(keywords: List[Keyword],channel: String,year: String)
 
 @main("Topics") {
     <body>
     <div class="container">
         <div class="col s12 l10 offset-l1">
             <div class="card-panel ">
-                <h4 class="form-signin-heading center">Showing all topics for channel @channel</h4>
+                <h4 class="form-signin-heading center">Showing all topics for channel @channel for @year</h4>
                     <table>
                         <tr><th>Keyword</th><th>Count</th></tr>
 
