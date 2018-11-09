@@ -123,12 +123,20 @@ public class AuthorController extends Controller {
         
         return ok(views.html.followerDetails.render(newsList));
     }
+    public Result getAuthorForm() {
+        Form<Author> authorForm = formFactory.form(Author.class);
+        return ok(views.html.getAuthorForm.render(authorForm));
+    }
 
-    public Result getAuthor(String name) throws Exception {
+
+    public Result getAuthor() throws Exception {
         String username = "cxy"; //TODO
+        
+        Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
+        String name = paperForm.get().getName();
         Author author = new Author();
         author.setName(name);
-
+        System.out.println(name);
         JsonNode nodes = apiCall.callAPI(Constants.getAuthorPapersURL + URLEncoder.encode(name, "UTF-8"));
         String jstring = nodes.toString();
         List<String> paperList = new ArrayList<String>();

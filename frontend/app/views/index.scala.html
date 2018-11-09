@@ -3,8 +3,101 @@
 @main("Welcome to Play") {
 <body>
   <h4 class="center">Welcome to Team3 Data Application!</h4>
-  <br><br><br><br>
-    <div class="row center">
+  
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Researchers</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Find Researchers By kewords and interests</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.FindResearcherByKeywordController.getForm' >Find Researchers By kewords</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    
+      <div class="col s12 m6">
+        <h4 class="header">Meta Data</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Show meta data of a paper</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.ShowKnowledgeCardController.getForm' >Show meta data of a paper</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Find Experts</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Find Expert By Keyword</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.FindExpertByKeyWordController.getForm'>Find Expert By Keyword</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    
+      <div class="col s12 m6">
+        <h4 class="header">Channel Topics</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>All Topics of a Channel</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.FindTopicsByChannelController.getForm' >All Topics of a Channel</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Journal Histogram</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Journal Histogram</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.AuthorController.journalAuthors' >Journal Histogram</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    
+      <div class="col s12 m6">
+        <h4 class="header">Author Histogram</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Author Histogram</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.AuthorController.publicationPerYear' >Author Histogram</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row center">
     <a href='@routes.AuthorController.publicationPerYear' class="waves-effect waves-light btn">Author Histogram</a>
       <br>
       <br>
@@ -25,5 +118,5 @@
       <br>
       <a href='@routes.PaperController.getForm' class="'waves-effect waves-light btn">Post a publication</a>
   </div>
-</body>
+ --></body>
  }
