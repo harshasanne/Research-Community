@@ -31,7 +31,7 @@ public class FollowController extends Controller {
 
     public Result getNews(String name) throws Exception {
         name = URLDecoder.decode(name, "UTF-8");
-        String query = "MATCH (user: Author {authorName: '"+ name + "'})-[:FOLLOWS]->(a: Author), (a: Author)-[:WRITES]->(p: Paper) ORDER BY p.year DESC RETURN a.authorName, p.title, p.abstract, p.journal, p.year LIMIT 10";
+        String query = "MATCH (user: Author {authorName: '"+ name + "'})-[:FOLLOWS]->(a: Author), (a: Author)-[:WRITES]->(p: Paper) RETURN a.authorName, p.title, p.abstract, p.journal, p.year ORDER BY p.year DESC LIMIT 10";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
 
