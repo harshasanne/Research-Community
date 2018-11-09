@@ -26,7 +26,7 @@ public class FollowersStatistics extends Controller {
 
     public Result getStats(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
-        String query = "match (a:Author)-[:FOLLOW]->(b:Author{authorName:'"+name+"'}) match(a)-[WRITES]->(p:Paper) match(p)-[HAS_KEYWORD]->(k:Keyword)return (a.authorName) as followerName,count(distinct a) as numberOfFollowers ,count(distinct p) as numberOfPapers,count(distinct k.keyword) as numberOfKeywords, collect(distinct(k.keyword)) as Keywords";
+        String query = "match (a:Author)-[:FOLLOWS]->(b:Author{authorName:'"+name+"'}) match(a)-[WRITES]->(p:Paper) match(p)-[HAS_KEYWORD]->(k:Keyword)return (a.authorName) as followerName,count(distinct a) as numberOfFollowers ,count(distinct p) as numberOfPapers,count(distinct k.keyword) as numberOfKeywords, collect(distinct(k.keyword)) as Keywords";
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
