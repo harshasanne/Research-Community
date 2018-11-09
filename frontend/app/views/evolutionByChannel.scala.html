@@ -1,0 +1,32 @@
+@(evolutions: List[Evolution],channel: String,startYear: String,endYear: String)
+
+@main("Topics") {
+    <body>
+    <div class="container">
+        <div class="col s12 l10 offset-l1">
+            <div class="card-panel ">
+                <h4 class="form-signin-heading center">Showing the trending for channel @channel from @startYear to @endYear</h4>
+
+
+                @for(evo <- evolutions){
+                    <div class= "card-panel ">
+                    <h5>@evo.getYear()</h5>
+                    <table>
+                        <tr><th>Keyword</th><th>Count</th></tr>
+                        @for(keyword <- evo.getKeywords()){
+                            <tr>
+
+                                <td>@keyword.getName()</td>
+                                <td>@keyword.getCount()</td>
+                            </tr>
+                        }
+                    </table>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+    </body>
+}

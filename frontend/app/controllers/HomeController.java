@@ -15,7 +15,17 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(views.html.index.render(""));
+        String viewerId = null;
+        try {
+            viewerId = session("username");
+        } catch (Exception e) {
+            System.out.println("session error");
+            e.printStackTrace();
+        }
+        if (viewerId == null || viewerId.isEmpty()) {
+            return redirect("/login");
+        }
+        return ok(views.html.index.render(viewerId));
     }
 
 }

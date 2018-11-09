@@ -95,14 +95,91 @@
             </div>
           </div>
       </div>
+
+      <div class="col s12 m6">
+        <h4 class="header">Topic Trending</h4>
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>List the trending topics of a Channel</p>
+            </div>
+            <div class="card-action">
+              <a href='@routes.EvolutionByChannelController.getForm' >Topic Trending</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-   <div class="row center">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Set your Profile</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Set your Profile</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.UserProfileController.getForm()' >Set your Profile</a>              </div>
+            </div>
+          </div>
+      </div>
+    
+      <div class="col s12 m6">
+        <h4 class="header">Get a Profile</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Get a Profile</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.ShowAuthorCardController.getForm' >Get a Profile</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Collaboration Network</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Collaboration Network</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.AuthorController.getResearcherNetwork()' >Collaboration Network</a>              </div>
+            </div>
+          </div>
+      </div>
+    
+      <!-- <div class="col s12 m6">
+        <h4 class="header">Get a Profile</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Get a Profile</p>
+              </div>
+              <div class="card-action">
+                <a href='@routes.ShowAuthorCardController.getForm' >Get a Profile</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div> -->
+  </div>
+
+
+   <!-- <div class="row center">
   <h4 class="center">@username</h4>
   <a href='@routes.UserProfileController.getForm()' class="waves-effect waves-light btn">Set your Profile</a>
   <a href='@routes.ShowAuthorCardController.getForm' class="'waves-effect waves-light btn">Get a Profile</a>
 
-</div>
+</div> -->
 
   <!-- <div class="row center">
   <h4 class="center">@username</h4>

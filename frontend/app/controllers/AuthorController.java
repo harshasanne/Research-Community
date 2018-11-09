@@ -92,6 +92,17 @@ public class AuthorController extends Controller {
     
         return ok(views.html.successDownload.render());
     }
+    public Result researcherNetwork() {
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.researcherForm.render(paperForm));
+    }
+      public Result getResearcherNetwork() throws Exception {
+        Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
+        String name = paperForm.get().journalName.replace(" ", "%20");
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/Collaboration" + "/" + name);
+    
+        return ok(views.html.successDownload.render());
+    }
      public Result statsFollowers() {
         Form<Author> authorForm = formFactory.form(Author.class);
         return ok(views.html.statsFollowers.render(authorForm));
