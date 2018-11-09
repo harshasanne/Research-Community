@@ -129,9 +129,10 @@ public class AuthorController extends Controller {
         }
         catch (Exception e) {
         }
-        System.out.println(nodes);
+        System.out.println(nodes+"aaaaaaaaaaaaa");
+        if(node !=null){
         System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
-        
+        }
         return ok(views.html.followerDetails.render(newsList));
     }
     public Result getAuthorForm() {
