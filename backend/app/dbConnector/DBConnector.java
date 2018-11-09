@@ -12,7 +12,7 @@ public class DBConnector {
 
     private final String URL = "bolt://localhost:7687";
     private final String USERNAME = "neo4j";
-    private final String PASSWORD = "123456";
+    private final String PASSWORD = "12345";
 
     private static DBConnector instance = null;
     private static Driver driver = null;

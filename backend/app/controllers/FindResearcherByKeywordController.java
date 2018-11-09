@@ -50,6 +50,7 @@ public class FindResearcherByKeywordController extends Controller{
             for (String a : authors) {
                 authorObjects.add(new Author(a));
             }
+            System.out.println(authorObjects.get(0));
             return ok(new Gson().toJson(authorObjects));
         }
     }
