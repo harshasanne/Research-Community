@@ -36,6 +36,21 @@
                             <td>@jsonNode.get("a").get("properties").get("RI").get("val").asText()</td>
                         </tr>
 
+
+                            @for(index <- 0 until jsonNode.get("publications").size){
+                                <tr>
+                                    @if(index == 0){
+                                        <td>Publications</td>
+                                        }
+
+                                    @if(index != 0){
+                                    <td></td>}
+
+                                <td>@jsonNode.get("publications").get(index).asText()</td>>
+                                </tr>
+                            }
+
+
                     </table>
 
                 </div>

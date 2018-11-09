@@ -62,3 +62,11 @@ GET     /collab           controllers.AuthorController.researcherNetwork
 POST     /collab           controllers.AuthorController.getResearcherNetwork
 
 
+
+###### ADVANCE REQ STARTS HERE #######
+
+
+# Adv 1
+
+GET /evolution/:channel/:startYear/:endYear controllers.EvolutionByChannelController.getEvloutions(channel: String,startYear: String, endYear: String)
+GET /evolution/form/         controllers.EvolutionByChannelController.getForm()

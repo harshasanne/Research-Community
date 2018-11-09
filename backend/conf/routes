@@ -46,6 +46,24 @@ GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeyw
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
 
+
+
+POST    /userProfile                     controllers.UserProfileController.setProfile()
+
+GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getCard(username:String)
+
 GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
 
+
+GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
+
+
 GET     /Collaboration/:name           controllers.FollowersStatistics.getCollaboration(name: String)
+
+###### ADVANCE REQ STARTS HERE #######
+
+
+# Adv 1
+
+GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
+
