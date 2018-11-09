@@ -35,3 +35,5 @@ GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardControl
 GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
+
+GET     /stats/          controllers.FollowersStatistics.getStats()
