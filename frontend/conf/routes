@@ -58,3 +58,11 @@ GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getC
 GET /showAuthorCard/form/         controllers.ShowAuthorCardController.getForm()
 
 
+
+###### ADVANCE REQ STARTS HERE #######
+
+
+# Adv 1
+
+GET /evolution/:channel/:startYear/:endYear controllers.EvolutionByChannelController.getEvloutions(channel: String,startYear: String, endYear: String)
+GET /evolution/form/         controllers.EvolutionByChannelController.getForm()

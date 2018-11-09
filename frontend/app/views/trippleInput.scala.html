@@ -1,0 +1,39 @@
+@(endpoint: String,parameter1: String,parameter2: String,parameter3: String,title:String)
+
+@main(title) {
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 l10 offset-l1">
+            <div class="card-panel">
+                <h4 class="form-signin-heading center">Please give @parameter1 and @parameter2</h4>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="p1" id="p1" >
+                            <label for="p1" class="active">@parameter1</label>
+
+                        </div>
+                        <div class="input-field col s12">
+                            <input type="text" name="p2" id="p2" >
+                            <label for="p2" class="active">@parameter2</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input type="text" name="p3" id="p3" >
+                            <label for="p3" class="active">@parameter3</label>
+                        </div>
+                    </div>
+                    <div class="actions row center">
+                        <div class="input-field col s12">
+                            <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create" onclick="window.location.href='/@endpoint/'+document.getElementById('p1').value+'/'+document.getElementById('p2').value+'/'+document.getElementById('p3').value">
+                                Submit</button>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+
+}
