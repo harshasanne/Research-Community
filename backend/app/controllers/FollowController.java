@@ -110,7 +110,10 @@ public class FollowController extends Controller {
 
         String follower = requestData.get("follower");
         String author = requestData.get("author");
-        String query = "MERGE (: Author {authorName: '" + follower + "'})-[:FOLLOWS]->(: Author {authorName: '" + author + "'});";
+        String query = "MERGE (a:Author {authorName:'" + author + "'})\n" +
+                "MERGE (b:Author {authorName:'" + follower + "'})\n" +
+                "ON CREATE SET a.authorName='" + author + "', b.authorauthorName='" + follower + "'\n" +
+                "CREATE UNIQUE (a) <- [:FOLLOWS] - (b)";
         System.out.println(query);
 
         return modifyFollowship(query);
