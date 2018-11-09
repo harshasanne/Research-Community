@@ -97,7 +97,9 @@ public class AuthorController extends Controller {
         System.out.println(name+"herheehrhe");
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
         System.out.println(nodes);
-        return ok(views.html.successDownload.render());
+        System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
+        
+        return ok(views.html.followerDetails.render(nodes));
     }
 
     public Result getAuthor(String name) throws Exception {

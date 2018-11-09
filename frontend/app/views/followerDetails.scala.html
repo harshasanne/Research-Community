@@ -1,28 +1,27 @@
 
-
-@( authorForm: Form[Author])
+@import com.fasterxml.jackson.databind.JsonNode
+@(jsonNode: JsonNode)
     @import helper._
 
 @main("PublicationPerYear"){       
-    @helper.form(routes.AuthorController.getstatsFollowers()) {
 <body>
 
 <div class="container">
   <div class="row">
      <div class="col s12 l10 offset-l1">
         <div class="card-panel">
-            <h4 class="form-signin-heading center">authorName</h4>
+            <h4 class="form-signin-heading center">@jsonNode.get(0).get("followerName").asText()</h4>
               <form class="form-signin" action="/stats/" method="GET">
                    <div class="row">
                       <div class="input-field col s12">
-                          <input type="text" name="name" id="name" value="@authorForm("name").value">
-                           <label for="name" class="active">authorName</label>
+                          <input type="text" name="name" id="name" >
+                           <label for="name" class="active">@jsonNode.get(0).get("numberOfFollowers").asText()</label>
                       </div>
                     </div>
                     <div class="row center">
                          <div class="input-field col s12">
                            <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create">
-                                            Submit</button>
+                                            @jsonNode.get(0).get("numberOfKeywords").asText()</button>
                          </div>
                       </div>
                   </div>
@@ -32,7 +31,7 @@
   </div>
 </div>
  </body>
-}
+
      
 }
 

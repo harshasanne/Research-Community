@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Author;
+import models.Statistics;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
 
@@ -18,10 +19,10 @@ public class FollowersStatistics extends Controller {
           "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
         try ( Session session = driver.session() )
         {
-            List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
+            List<Statistics> authors =  session.readTransaction( new TransactionWork<List<Statistics>>()
             {
                 @Override
-                public List<String> execute( Transaction tx )
+                public List<Statistics> execute( Transaction tx )
                 {
                     return findExpert( tx, query );
                 }
@@ -30,20 +31,21 @@ public class FollowersStatistics extends Controller {
         }
     }
 
-    private static List<String> findExpert(Transaction tx, String query)
+    private static List<Statistics> findExpert(Transaction tx, String query)
     {
-         List<String> year = new ArrayList<>();
+         List<Statistics> stat = new ArrayList<>();
+         List<String> s = new ArrayList<>();
         StatementResult result = tx.run( query );
         Gson gson = new Gson();
-
         while ( result.hasNext() )
         {
-             Record record = result.next();
-            String d= gson.toJson(record.asMap());
-            year.add(d);
-            System.out.println(d);
-
+            Record t = result.next();
+            stat.add(new Statistics(t.get(0).asString(), t.get(1).toString(), t.get(2).toString(), t.get(3).toString(), t.get(4).toString()));
         }
-        return year;
+            //  Record record = result.next();
+            // String d= gson.toJson(record.asMap());
+            // year.add(d);
+            // System.out.println(d);
+        return stat;
     }
 }
