@@ -33,7 +33,7 @@ public class FindResearcherByKeywordController extends Controller{
                 "WHERE p.abstract =~ '.*"+keywords+".*'\n" +
                 "RETURN a.authorName, count(a.authorName) as c\n" +
                 "ORDER BY c desc\n" +
-                "limit 10";;
+                "limit 10";
 //3D Medical Volume Reconstruction Using Web Services.
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
