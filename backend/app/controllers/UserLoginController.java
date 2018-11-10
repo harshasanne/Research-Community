@@ -45,12 +45,12 @@ private com.typesafe.config.Config config;
 
         String username = user.getUsername();
         String pwd = user.getPassword();
-        String ri = user.getRI();
-        String query1 = "MATCH(a:User{userId:'" + username +"'}) RETURN a.userId";
-        String query2 = "create (a:User{userId:'" + username + "', password:'"+ pwd + "', ri:'"+ ri+"'}) RETURN a.userId";
 
+        String query1 = "MATCH(a:Author{authorName:'" + username +"'}) WHERE EXISTS(a.password) RETURN a.password";
+        String query3 = "create (a:Author{authorName:'" + username + "', password:'"+ pwd + "'}) RETURN a.authorName";
+        String query2 = "MATCH(a:Author{authorName:'" + username +"'}) SET a.password='" + pwd + "' RETURN a.authorName";
         System.out.println(query1);
-        System.out.print(query2);
+        System.out.println(query2);
         Driver driver = DBDriver.getDriver(this.config);
         //int res = 0;
         String res = null;
@@ -68,8 +68,17 @@ private com.typesafe.config.Config config;
                     if(!result1.hasNext()) {
 
                         StatementResult result2 = tx.run(query2);
-                        System.out.println("sign up succuss");
-                        return "2";
+                        if(!result2.hasNext()) {
+                            StatementResult result3 = tx.run(query3);
+                            System.out.println("sign up succuss");
+                            return "2";
+                        }
+                        else
+                        {
+                            System.out.println("registered the password");
+                            return "3";
+
+                        }
                     }
                     else {
                         String getPassword = "";
@@ -77,10 +86,15 @@ private com.typesafe.config.Config config;
                         while(result1.hasNext())
                         {
                             Record record = result1.next();
+                           // Record record = result.next();
+
 
                             getPassword = record.get(0).asString();
+
                             break;
                         }
+                        System.out.println("pwd: " + getPassword);
+
                         if(getPassword.equals(pwd))
                         {
                             System.out.print("login success");
@@ -110,8 +124,14 @@ private com.typesafe.config.Config config;
 
             return created(loginUtils.createResponse(userObj, false));
         }
+        if(resInt == loginUtils.SIGNUP_SUCCESS)
+        {
+            return created(loginUtils.createResponse(userObj, true));
+        }
         else
         {
+
+
             return created(loginUtils.createResponse(userObj, true));
         }
 
