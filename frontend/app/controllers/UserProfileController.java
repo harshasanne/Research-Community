@@ -70,7 +70,7 @@ public class UserProfileController extends Controller {
                     if (r.asJson().get("isSuccessful").asBoolean()) {
                         System.out.println(" Set Profile Success ");
 
-                        return created(index.render(session().get("username")));
+                        return created(index.render(session().get("username"), ""));
                     } else {
                         System.out.println(" Set Profile failed");
                         return badRequest(setProfile.render(form,true));

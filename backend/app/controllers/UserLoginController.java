@@ -15,6 +15,7 @@ import java.lang.*;
 import utils.DBDriver;
 import utils.loginUtils;
 
+import com.google.gson.Gson;
 import models.*;
 
 
@@ -43,11 +44,16 @@ private com.typesafe.config.Config config;
         String username = user.getUsername();
         String pwd = user.getPassword();
 
-        String query1 = "MATCH(a:Author{authorName:'" + username +"'}) WHERE EXISTS(a.password) RETURN a.password";
-        String query2 = "MATCH(a:Author{authorName:'" + username +"'}) SET a.password='" + pwd + "' RETURN a.authorName";
-        String query3 = "create (a:Author{authorName:'" + username + "', password:'"+ pwd + "'}) RETURN a.authorName";
+        Long currentTime = System.currentTimeMillis();
+        String query1 = "MATCH(a:Author{authorName:'" + username +"'}) WHERE EXISTS(a.password) RETURN a.password, a.lastVisited";
+        String query2 = "MATCH(a:Author{authorName:'" + username +"'}) SET a.password='" + pwd + "', a.lastVisited="
+          + currentTime + " RETURN a.authorName";
+        String query3 = "create (a:Author{authorName:'" + username + "', password:'"+ pwd + "', lastVisited:" +
+          currentTime + "}) RETURN a.authorName";
+        String updateLastVisitedQuery = "MATCH(a:Author{authorName:'" + username +"'}) SET a.lastVisited="
+          + currentTime + " RETURN a.authorName";
+
         System.out.println(query1);
-        System.out.println(query2);
         Driver driver = DBDriver.getDriver(this.config);
 
         String res = null;
@@ -60,18 +66,22 @@ private com.typesafe.config.Config config;
 
                 public String execute( Transaction tx )
                 {
+                    user.setLastVisited(0L);
                     StatementResult result1 = tx.run( query1 );
 
                     if(!result1.hasNext()) {
+                        System.out.println(query2);
 
                         StatementResult result2 = tx.run(query2);
                         if(!result2.hasNext()) {
+                            System.out.println(query3);
                             StatementResult result3 = tx.run(query3);
                             System.out.println("sign up succuss");
                             return "2";
                         }
                         else
                         {
+                            user.setLastVisited(currentTime);
                             System.out.println("registered the password");
                             return "3";
 
@@ -79,15 +89,14 @@ private com.typesafe.config.Config config;
                     }
                     else {
                         String getPassword = "";
-
+                        long lastVisited = 0L;
+                        Record record = null;
                         while(result1.hasNext())
                         {
-                            Record record = result1.next();
-
-
+                            record = result1.next();
 
                             getPassword = record.get(0).asString();
-
+                            lastVisited = record.get(1).asLong();
                             break;
                         }
                         System.out.println("pwd: " + getPassword);
@@ -95,13 +104,14 @@ private com.typesafe.config.Config config;
                         if(getPassword.equals(pwd))
                         {
                             System.out.print("login success");
+                            user.setLastVisited(lastVisited);
+                            tx.run(updateLastVisitedQuery);
                             return "0";
                         }
                         else {
                             System.out.println("error password or username");
                             return "1";
                         }
-
 
                     }
                 }

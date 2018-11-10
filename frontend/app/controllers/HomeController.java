@@ -25,7 +25,7 @@ public class HomeController extends Controller {
         if (viewerId == null || viewerId.isEmpty()) {
             return redirect("/login");
         }
-        return ok(views.html.index.render(viewerId));
+        return ok(views.html.index.render(viewerId, ""));
     }
 
 }
