@@ -70,3 +70,7 @@ POST     /collab           controllers.AuthorController.getResearcherNetwork
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionByChannelController.getEvloutions(channel: String,startYear: String, endYear: String)
 GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
+# Adv 2
+
+GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
+GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
