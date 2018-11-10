@@ -49,6 +49,9 @@ POST     /loginResult                  controllers.UserLoginController.loginResu
 # Find Stats of followers
 GET     /stats           controllers.AuthorController.statsFollowers
 POST     /stats           controllers.AuthorController.getstatsFollowers
+# Find Stats of user followers
+GET     /statsUser           controllers.AuthorController.getstatsUserFollowers
+POST     /statsUser           controllers.AuthorController.getstatsUserFollowers
 
 GET     /userProfile/form/         controllers.UserProfileController.getForm()
 POST     /userProfile                  controllers.UserProfileController.setProfile()
