@@ -12,8 +12,8 @@ public class User {
 
         String jsonString = "{" +
                 "\"username\":\"" + form.getUsername() + "\"," +
-                "\"password\":\"" + form.getPassword() +"\","+
-                "\"RI\":\"" + form.getRI() +"\""+
+
+                "\"password\":\"" + form.getPassword() +"\""+
                 "}";
 
         WSClient ws = play.test.WSTestClient.newClient(9001);

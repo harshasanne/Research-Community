@@ -9,6 +9,7 @@ public class loginUtils {
     public final static int LOGIN_FAILURE = 1;
     public final static int SIGNUP_SUCCESS = 2;
 
+    public final static int CREATE_PWD = 3;
 
     public static ObjectNode createResponse(
             Object response, boolean ok) {
