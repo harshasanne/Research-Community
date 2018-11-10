@@ -75,6 +75,8 @@ public class FollowersStatistics extends Controller {
                     return findRecentPaper( tx, query );
                 }
             } );
+            // MyJsonContainer jsonContainer = new MyJsonContainer();
+            // jsonContainer.setTest(papers);
             return ok(new Gson().toJson(papers));
         }
     }
@@ -89,7 +91,7 @@ public class FollowersStatistics extends Controller {
             Record t = result.next();
             String d= gson.toJson(t.asMap());
             papers.add(d);
-            System.out.println(papers+"there");
+            System.out.println(d+"there");
 
             // papers.add(new Paper(t.get(0).asString(), t.get(1).asString(), t.get(2).asString(), t.get(3).asString(), t.get(4).asString()));
         }

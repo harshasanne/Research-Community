@@ -18,6 +18,7 @@ import java.util.concurrent.CompletionStage;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.Json;
 import play.libs.ws.*;
+import com.google.gson.Gson;
 
 import play.data.DynamicForm;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -100,8 +101,18 @@ public class AuthorController extends Controller {
         Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
         String name = paperForm.get().journalName.replace(" ", "%20");
         JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/Collaboration" + "/" + name);
-    
-        return ok(views.html.successDownload.render());
+        Gson gson = new Gson();
+        
+        String s = nodes.toString().replaceAll("\\\\","");
+        String d= gson.toJson(s);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+
+        System.out.println(d+"..............................");
+        // System.out.println(s+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+
+        return ok(views.html.researchesNetwork.render(nodes));
     }
      public Result statsFollowers() {
         Form<Author> authorForm = formFactory.form(Author.class);
