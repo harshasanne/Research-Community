@@ -9,6 +9,8 @@ import play.mvc.*;
 import util.APICall;
 import util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 import play.data.Form;
 import play.data.FormFactory;
@@ -55,7 +57,15 @@ public class UserLoginController extends Controller {
 
 
                        // System.out.println("Session Username : "+ session().get("username"));
-                        return created(index.render(session().get("username")));
+                        Long lastVisited = r.asJson().get("body").get("lastVisited").asLong();
+                        String dateString = "";
+                        if (lastVisited != 0L) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+                            Date resultDate = new Date(lastVisited);
+                            dateString = sdf.format(resultDate);
+                        }
+
+                        return created(index.render(session().get("username"), dateString));
                     } else {
                         System.out.println(" Login failed");
                         return badRequest(login.render(true));

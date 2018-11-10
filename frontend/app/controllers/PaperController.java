@@ -54,7 +54,7 @@ public class PaperController extends Controller {
                 .addHeader("Content-Type", "application/json")
                 .post(Json.toJson(info))
                 .thenApplyAsync((WSResponse r) -> {
-                    return ok(views.html.index.render(session().get("username")));
+                    return ok(views.html.index.render(session().get("username"), ""));
                 }, ec.current());
     }
 }

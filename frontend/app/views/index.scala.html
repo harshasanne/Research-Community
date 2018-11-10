@@ -1,9 +1,12 @@
-@(username:String)
+@(username:String, lastVisited:String)
 
 @main("Welcome to Play") {
 <body>
-  <h4 class="center">Welcome to Team3 Data Application!</h4>
-  
+@if(lastVisited != "") {
+  <h4 class="center">Welcome to Team3 Data Application! You last visited on @lastVisited</h4>
+}else {
+<h4 class="center">Welcome to Team3 Data Application!</h4>
+}
   <div class="container">
     <div class="row">
       <div class="col s12 m6">
