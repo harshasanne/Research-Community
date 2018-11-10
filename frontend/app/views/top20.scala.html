@@ -1,0 +1,25 @@
+@import com.fasterxml.jackson.databind.JsonNode
+@(jsonNode: JsonNode)
+
+
+@main("Expert") {
+    <body>
+        <div class="container">
+            <div class="col s12 l10 offset-l1">
+                <div class="card-panel">
+                    <h4 class="form-signin-heading center">Showing top 20 cited papers</h4>
+                    <h6 class="center">@jsonNode.get(0).asText()</h6>
+                    <h6 class="center">@jsonNode.get(1).asText()</h6>
+                    <h6 class="center">@jsonNode.get(2).asText()</h6>
+                    <h6 class="center">@jsonNode.get(3).asText()</h6>
+                    <h6 class="center">@jsonNode.get(4).asText()</h6>
+                    <h6 class="center">@jsonNode.get(5).asText()</h6>
+                    <h6 class="center">@jsonNode.get(6).asText()</h6>
+                    <h6 class="center">@jsonNode.get(7).asText()</h6>
+                    <h6 class="center">@jsonNode.get(8).asText()</h6>
+                    <h6 class="center">@jsonNode.get(9).asText()</h6>
+                </div>
+            </div>
+        </div>
+    </body>
+}

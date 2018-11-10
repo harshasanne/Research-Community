@@ -57,4 +57,10 @@ public class PaperController extends Controller {
                     return ok(views.html.index.render(session().get("username"), ""));
                 }, ec.current());
     }
+    public Result getTop20Papers() throws Exception {
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/top20" + "/" );
+        System.out.println(nodes);
+
+        return ok(views.html.top20.render(nodes));
+    }
 }

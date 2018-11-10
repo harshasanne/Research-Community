@@ -77,3 +77,6 @@ GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
 
 GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
 GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
+
+GET /top20/         controllers.PaperController.getTop20Papers()
+

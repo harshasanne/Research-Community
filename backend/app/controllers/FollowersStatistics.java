@@ -27,6 +27,7 @@ public class FollowersStatistics extends Controller {
     public Result getStats(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (a:Author)-[:FOLLOWS]->(b:Author{authorName:'"+name+"'}) match(a)-[WRITES]->(p:Paper) match(p)-[HAS_KEYWORD]->(k:Keyword)return (a.authorName) as followerName,count(distinct a) as numberOfFollowers ,count(distinct p) as numberOfPapers,count(distinct k.keyword) as numberOfKeywords, collect(distinct(k.keyword)) as Keywords";
+       
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
@@ -97,5 +98,42 @@ public class FollowersStatistics extends Controller {
         }
         return papers;
     }
+    public Result getTop20Papers() throws Exception {
+        // name = URLDecoder.decode(name, "UTF-8");
+        String query = "match (p)where exists(p.journal) return (p.title) ,(p.index) order by toInt(p.index) desc limit 20";
+        System.out.println(query);
+        Driver driver = DBDriver.getDriver(this.config);
 
+        try ( Session session = driver.session() )
+        {
+            List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    return paperList( tx, query );
+                }
+            } );
+            // MyJsonContainer jsonContainer = new MyJsonContainer();
+            // jsonContainer.setTest(papers);
+            return ok(new Gson().toJson(papers));
+        }
+    }
+     private static List<String> paperList(Transaction tx, String query)
+    {
+        List<String> papers = new ArrayList<>();
+        StatementResult result = tx.run( query );
+        Gson gson = new Gson();
+
+        while ( result.hasNext() )
+        {
+            
+            papers.add(result.next().get(0).asString());
+            System.out.println(papers+"there");
+
+
+            // papers.add(new Paper(t.get(0).asString(), t.get(1).asString(), t.get(2).asString(), t.get(3).asString(), t.get(4).asString()));
+        }
+        return papers;
+    }
 }
