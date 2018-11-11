@@ -3,40 +3,43 @@
     <nav class="blue darken-4" style='margin-bottom: 20px;'>
         <div class="nav-wrapper">
             <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
-               <ul id="nav-mobile" class=" hide-on-med-and-down">
+           <ul id="nav-mobile" class=" hide-on-med-and-down">
 
-                   <li><a href="@routes.HomeController.index" title="Home"><i class="material-icons">home</i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-trigger" data-target="dropdown-UseCase">Histograms</a>
-                        <ul class="dropdown-content" id="dropdown-UseCase">
-                            <li><a href="@routes.AuthorController.publicationPerYear">Author Histogram</a></li>
-                            <li><a href="@routes.AuthorController.journalAuthors">
-                                Journal Histogram</a></li>
-                            <li><a href="@routes.FindExpertByKeyWordController.getForm">
-                                Find Expert By Keyword</a></li>
-                            
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-trigger" data-target="dropdown-statistics">User Profile</a>
-                        <ul class="dropdown-content" id="dropdown-statistics">
-                            <li><a href="@routes.AuthorController.getAuthorForm">
-                                Author Details </a></li>
-                            <li><a href="@routes.AuthorController.statsFollowers">Followers Statistics</a></li>
-                            <li><a href="@routes.AuthorController.getstatsUserFollowers">User Followers Statistics</a></li>
-                            <li><a href="@routes.DashboardController.getMyProfile">Dashboard</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-trigger" data-target="dropdown-publication">Publication</a>
-                        <ul class="dropdown-content" id="dropdown-publication">
-                            <li><a href="@routes.PaperController.getForm">
-                                Register Publication</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+               <li><a href="@routes.HomeController.index" title="Home"><i class="material-icons">home</i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-trigger" data-target="dropdown-UseCase">Histograms</a>
+                    <ul class="dropdown-content" id="dropdown-UseCase">
+                        <li><a href="@routes.AuthorController.publicationPerYear">Author Histogram</a></li>
+                        <li><a href="@routes.AuthorController.journalAuthors">
+                            Journal Histogram</a></li>
+                        <li><a href="@routes.FindExpertByKeyWordController.getForm">
+                            Find Expert By Keyword</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-trigger" data-target="dropdown-statistics">User Profile</a>
+                    <ul class="dropdown-content" id="dropdown-statistics">
+                        <li><a href="@routes.AuthorController.getAuthorForm">
+                            Author Details </a></li>
+                        <li><a href="@routes.AuthorController.statsFollowers">Followers Statistics</a></li>
+                        <li><a href="@routes.AuthorController.getstatsUserFollowers">User Followers Statistics</a></li>
+                        <li><a href="@routes.DashboardController.getMyProfile">Dashboard</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-trigger" data-target="dropdown-publication">Publication</a>
+                    <ul class="dropdown-content" id="dropdown-publication">
+                        <li><a href="@routes.PaperController.getForm">
+                            Register Publication</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="@routes.HomeController.logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
                 

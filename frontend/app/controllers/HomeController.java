@@ -28,4 +28,9 @@ public class HomeController extends Controller {
         return ok(views.html.index.render(viewerId, ""));
     }
 
+    public Result logout() {
+        session().clear();
+        return redirect("/login");
+    }
+
 }
