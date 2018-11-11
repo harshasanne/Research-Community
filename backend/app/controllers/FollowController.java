@@ -4,7 +4,6 @@ import models.Paper;
 import models.Author;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
-import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;

@@ -3,7 +3,6 @@ package controllers;
 import models.Paper;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
-import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;
@@ -32,8 +31,7 @@ public class PaperController extends Controller {
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (a:Paper)-[:REFERS_TO]-(p:Paper) where a.title = '" + name + "' and p.title<>a.title return p.title";
         System.out.println(query);
-        Driver driver = GraphDatabase.driver(
-                "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
+        Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
             List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
