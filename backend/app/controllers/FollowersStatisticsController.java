@@ -1,32 +1,33 @@
 package controllers;
 
-import models.Author;
 import models.Statistics;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.net.URLDecoder;
-import java.util.*;
 
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
-import dbConnector.DBConnector;
 import utils.DBDriver;
 import javax.inject.Inject;
 
-public class FollowersStatistics extends Controller {
+public class FollowersStatisticsController extends Controller {
     private Config config;
 
     @Inject
-    public FollowersStatistics( Config config) {
+    public FollowersStatisticsController(Config config) {
         this.config = config;
     }
 
     public Result getStats(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
-        String query = "match (a:Author)-[:FOLLOWS]->(b:Author{authorName:'"+name+"'}) match(a)-[WRITES]->(p:Paper) match(p)-[HAS_KEYWORD]->(k:Keyword)return (a.authorName) as followerName,count(distinct a) as numberOfFollowers ,count(distinct p) as numberOfPapers,count(distinct k.keyword) as numberOfKeywords, collect(distinct(k.keyword)) as Keywords";
+
+        String getFollowersQuery = "match (a:Author)-[:FOLLOWS]->(b:Author{authorName:'"+name+"'}) "
+          + "return a.authorName";
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
@@ -35,28 +36,61 @@ public class FollowersStatistics extends Controller {
                 @Override
                 public List<Statistics> execute( Transaction tx )
                 {
-                    return findExpert( tx, query );
+                    List<Statistics> stats = new ArrayList<Statistics>();
+                    // First, get all the followers' names since some followers have no publications
+                    List<String> followers = getFollowers(tx, getFollowersQuery);
+                    if (followers.isEmpty()) return stats;
+                    String getStatisticsQuery = "with " + serializeList(followers)
+                      + "as names optional match (a:Author)-[:WRITES]->(p:Paper)-[:HAS_KEYWORD]->(k:Keyword)"
+                      + "where a.authorName in names return a.authorName, count(distinct p.title) as cnt, count(distinct k) as keys";
+
+                    Map<String, Statistics> statistics = getStatistics(tx, getStatisticsQuery);
+                    for (String follower: followers) {
+                        if (statistics.containsKey(follower)) {
+                            stats.add(statistics.get(follower));
+                        }
+                        else {
+                            stats.add(new Statistics(follower, 0,0));
+                        }
+                    }
+                    return stats;
                 }
             } );
             return ok(new Gson().toJson(authors));
         }
     }
 
-    private static List<Statistics> findExpert(Transaction tx, String query)
-    {
-         List<Statistics> stat = new ArrayList<>();
-         List<String> s = new ArrayList<>();
-        StatementResult result = tx.run( query );
-        Gson gson = new Gson();
-        while ( result.hasNext() )
-        {
-            Record t = result.next();
-            stat.add(new Statistics(t.get(0).asString(), t.get(1).toString(), t.get(2).toString(), t.get(3).toString(), t.get(4).toString()));
+    private static String serializeList(List<String> values) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (String value : values) {
+            sb.append("'" + value + "', ");
         }
-            //  Record record = result.next();
-            // String d= gson.toJson(record.asMap());
-            // year.add(d);
-            // System.out.println(d);
+
+        String result = sb.toString();
+        return result.substring(0, result.length()-2) + "]";
+    }
+
+    private static List<String> getFollowers(Transaction tx, String query) {
+        StatementResult result  = tx.run(query);
+        List<String> followers = new ArrayList<String>();
+        while (result.hasNext()) {
+            followers.add(result.next().get(0).asString());
+        }
+
+        return followers;
+    }
+
+    private static Map<String, Statistics> getStatistics(Transaction tx, String query)
+    {
+        Map<String, Statistics> stat = new HashMap<String, Statistics>();
+        List<String> s = new ArrayList<>();
+        StatementResult result = tx.run( query );
+        while ( result.hasNext() ) {
+            Record t = result.next();
+            stat.put(t.get(0).asString(), new Statistics(t.get(0).asString(), t.get(1).asInt(), t.get(2).asInt()));
+        }
+
         return stat;
     }
     public Result getCollaboration( String name) throws Exception {

@@ -6,31 +6,19 @@ public class Statistics {
 
 
     private String followerName;
-    private String numberOfFollowers;
     private String numberOfPapers;
     private String numberOfKeywords;
-    private String Keywords;
 
     // public Statistics() {}
 
-    public Statistics(String followerName, String numberOfFollowers, String numberOfPapers, String numberOfKeywords, String Keywords) {
+    public Statistics(String followerName, String numberOfPapers, String numberOfKeywords) {
         this.followerName = followerName;
-        this.numberOfFollowers = numberOfFollowers;
         this.numberOfPapers = numberOfPapers;
         this.numberOfKeywords = numberOfKeywords;
-        this.Keywords = Keywords;
     }
-
-    // public Paper(String title) {
-    //     this.title = title;
-    // }
 
     public String getfollowerName() {
         return followerName;
-    }
-
-    public String getnumberOfFollowers() {
-        return numberOfFollowers;
     }
 
     public String getnumberOfPapers() {
@@ -41,16 +29,8 @@ public class Statistics {
         return numberOfKeywords;
     }
 
-    public String getKeywords() {
-        return Keywords;
-    }
-
     public void setfollowerName(String followerName) {
         this.followerName = followerName;
-    }
-
-    public void setnumberOfFollowers(String numberOfFollowers) {
-        this.numberOfFollowers = numberOfFollowers;
     }
 
     public void setnumberOfPapers(String numberOfPapers) {
@@ -59,9 +39,5 @@ public class Statistics {
 
     public void setnumberOfKeywords(String numberOfKeywords) {
         this.numberOfKeywords = numberOfKeywords;
-    }
-
-    public void setKeywords(String Keywords) {
-        this.Keywords = Keywords;
     }
 }
