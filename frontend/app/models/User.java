@@ -4,7 +4,9 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 import forms.LoginForm;
-import services.RouteToBackEnd;
+
+import util.Constants;
+
 import java.util.concurrent.CompletionStage;
 
 public class User {
@@ -19,7 +21,7 @@ public class User {
         WSClient ws = play.test.WSTestClient.newClient(9001);
 
         System.out.println(jsonString);
-        WSRequest request = ws.url(RouteToBackEnd.getLoginURL());
+        WSRequest request = ws.url(Constants.loginURL);
         return request.addHeader("Content-Type", "application/json")
                 .post(jsonString)
                 .thenApply((WSResponse r) -> {

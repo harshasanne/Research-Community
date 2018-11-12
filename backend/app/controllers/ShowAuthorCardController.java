@@ -50,7 +50,7 @@ public class ShowAuthorCardController extends Controller {
                 }
 
             } );
-            System.out.println(papers);
+           // System.out.println(papers);
             JsonArray jArray = new JsonArray();
             for(String p: papers)
             {
@@ -58,14 +58,15 @@ public class ShowAuthorCardController extends Controller {
                 jArray.add(element);
             }
 
-            //System.out.println(jArray);
+           // System.out.println("jarray:" + jArray);
             JsonParser parser = new JsonParser();
-            JsonObject obj = parser.parse(authors.get(0)).getAsJsonObject();
-
-
-
-            obj.add("publications",jArray);
-            System.out.println(obj.toString());
+            JsonObject obj = null;
+            if(authors.size() > 0) {
+                obj = parser.parse(authors.get(0)).getAsJsonObject();
+                obj.add("publications", jArray);
+            }
+            //System.out.println(obj.toString());
+            System.out.println("jarray:" + jArray);
             //System.out.println("gson :" + gson);
             return ok(new Gson().toJson(obj)).as("applications/json");
         }
