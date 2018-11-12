@@ -172,7 +172,7 @@ public class AuthorController extends Controller {
 
 
     public Result getAuthor() throws Exception {
-        String username = "Jia Zhang"; //TODO
+        String username = session("username");
         
         Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
         String name = paperForm.get().getName();
