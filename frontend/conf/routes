@@ -80,3 +80,7 @@ GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordContr
 
 GET /top20/         controllers.PaperController.getTop20Papers()
 
+GET /top20years/form         controllers.PaperController.formTop20PapersWithYears()
+GET /top20years/         controllers.PaperController.getTop20PapersWithYears()
+
+

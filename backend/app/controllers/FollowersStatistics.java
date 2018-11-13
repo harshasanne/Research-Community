@@ -15,6 +15,11 @@ import com.typesafe.config.Config;
 import dbConnector.DBConnector;
 import utils.DBDriver;
 import javax.inject.Inject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.io.IOException;
 
 public class FollowersStatistics extends Controller {
     private Config config;
@@ -88,7 +93,7 @@ public class FollowersStatistics extends Controller {
         Gson gson = new Gson();
 
         while ( result.hasNext() )
-        {
+        {   
             Record t = result.next();
             String d= gson.toJson(t.asMap());
             papers.add(d);
@@ -98,9 +103,12 @@ public class FollowersStatistics extends Controller {
         }
         return papers;
     }
+    
     public Result getTop20Papers() throws Exception {
+
+       
         // name = URLDecoder.decode(name, "UTF-8");
-        String query = "match (p)where exists(p.journal) return (p.title) ,(p.index) order by toInt(p.index) desc limit 20";
+        String query = "match (p)where exists(p.journal) return (p.title) ,(p.cIndex) order by toInt(p.cIndex) limit 100";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
 
@@ -114,10 +122,52 @@ public class FollowersStatistics extends Controller {
                     return paperList( tx, query );
                 }
             } );
-            // MyJsonContainer jsonContainer = new MyJsonContainer();
-            // jsonContainer.setTest(papers);
+                 // String cIndex =getIndex("title");
+
+            for (String title: papers){
+                 String cIndex =getIndex(title);
+                 String neo4jQuery = "match (p)where exists(p.journal)and p.title = '"+title+"' set p.citationCount= '"+cIndex+"' return (p.title) ,(p.index),(p.cIndex)";
+             try ( Session session1 = driver.session() )
+                {   
+                  List<String> papers1 =  session1.readTransaction( new TransactionWork<List<String>>()
+                 {
+                    @Override
+                    public List<String> execute(Transaction t){
+                        return paperList( t, neo4jQuery );
+                    }
+                    } );
+                }   Thread.sleep(1000);
+
+            }
             return ok(new Gson().toJson(papers));
         }
+    }
+    private static String getIndex(String title)
+    {   
+
+        try {
+                String URL = "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q='"+title+"'&btnG=";
+
+                Document document = Jsoup.connect(URL).get();
+
+                Elements linksOnPage = document.select("a[href]");
+                String citaion = "";
+
+                for (Element page : linksOnPage) {
+                    String temp = page.text();
+                    System.out.println(temp);
+                    if(temp.contains("Cited"))
+                        citaion = temp;
+                }
+                String cIndex ="";
+                String[] one = citaion.split(" ");
+                 cIndex = one[one.length-1];
+        System.out.println(cIndex);
+
+            return cIndex;
+            } catch (IOException e) {
+            }
+            return "0";
     }
      private static List<String> paperList(Transaction tx, String query)
     {
@@ -127,13 +177,30 @@ public class FollowersStatistics extends Controller {
 
         while ( result.hasNext() )
         {
-            
             papers.add(result.next().get(0).asString());
-            System.out.println(papers+"there");
-
-
-            // papers.add(new Paper(t.get(0).asString(), t.get(1).asString(), t.get(2).asString(), t.get(3).asString(), t.get(4).asString()));
         }
         return papers;
     }
+    public Result getTop20PapersWithYear(String start, String end) throws Exception {
+        // name = URLDecoder.decode(name, "UTF-8");
+
+        String query = "match (p)where exists(p.journal)and p.year >= '"+start+"'and p.year<='"+end+"' return (p.title) ,(p.index) order by toInt(p.index) desc limit 10";
+        System.out.println(query);
+        Driver driver = DBDriver.getDriver(this.config);
+
+        try ( Session session = driver.session() )
+        {
+            List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    return paperList( tx, query );
+                }
+            } );
+            return ok(new Gson().toJson(papers));
+        }
+    }
+
+
 }

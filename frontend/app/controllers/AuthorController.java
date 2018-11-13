@@ -25,7 +25,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AuthorController extends Controller {
     private APICall apiCall;
@@ -108,8 +110,12 @@ public class AuthorController extends Controller {
 
         ObjectMapper mapper = new ObjectMapper();
 
-
-        System.out.println(d+"..............................");
+        final JSONObject obj = new JSONObject(nodes);
+        System.out.println(obj+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
+        final JSONArray geodata = obj.getJSONArray("");
+        int n = geodata.length();
+ 
+        System.out.println(n+"..............................");
         // System.out.println(s+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
         return ok(views.html.researchesNetwork.render(nodes));

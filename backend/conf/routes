@@ -69,5 +69,8 @@ GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getT
 
 GET /top20/ controllers.FollowersStatistics.getTop20Papers()
 
+GET /top20years/ controllers.FollowersStatistics.getTop20PapersWithYear(startYear: String, endYear: String)
+
+
 
 

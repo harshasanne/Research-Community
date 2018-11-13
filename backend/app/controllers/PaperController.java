@@ -16,6 +16,10 @@ import play.data.FormFactory;
 import utils.DBDriver;
 import javax.inject.Inject;
 import com.typesafe.config.Config;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class PaperController extends Controller {
 

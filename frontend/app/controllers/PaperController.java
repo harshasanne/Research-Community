@@ -17,6 +17,7 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.*;
 import play.libs.Json;
 import java.util.concurrent.CompletionStage;
+import models.*;
 
 public class PaperController extends Controller {
     private APICall apiCall;
@@ -63,4 +64,19 @@ public class PaperController extends Controller {
 
         return ok(views.html.top20.render(nodes));
     }
+    public Result formTop20PapersWithYears() {
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.top20PapersForm.render(paperForm));
+    }
+
+    public Result getTop20PapersWithYears() throws Exception {
+        Paper paperForm = formFactory.form(Paper.class).bindFromRequest().get();
+
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/top20year" + "/"+paperForm.startYear
+                +"/" + paperForm.endYear );
+        System.out.println(nodes);
+
+        return ok(views.html.top20.render(nodes));
+    }
+
 }
