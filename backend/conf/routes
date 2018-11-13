@@ -52,13 +52,9 @@ POST    /userProfile                     controllers.UserProfileController.setPr
 
 GET     /showAuthorCard/:username      controllers.ShowAuthorCardController.getCard(username:String)
 
-GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
+GET     /stats/:name                    controllers.FollowersStatisticsController.getStats(name: String)
 
-
-GET     /stats/:name                    controllers.FollowersStatistics.getStats(name: String)
-
-
-GET     /Collaboration/:name           controllers.FollowersStatistics.getCollaboration(name: String)
+GET     /Collaboration/:name           controllers.FollowersStatisticsController.getCollaboration(name: String)
 
 ###### ADVANCE REQ STARTS HERE #######
 

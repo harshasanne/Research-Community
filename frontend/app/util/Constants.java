@@ -9,5 +9,8 @@ public class Constants {
     public final static String getAllFollowingsURL = Constants.BACKEND + "/following/";
     public final static String followURL = Constants.BACKEND + "/follow";
     public final static String unfollowURL = Constants.BACKEND + "/unfollow";
+    public final static String userProfileURL = Constants.BACKEND + "/userProfile";
+    public final static String loginURL = Constants.BACKEND + "/loginResult";
+
 
 }

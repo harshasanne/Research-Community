@@ -126,9 +126,9 @@ public class AuthorController extends Controller {
     }
       public Result getstatsFollowers() throws Exception {
         Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
-        String name =paperForm.get().getName().replace(" ", "%20");
+        String name =paperForm.get().getName();
         System.out.println(name);
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + URLEncoder.encode(name, "UTF-8"));
         ObjectMapper mapper = new ObjectMapper();
         ObjectReader reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
         List<Statistics> newsList = new ArrayList<Statistics>();
@@ -136,27 +136,23 @@ public class AuthorController extends Controller {
             for (int i=0; i<nodes.size(); i++) {
                 Map<String, String> map = reader.readValue(nodes.get(i));
                 String followerName = map.get("followerName");
-                String numberOfFollowers = map.get("numberOfFollowers");
                 String numberOfPapers = map.get("numberOfPapers");
                 String numberOfKeywords = map.get("numberOfKeywords");
-                String Keywords = map.get("Keywords");
-                Statistics p = new Statistics(followerName, numberOfFollowers, numberOfPapers, numberOfKeywords, Keywords);
+                Statistics p = new Statistics(followerName, numberOfPapers, numberOfKeywords);
                 newsList.add(p);
             }
         }
         catch (Exception e) {
         }
+
         System.out.println(nodes);
-        if(nodes !=null){
-       // System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
-        }
+
         return ok(views.html.followerDetails.render(newsList));
     }
     public Result getstatsUserFollowers() throws Exception {
-        // Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
-        String name = "Ravinder Pal";
+        String name = session("username");
         System.out.println(name);
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + name);
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/stats" + "/" + URLEncoder.encode(name, "UTF-8"));
         ObjectMapper mapper = new ObjectMapper();
         ObjectReader reader = mapper.readerFor(new TypeReference<Map<String, String>>() {});
         List<Statistics> newsList = new ArrayList<Statistics>();
@@ -164,20 +160,15 @@ public class AuthorController extends Controller {
             for (int i=0; i<nodes.size(); i++) {
                 Map<String, String> map = reader.readValue(nodes.get(i));
                 String followerName = map.get("followerName");
-                String numberOfFollowers = map.get("numberOfFollowers");
                 String numberOfPapers = map.get("numberOfPapers");
                 String numberOfKeywords = map.get("numberOfKeywords");
-                String Keywords = map.get("Keywords");
-                Statistics p = new Statistics(followerName, numberOfFollowers, numberOfPapers, numberOfKeywords, Keywords);
+                Statistics p = new Statistics(followerName, numberOfPapers, numberOfKeywords);
                 newsList.add(p);
             }
         }
         catch (Exception e) {
         }
         System.out.println(nodes);
-        if(nodes !=null){
-       // System.out.println(nodes.get(0).findPath("followerName").asText()+"hereherehere");
-        }
         return ok(views.html.followerDetails.render(newsList));
     }
     public Result getAuthorForm() {
@@ -187,7 +178,7 @@ public class AuthorController extends Controller {
 
 
     public Result getAuthor() throws Exception {
-        String username = "Jia Zhang"; //TODO
+        String username = session("username");
         
         Form<Author> paperForm = formFactory.form(Author.class).bindFromRequest();
         String name = paperForm.get().getName();

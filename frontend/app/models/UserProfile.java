@@ -4,7 +4,9 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 import forms.*;
-import services.RouteToBackEnd;
+
+import util.Constants;
+
 import java.util.concurrent.CompletionStage;
 
 public class UserProfile {
@@ -21,7 +23,7 @@ public class UserProfile {
         WSClient ws = play.test.WSTestClient.newClient(9001);
 
         System.out.println(jsonString);
-        WSRequest request = ws.url(RouteToBackEnd.getUserProfileURL());
+        WSRequest request = ws.url(Constants.userProfileURL);
         return request.addHeader("Content-Type", "application/json")
                 .post(jsonString)
                 .thenApply((WSResponse r) -> {

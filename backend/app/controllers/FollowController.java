@@ -4,7 +4,6 @@ import models.Paper;
 import models.Author;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
-import dbConnector.DBConnector;
 
 import java.util.*;
 import java.net.URLDecoder;
@@ -111,7 +110,7 @@ public class FollowController extends Controller {
         String author = requestData.get("author");
         String query = "MERGE (a:Author {authorName:'" + author + "'})\n" +
                 "MERGE (b:Author {authorName:'" + follower + "'})\n" +
-                "ON CREATE SET a.authorName='" + author + "', b.authorauthorName='" + follower + "'\n" +
+                "ON CREATE SET a.authorName='" + author + "', b.authorName='" + follower + "'\n" +
                 "CREATE UNIQUE (a) <- [:FOLLOWS] - (b)";
         System.out.println(query);
 
