@@ -19,6 +19,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import models.Evolution;
 
 public class FollowersStatisticsController extends Controller {
     private Config config;
@@ -114,8 +115,7 @@ public class FollowersStatisticsController extends Controller {
                     return findRecentPaper( tx, query );
                 }
             } );
-            // MyJsonContainer jsonContainer = new MyJsonContainer();
-            // jsonContainer.setTest(papers);
+
             return ok(new Gson().toJson(papers));
         }
     }
@@ -139,9 +139,38 @@ public class FollowersStatisticsController extends Controller {
     
     public Result getTop20Papers() throws Exception {
 
+        // name = URLDecoder.decode(name, "UTF-8");
+        String query = "match(p:Paper) with p ORDER BY p.citationCount desc return p.journal as journal, collect({title:p.title,citation:p.citationCount})[0..20] as citaion";
+        System.out.println(query);
+        Driver driver = DBDriver.getDriver(this.config);
+
+        try ( Session session = driver.session() )
+        {
+            List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    Gson gson = new Gson();
+                    List<String> reqData = new ArrayList<>();
+                    StatementResult result = tx.run(query);
+                    while (result.hasNext()) {
+                        Record record = result.next();
+                        reqData.add(gson.toJson(record.asMap()));
+                    }
+                    return reqData;
+                }
+            } );
+        System.out.println(papers+".................");
+            return ok("{\"data\": "+papers+"}").as("application/json");
+        }
+    }
+
+    public Result getCitaionCount() throws Exception {
+
        
         // name = URLDecoder.decode(name, "UTF-8");
-        String query = "match (p)where exists(p.journal) return (p.title) ,(p.cIndex) order by toInt(p.cIndex) limit 100";
+        String query = "match (p)where exists(p.journal) return (p.title) limit 100";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
 
@@ -158,8 +187,9 @@ public class FollowersStatisticsController extends Controller {
                  // String cIndex =getIndex("title");
 
             for (String title: papers){
-                 String cIndex =getIndex(title);
-                 String neo4jQuery = "match (p)where exists(p.journal)and p.title = '"+title+"' set p.citationCount= '"+cIndex+"' return (p.title) ,(p.index),(p.cIndex)";
+                 String cIndex ="0";
+                 cIndex=getIndex(title);
+                 String neo4jQuery = "match (p) where exists(p.journal) and p.title = '"+title+"' set p.citationCount='"+cIndex+"' return (p.title)";
              try ( Session session1 = driver.session() )
                 {   
                   List<String> papers1 =  session1.readTransaction( new TransactionWork<List<String>>()
@@ -217,7 +247,7 @@ public class FollowersStatisticsController extends Controller {
     public Result getTop20PapersWithYear(String start, String end) throws Exception {
         // name = URLDecoder.decode(name, "UTF-8");
 
-        String query = "match (p)where exists(p.journal)and p.year >= '"+start+"'and p.year<='"+end+"' return (p.title) ,(p.index) order by toInt(p.index) desc limit 10";
+        String query = "match(p:Paper) WHERE p.year>'"+start+"' and p.year<'"+end+"' with p ORDER BY p.citationCount desc return p.journal as Journal, p.year as year, collect({title:p.title,citationCount:p.citationCount})[0..10] as CitationData";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
 
@@ -228,10 +258,19 @@ public class FollowersStatisticsController extends Controller {
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return paperList( tx, query );
+                    Gson gson = new Gson();
+                    List<String> reqData = new ArrayList<>();
+                    StatementResult result = tx.run(query);
+                    while (result.hasNext()) {
+                        Record record = result.next();
+                        reqData.add(gson.toJson(record.asMap()));
+                    }
+                    return reqData;
                 }
             } );
-            return ok(new Gson().toJson(papers));
+            return ok("{\"data\": "+papers+"}").as("application/json");
+            
+            // return ok(new Gson().toJson(papers));
         }
     }
 

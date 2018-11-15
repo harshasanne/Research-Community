@@ -64,6 +64,7 @@ public class AuthorController extends Controller {
         for (int i = 0; i < nodes.size(); i++) {
             collaborators.add(nodes.get(i).findPath("name").asText());
         }
+        System.out.println(nodes);
 
         //TODO: Harsha, change the return type however suitable for your graph
         return ok(views.html.author.render(collaborators));

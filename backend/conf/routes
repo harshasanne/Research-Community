@@ -63,9 +63,9 @@ GET     /Collaboration/:name           controllers.FollowersStatisticsController
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
 
-GET /top20/ controllers.FollowersStatistics.getTop20Papers()
+GET /top20/ controllers.FollowersStatisticsController.getTop20Papers()
 
-GET /top20years/ controllers.FollowersStatistics.getTop20PapersWithYear(startYear: String, endYear: String)
+GET /top20years/:startYear/:endYear  controllers.FollowersStatisticsController.getTop20PapersWithYear(startYear: String, endYear: String)
 
 
 
