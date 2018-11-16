@@ -78,3 +78,8 @@ GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
 
 GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
 GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
+
+#Adv 14&15
+
+GET /recommend/:keyword      controllers.RecommendController.getRecommend(keyword: String)
+GET /recommend/form/         controllers.RecommendController.getForm()

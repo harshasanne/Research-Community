@@ -36,29 +36,78 @@ public class RecommendController extends Controller {
 
         try ( Session session = driver.session() )
         {
+            List<String> titles;
+            String interestQuery = "MATCH(a:Author{authorName:'"+username+"'}) WHERE EXISTS(a.RI) RETURN a.RI\n";
 
-            String query1  = "MATCH (p:Paper)-[:HAS_KEYWORD]->(:Keyword {keyword:'"+keyword+"'})\n" +
-                    "WHERE p.abstract =~ '.*"+interest+".*'\n" +
-                    "RETURN p.title\n" +
-                    "limit 10";
-            String query2  = "MATCH (p:Paper)\n" +
-                    "WHERE p.abstract =~ '.*"+interest+".*'\n" +
-                    "RETURN p.title\n" +
-                    "limit 10";
-
-
-            List<String> titles =  session.readTransaction( new TransactionWork<List<String>>()
+            interest =session.readTransaction( new TransactionWork<List<String>>()
             {
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return matchPaperNodes( tx, query1 );
+                    List<String> a = new ArrayList<>();
+                    a.add(getInterest( tx, interestQuery ));
+                    return a;
                 }
-            } );
-            for (String t : titles) {
-                if(!dedup.contains(t)){
-                    dedup.add(t);
-                    res.add(t);
+            } ).get(0);
+            String query1  = "MATCH (p:Paper)-[:HAS_KEYWORD]->(:Keyword {keyword:'"+keyword+"'})\n" +
+                    "WHERE p.abstract =~ '.*"+interest+".*'\n" +
+                    "RETURN p.title\n" +
+                    "limit 10";
+            String query2  = "MATCH (p:Paper)-[:HAS_KEYWORD]->(:Keyword {keyword:'"+keyword+"'})\n" +
+                    "RETURN p.title\n" +
+                    "limit 10";
+            String query4  = "MATCH (p:Paper)\n" +
+                    "WHERE p.abstract =~ '.*"+interest+".*'\n" +
+                    "RETURN p.title\n" +
+                    "limit 10";
+
+
+            if(interest.length()!=0){
+                titles =  session.readTransaction( new TransactionWork<List<String>>()
+                {
+                    @Override
+                    public List<String> execute( Transaction tx )
+                    {
+                        return matchPaperNodes( tx, query1 );
+                    }
+                } );
+                for (String t : titles) {
+                    if(!dedup.contains(t)){
+                        dedup.add(t);
+                        res.add(t);
+                    }
+                }
+            }
+            if(res.size()<10){
+                titles =  session.readTransaction( new TransactionWork<List<String>>()
+                {
+                    @Override
+                    public List<String> execute( Transaction tx )
+                    {
+                        return matchPaperNodes( tx, query2 );
+                    }
+                } );
+                for (String t : titles) {
+                    if(!dedup.contains(t)){
+                        dedup.add(t);
+                        res.add(t);
+                    }
+                }
+            }
+            if(res.size()<10){
+                titles =  session.readTransaction( new TransactionWork<List<String>>()
+                {
+                    @Override
+                    public List<String> execute( Transaction tx )
+                    {
+                        return matchPaperNodes( tx, query4 );
+                    }
+                } );
+                for (String t : titles) {
+                    if(!dedup.contains(t)){
+                        dedup.add(t);
+                        res.add(t);
+                    }
                 }
             }
             if(res.size()<=10){
@@ -79,7 +128,11 @@ public class RecommendController extends Controller {
             }
 
             if(res.size()<=10){
-                String ls = "['"+String.join("','",res)+"']";
+                List<String> b = new ArrayList<>();
+                for(String t:res){
+                    b.add(t.replace("'","\\'"));
+                }
+                String ls = "['"+String.join("','",b)+"']";
                 String query3 ="MATCH (p:Paper)-[:REFERS_TO]-(p2:Paper)\n" +
                         "WHERE p.title IN "+ls+" AND NOT p2.title IN "+ls+"\n" +
                         "RETURN p2.title\n" +
