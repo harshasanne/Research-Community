@@ -3,16 +3,17 @@ package controllers;
 import models.Statistics;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.net.URLDecoder;
-
+import utils.*;
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
-import utils.DBDriver;
+// import utils.DBDriver;
+// import utils.Neo4jApiService;
+
 import javax.inject.Inject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,9 +24,11 @@ import models.Evolution;
 
 public class FollowersStatisticsController extends Controller {
     private Config config;
+    // private final Neo4jApiService neo4jApiService;
 
     @Inject
     public FollowersStatisticsController(Config config) {
+        // this.neo4jApiService = neo4jApiService;
         this.config = config;
     }
 
@@ -103,6 +106,7 @@ public class FollowersStatisticsController extends Controller {
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (author:Author{authorName:'"+name+"'})-[coauth:CO_AUTHOR*1..2]-(coauthor)Return collect(distinct author), collect(coauth) as relations, collect(distinct coauthor) as nodes";
         System.out.println(query);
+        // String d = neo4jApiService.callNeo4jApi(query,true);
         Driver driver = DBDriver.getDriver(this.config);
 
         try ( Session session = driver.session() )
@@ -117,8 +121,11 @@ public class FollowersStatisticsController extends Controller {
             } );
 
             return ok(new Gson().toJson(papers));
+
+            // return ok(d).as("application/json");
         }
     }
+    
      private static List<String> findRecentPaper(Transaction tx, String query)
     {
         List<String> papers = new ArrayList<>();

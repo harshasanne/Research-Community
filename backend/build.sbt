@@ -11,5 +11,5 @@ libraryDependencies += guice
 libraryDependencies ++= Seq(
   "com.google.code.gson" % "gson" % "2.8.5",
   "org.neo4j" % "neo4j-jdbc-driver" % "3.4.0",
-  "org.jsoup" % "jsoup" % "1.11.2"
+  "org.jsoup" % "jsoup" % "1.11.2", ws
 )
