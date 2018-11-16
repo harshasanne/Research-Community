@@ -12,5 +12,6 @@ public class Constants {
     public final static String userProfileURL = Constants.BACKEND + "/userProfile";
     public final static String loginURL = Constants.BACKEND + "/loginResult";
 
+    public final static String showSimpleCategoriesURL = Constants.BACKEND + "/ShowSimpleCategories";
 
 }

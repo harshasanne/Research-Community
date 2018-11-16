@@ -78,3 +78,9 @@ GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
 
 GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
 GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
+
+GET /simpleCategories/:startYear/:endYear controllers.PaperCategoriesController.showSimpleCategories(startYear: String, endYear: String)
+GET /simpleCategoriesform/         controllers.PaperCategoriesController.getForm()
+
+GET /multiParamsCategories/:startYear/:endYear/:channels/:keywords    controllers.MultiParamsCategoriesController.showCategories(startYear: String, endYear: String,channels:String, keywords:String)
+GET /multiParamsCategoriesform/         controllers.MultiParamsCategoriesController.getForm()

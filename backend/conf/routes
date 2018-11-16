@@ -59,6 +59,8 @@ GET     /Collaboration/:name           controllers.FollowersStatisticsController
 ###### ADVANCE REQ STARTS HERE #######
 
 
+GET    /simpleCategories/:startYear/:endYear                     controllers.PaperCategoriesController.showCategories(startYear: String, endYear: String)
+GET /multiParamsCategories/:startYear/:endYear/:channels/:keywords    controllers.PaperCategoriesController.multiParamsCategories(startYear: String, endYear: String,channels:String, keywords:String)
 # Adv 1
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
