@@ -41,11 +41,6 @@ public class FindPapersbyAuthornameController extends Controller {
             //do stuff with exception
             iox.printStackTrace();
         }
-
-            // List<Paper> paperObjects = new ArrayList<Paper>();
-            // for (int p : year) {
-            //     paperObjects.add(new Paper(p));
-            // }
             return ok(year.toString()).as("applications/json");
         }
     }

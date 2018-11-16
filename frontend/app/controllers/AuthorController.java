@@ -25,7 +25,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AuthorController extends Controller {
     private APICall apiCall;
@@ -62,6 +64,7 @@ public class AuthorController extends Controller {
         for (int i = 0; i < nodes.size(); i++) {
             collaborators.add(nodes.get(i).findPath("name").asText());
         }
+        System.out.println(nodes);
 
         //TODO: Harsha, change the return type however suitable for your graph
         return ok(views.html.author.render(collaborators));
@@ -106,11 +109,6 @@ public class AuthorController extends Controller {
         String s = nodes.toString().replaceAll("\\\\","");
         String d= gson.toJson(s);
 
-        ObjectMapper mapper = new ObjectMapper();
-
-
-        System.out.println(d+"..............................");
-        // System.out.println(s+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
         return ok(views.html.researchesNetwork.render(nodes));
     }
@@ -184,9 +182,6 @@ public class AuthorController extends Controller {
         List<String> paperList = new ArrayList<String>();
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
-
-
-
 
                 String p = nodes.get(i).findPath("title").asText();
 
