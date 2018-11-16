@@ -166,7 +166,7 @@
           <div class="card horizontal">
             <div class="card-stacked">
               <div class="card-content">
-                <p>Collaboration Network</p>
+                <p>Showing a multi­depth collaboration network of the author</p>
               </div>
               <div class="card-action">
                 <a href='@routes.AuthorController.getResearcherNetwork()' >Collaboration Network</a>              </div>
@@ -179,7 +179,7 @@
           <div class="card horizontal">
             <div class="card-stacked">
               <div class="card-content">
-                <p>For each major publication channel (e.g., a journal or a conference) and a given year or year period, list the top 10 most cited papers.</p>
+                <p>For each major publication channel and a given year or year period, list the top 10 most cited papers.</p>
               </div>
               <div class="card-action">
                 <a href='@routes.PaperController.formTop20PapersWithYears' >Get Top10 Cited Papers</a>
@@ -199,31 +199,86 @@
                 <p>For each major publication channel list the top 20 cited papers.</p>
               </div>
               <div class="card-action">
-                <a href='routes.PaperController.getTop20Papers' >Get Top20 Cited Papers</a>              </div>
+                <a href='@routes.PaperController.getTop20Papers()' >Get Top20 Cited Papers</a>              </div>
             </div>
           </div>
       </div>
     
-<!--       <div class="col s12 m6">
-        <h4 class="header">Get Top 10 Citation Papers</h4>
+      <div class="col s12 m6">
+        <h4 class="header">Post Publication</h4>
           <div class="card horizontal">
             <div class="card-stacked">
               <div class="card-content">
-                <p>Get a Profile</p>
+                <p>Register Publication</p>
               </div>
               <div class="card-action">
-                <a href='@routes.PaperController.formTop20PapersWithYears' >Get a Profile</a>
+                <a href='@routes.PaperController.getForm' >Register Publication</a>
               </div>
             </div>
           </div>
       </div>
-    </div> -->
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Followers Statistics</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Followers Statistics</p>
+              </div>
+              <div class="card-action">
+                <a href="@routes.AuthorController.statsFollowers">Followers Statistics</a>              </div>
+            </div>
+          </div>
+      </div>
+    
+      <div class="col s12 m6">
+        <h4 class="header">User Followers Statistics</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>User Followers Statistics</p>
+              </div>
+              <div class="card-action">
+                <a href="@routes.AuthorController.getstatsUserFollowers">User Followers Statistics</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Dashboard</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Dashboard</p>
+              </div>
+              <div class="card-action">
+                <a href="@routes.DashboardController.getMyProfile">Dashboard</a> </div>
+            </div>
+          </div>
+      </div>
+    
+      <!-- <div class="col s12 m6">
+        <h4 class="header">User Followers Statistics</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>User Followers Statistics</p>
+              </div>
+              <div class="card-action">
+                ><a href="@routes.AuthorController.getstatsUserFollowers">User Followers Statistics</a>
+              </div>
+            </div>
+          </div>
+      </div> -->
+    </div>
   </div>
 
-
-   <!-- <div class="row center">
-  <h4 class="center">@username</h4>
-  <a href='@routes.UserProfileController.getForm()' class="waves-effect waves-light btn">Set your Profile</a>
-  <a href='@routes.ShowAuthorCardController.getForm' class="'waves-effect waves-light btn">Get a Profile</a>
 </body>
  }
