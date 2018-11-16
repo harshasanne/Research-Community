@@ -2,6 +2,8 @@ package controllers;
 
 import models.Author;
 import models.Paper;
+import org.neo4j.driver.v1.types.Node;
+import org.neo4j.driver.v1.types.Path;
 import utils.DBDriver;
 import org.neo4j.driver.v1.*;
 import play.mvc.*;
@@ -47,6 +49,48 @@ public class AuthorController extends Controller {
         }
     }
 
+    public Result getPath(String source, String destination) throws Exception {
+        source = URLDecoder.decode(source, "UTF-8");
+        destination = URLDecoder.decode(destination, "UTF-8");
+        String getPathQuery = "match (a:Author {authorName: '" + source + "'}), "
+          + "(b:Author {authorName: '" + destination + "'}), "
+          + "p = shortestPath((a)-[:COAUTHORS*]-(b)) return p;";
+        Driver driver = DBDriver.getDriver(this.config);
+        try ( Session session = driver.session() )
+        {
+            List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    List<String> values = new ArrayList<>();
+                    StatementResult result = tx.run(getPathQuery);
+                    while ( result.hasNext() )
+                    {
+                        Record record = result.next();
+                        Path path = record.get(0).asPath();
+                        boolean isStart = true;
+                        for (Path.Segment seg : path) {
+                            Node start = seg.start();
+                            Node end = seg.end();
+                            if (isStart) {
+                                values.add(start.get("authorName").asString());
+                                isStart = false;
+                            }
+                            values.add(end.get("authorName").asString());
+                        }
+                    }
+                    return values;
+                }
+            } );
+
+            List<Author> authorObjects = new ArrayList<Author>();
+            for (String a : authors) {
+                authorObjects.add(new Author(a));
+            }
+            return ok(new Gson().toJson(authorObjects));
+        }
+    }
     public Result getCollaborators(String name) throws Exception {
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (a:Author)-[:WRITES]->(p:Paper)<-[:WRITES]-(b:Author) where a.authorName = '"

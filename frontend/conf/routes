@@ -9,6 +9,9 @@ GET     /logout                     controllers.HomeController.logout
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
 GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
+GET     /path/:source/:destination  controllers.AuthorController.getPath(source: String, destination: String)
+GET     /path/form              controllers.AuthorController.getPathForm()
+
 # Find Papers by Author name
 GET     /authorName           controllers.AuthorController.publicationPerYear
 POST     /authorName           controllers.AuthorController.getPapersYear

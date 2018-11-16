@@ -1,0 +1,23 @@
+@(paths: String, source: String, destination: String)
+
+@main("Topics") {
+<body>
+<div class="container">
+    <div class="col s12 l10 offset-l1">
+        <div class="card-panel ">
+            <h4 class="form-signin-heading center">Showing the shortest path from @source to @destination</h4>
+
+            <div class= "card-panel ">
+                <table>
+                    <tr><th>shortest path between two authors</th></tr>
+                    <tr>
+                        <td>@paths</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+}

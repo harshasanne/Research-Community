@@ -70,6 +70,24 @@ public class AuthorController extends Controller {
         return ok(views.html.author.render(collaborators));
     }
 
+    public Result getPath(String source, String destination) throws Exception {
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/path/" + URLEncoder.encode(source, "UTF-8")
+            + "/" + URLEncoder.encode(destination, "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < nodes.size(); i++) {
+            sb.append(nodes.get(i).findPath("name").asText());
+            if (i != nodes.size() -  1) {
+                sb.append("<->");
+            }
+        }
+
+        return ok(views.html.shortestPath.render(sb.toString(), source, destination));
+    }
+
+    public Result getPathForm() throws Exception {
+        return ok(views.html.shortestPathInput.render("path", "Find shortest path between authors"));
+    }
+
     public Result publicationPerYear() {
         Form<Author> authorForm = formFactory.form(Author.class);
         Form<Paper> paperForm = formFactory.form(Paper.class);
