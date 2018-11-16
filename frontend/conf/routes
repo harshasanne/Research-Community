@@ -85,3 +85,7 @@ GET /top20years/form         controllers.PaperController.formTop20PapersWithYear
 GET /top20years/         controllers.PaperController.getTop20PapersWithYears()
 
 
+#Adv 14&15
+
+GET /recommend/:keyword      controllers.RecommendController.getRecommend(keyword: String)
+GET /recommend/form/         controllers.RecommendController.getForm()

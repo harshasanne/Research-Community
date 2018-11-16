@@ -63,10 +63,14 @@ GET     /Collaboration/:name           controllers.FollowersStatisticsController
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
 
+# Adv 9&10
+
 GET /top20/ controllers.FollowersStatisticsController.getTop20Papers()
 
 GET /top20years/:startYear/:endYear  controllers.FollowersStatisticsController.getTop20PapersWithYear(startYear: String, endYear: String)
 
 
+# Adv 14&15
 
+GET /recommend/:keyword/:username controllers.RecommendController.getRecommend(keyword: String, username: String)
 
