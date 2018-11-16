@@ -130,16 +130,13 @@ public class FollowersStatisticsController extends Controller {
             Record t = result.next();
             String d= gson.toJson(t.asMap());
             papers.add(d);
-            System.out.println(d+"there");
-
-            // papers.add(new Paper(t.get(0).asString(), t.get(1).asString(), t.get(2).asString(), t.get(3).asString(), t.get(4).asString()));
+            System.out.println(d);
         }
         return papers;
     }
     
     public Result getTop20Papers() throws Exception {
 
-        // name = URLDecoder.decode(name, "UTF-8");
         String query = "match(p:Paper) with p ORDER BY p.citationCount desc return p.journal as journal, collect({title:p.title,citation:p.citationCount})[0..20] as citaion";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
@@ -161,15 +158,13 @@ public class FollowersStatisticsController extends Controller {
                     return reqData;
                 }
             } );
-        System.out.println(papers+".................");
+        System.out.println(papers);
             return ok("{\"data\": "+papers+"}").as("application/json");
         }
     }
 
     public Result getCitaionCount() throws Exception {
-
        
-        // name = URLDecoder.decode(name, "UTF-8");
         String query = "match (p)where exists(p.journal) return (p.title) limit 100";
         System.out.println(query);
         Driver driver = DBDriver.getDriver(this.config);
@@ -184,7 +179,6 @@ public class FollowersStatisticsController extends Controller {
                     return paperList( tx, query );
                 }
             } );
-                 // String cIndex =getIndex("title");
 
             for (String title: papers){
                  String cIndex ="0";
@@ -245,7 +239,6 @@ public class FollowersStatisticsController extends Controller {
         return papers;
     }
     public Result getTop20PapersWithYear(String start, String end) throws Exception {
-        // name = URLDecoder.decode(name, "UTF-8");
 
         String query = "match(p:Paper) WHERE p.year>'"+start+"' and p.year<'"+end+"' with p ORDER BY p.citationCount desc return p.journal as Journal, p.year as year, collect({title:p.title,citationCount:p.citationCount})[0..10] as CitationData";
         System.out.println(query);
@@ -269,8 +262,7 @@ public class FollowersStatisticsController extends Controller {
                 }
             } );
             return ok("{\"data\": "+papers+"}").as("application/json");
-            
-            // return ok(new Gson().toJson(papers));
+
         }
     }
 

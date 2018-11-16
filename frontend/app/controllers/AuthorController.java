@@ -109,15 +109,6 @@ public class AuthorController extends Controller {
         String s = nodes.toString().replaceAll("\\\\","");
         String d= gson.toJson(s);
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        final JSONObject obj = new JSONObject(nodes);
-        System.out.println(obj+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
-        final JSONArray geodata = obj.getJSONArray("");
-        int n = geodata.length();
- 
-        System.out.println(n+"..............................");
-        // System.out.println(s+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
         return ok(views.html.researchesNetwork.render(nodes));
     }
@@ -191,9 +182,6 @@ public class AuthorController extends Controller {
         List<String> paperList = new ArrayList<String>();
         if(nodes != null) {
             for (int i = 0; i < nodes.size(); i++) {
-
-
-
 
                 String p = nodes.get(i).findPath("title").asText();
 

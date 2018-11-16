@@ -94,7 +94,7 @@ public class PaperController extends Controller {
         Integer count;
         String year;
         String title;
-        System.out.println(nodes+",,,,,,,,,,,,,,,,,,,,,");
+        System.out.println(nodes);
 
         List<Citaion> citeList=new ArrayList<>();
         for (JsonNode data : nodes.get("data")) {
