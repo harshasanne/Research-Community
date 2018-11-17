@@ -66,6 +66,12 @@ GET /multiParamsCategories/:startYear/:endYear/:channels/:keywords    controller
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
 
+# Adv 12
+GET     /map/author/:country/:keyword                  controllers.MapController.getAuthorLocations(country: String, keyword: String)
+
+# Adv 13
+GET     /map/paper/:conference/:startYear/:endYear    controllers.MapController.getPaperLocations(conference: String, startYear: Integer, endYear: Integer)
+
 # Adv 9&10
 
 GET /top20/ controllers.FollowersStatisticsController.getTop20Papers()
@@ -76,4 +82,3 @@ GET /top20years/:startYear/:endYear  controllers.FollowersStatisticsController.g
 # Adv 14&15
 
 GET /recommend/:keyword/:username controllers.RecommendController.getRecommend(keyword: String, username: String)
-
