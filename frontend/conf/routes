@@ -9,6 +9,9 @@ GET     /logout                     controllers.HomeController.logout
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
 GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
+GET     /path/:source/:destination  controllers.AuthorController.getPath(source: String, destination: String)
+GET     /path/form              controllers.AuthorController.getPathForm()
+
 # Find Papers by Author name
 GET     /authorName           controllers.AuthorController.publicationPerYear
 POST     /authorName           controllers.AuthorController.getPapersYear
@@ -87,3 +90,22 @@ GET     /map/author/:country/:keyword               controllers.MapController.ge
 # Adv 13
 GET     /map/paper/form                             controllers.MapController.getPaperForm()
 GET     /map/paper/:conference/:startYear/:endYear  controllers.MapController.getPaperLocations(conference: String, startYear: Integer, endYear: Integer)
+
+
+GET /simpleCategories/:startYear/:endYear controllers.PaperCategoriesController.showSimpleCategories(startYear: String, endYear: String)
+GET /simpleCategoriesform/         controllers.PaperCategoriesController.getForm()
+
+GET /multiParamsCategories/:startYear/:endYear/:channels/:keywords    controllers.MultiParamsCategoriesController.showCategories(startYear: String, endYear: String,channels:String, keywords:String)
+GET /multiParamsCategoriesform/         controllers.MultiParamsCategoriesController.getForm()
+
+GET /top20/         controllers.PaperController.getTop20Papers()
+
+GET /top20years/form         controllers.PaperController.formTop20PapersWithYears()
+GET /top20years/         controllers.PaperController.getTop20PapersWithYears()
+
+
+#Adv 14&15
+
+GET /recommend/:keyword      controllers.RecommendController.getRecommend(keyword: String)
+GET /recommend/form/         controllers.RecommendController.getForm()
+

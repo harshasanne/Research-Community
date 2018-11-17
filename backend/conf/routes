@@ -8,6 +8,7 @@ GET     /                           controllers.HomeController.index
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
 GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
+GET     /path/:source/:destination      controllers.AuthorController.getPath(source: String, destination: String)
 
 #Find Expert by keyword
 GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordController.getExpert(keyword: String)
@@ -59,6 +60,8 @@ GET     /Collaboration/:name           controllers.FollowersStatisticsController
 ###### ADVANCE REQ STARTS HERE #######
 
 
+GET    /simpleCategories/:startYear/:endYear                     controllers.PaperCategoriesController.showCategories(startYear: String, endYear: String)
+GET /multiParamsCategories/:startYear/:endYear/:channels/:keywords    controllers.PaperCategoriesController.multiParamsCategories(startYear: String, endYear: String,channels:String, keywords:String)
 # Adv 1
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
@@ -68,3 +71,14 @@ GET     /map/author/:country/:keyword                  controllers.MapController
 
 # Adv 13
 GET     /map/paper/:conference/:startYear/:endYear    controllers.MapController.getPaperLocations(conference: String, startYear: Integer, endYear: Integer)
+
+# Adv 9&10
+
+GET /top20/ controllers.FollowersStatisticsController.getTop20Papers()
+
+GET /top20years/:startYear/:endYear  controllers.FollowersStatisticsController.getTop20PapersWithYear(startYear: String, endYear: String)
+
+
+# Adv 14&15
+
+GET /recommend/:keyword/:username controllers.RecommendController.getRecommend(keyword: String, username: String)

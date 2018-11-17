@@ -1,24 +1,31 @@
 
-@( paperForm: Form[Paper])
+@(paperForm: Form[Paper])
     @import helper._
 
 @main("PublicationPerYear"){       
-    @helper.form(routes.AuthorController.getResearcherNetwork()) {
+    @helper.form(routes.PaperController.getTop20PapersWithYears()) {
 <body>
-
+  
 <div class="container">
   <div class="row">
      <div class="col s12 l10 offset-l1">
         <div class="card-panel">
-            <h4 class="form-signin-heading center">Collaboration Network</h4>
+            <h4 class="form-signin-heading center">Top 10 citations for each channel</h4>
               <form class="form-signin" action="/autho/" method="GET">
+                   
                    <div class="row">
                       <div class="input-field col s12">
-                          <input type="text" name="journalName" id="journalName" value="@paperForm("journalName").value">
-                           <label for="journalName" class="active">Collaboration Network</label>
+                          <input type="text" name="startYear" id="startYear" value="@paperForm("startYear").value">
+                           <label for="startYear"class="active">Start Year</label>
                       </div>
                     </div>
-                    <div class="row center">
+                   <div class="row">
+                      <div class="input-field col s12">
+                          <input type="text" name="endYear" id="endYear" value="@paperForm("endYear").value">
+                           <label for="endYear"class="active">End Year</label>
+                      </div>
+                    </div>
+                      <div class="row center">
                          <div class="input-field col s12">
                            <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create">
                                             Submit</button>
