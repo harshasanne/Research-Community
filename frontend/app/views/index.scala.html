@@ -193,6 +193,38 @@
       </div>
     </div>
   </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="header">Get Author Distribution</h4>
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>Get Author Distribution by country and keyword</p>
+            </div>
+            <div class="card-action">
+              <a href='@routes.MapController.getAuthorForm()' >Get author distribution</a>              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m6">
+        <h4 class="header">Get Paper Distribution</h4>
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>Get Paper Distribution by conference and time frame</p>
+            </div>
+            <div class="card-action">
+              <a href='@routes.MapController.getPaperForm()' >Get paper distribution</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="row">
       <div class="col s12 m6">
@@ -223,6 +255,44 @@
       </div>
     </div>
   </div>
+
+   <!-- <div class="row center">
+  <h4 class="center">@username</h4>
+  <a href='@routes.UserProfileController.getForm()' class="waves-effect waves-light btn">Set your Profile</a>
+  <a href='@routes.ShowAuthorCardController.getForm' class="'waves-effect waves-light btn">Get a Profile</a>
+
+</div> -->
+
+  <!-- <div class="row center">
+  <h4 class="center">@username</h4>
+  <br><br><br><br><br><br>
+  <div class="row center">
+    <a href='@routes.AuthorController.publicationPerYear' class="waves-effect waves-light btn">Author Histogram</a>
+    <br>
+    <br>
+    <a href='@routes.UserProfileController.getForm()' class="waves-effect waves-light btn">Set your Profile</a>
+      <br>
+      <br>
+    <a href='@routes.AuthorController.journalAuthors' class="waves-effect waves-light btn">Journal Histogram</a>
+      <br>
+      <br>
+      <a href='@routes.FindExpertByKeyWordController.getForm' class="waves-effect waves-light btn">Find Expert By Keyword</a>
+      <br>
+      <br>
+      <a href='@routes.FindTopicsByChannelController.getForm' class="waves-effect waves-light btn">All Topics of a Channel</a>
+      <br>
+      <br>
+      <a href='@routes.FindResearcherByKeywordController.getForm' class="waves-effect waves-light btn">Find Researchers By kewords and interests</a>
+      <br>
+      <br>
+      <a href='@routes.ShowKnowledgeCardController.getForm' class="waves-effect waves-light btn">Show meta data of a paper</a>
+      <br>
+      <br>
+      <a href='@routes.PaperController.getForm' class="'waves-effect waves-light btn">Post a publication</a>
+      <br>
+      <br>
+      <a href='@routes.ShowAuthorCardController.getForm' class="'waves-effect waves-light btn">Get a Profile</a>
+
   <div class="container">
     <div class="row">
       <div class="col s12 m6">
