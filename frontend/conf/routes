@@ -8,7 +8,8 @@ GET     /logout                     controllers.HomeController.logout
 
 # Authorship
 GET     /author/:name           controllers.AuthorController.getPapers(name: String)
-GET     /collaborator/:name     controllers.AuthorController.getCollaborators(name: String)
+GET     /collaborator/     controllers.AuthorController.collaboratorForm()
+POST     /collaborator/     controllers.AuthorController.getCollaborators()
 GET     /path/:source/:destination  controllers.AuthorController.getPath(source: String, destination: String)
 GET     /path/form              controllers.AuthorController.getPathForm()
 

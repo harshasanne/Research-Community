@@ -55,19 +55,36 @@ public class AuthorController extends Controller {
            paperList.add(p);
         }
     }
-        return ok(views.html.author.render(paperList));
+        return ok();
+    }
+    public Result collaboratorForm() {
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.collaborationForm.render(paperForm));
     }
 
-    public Result getCollaborators(String name) throws Exception {
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/collaborator" + "/" +URLEncoder.encode(name, "UTF-8"));
-        List<String> collaborators = new ArrayList<String>();
-        for (int i = 0; i < nodes.size(); i++) {
-            collaborators.add(nodes.get(i).findPath("name").asText());
+    public Result getCollaborators() throws Exception {
+        Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
+        String name = paperForm.get().journalName.replace(" ", "%20");
+        JsonNode p = apiCall.callAPI(Constants.BACKEND + "/collaborator" + "/" + name);
+        JsonNode n = p.get("data");
+        List<Node> nodes = new ArrayList<>();
+        List<Edge> edges = new ArrayList<>();
+        Map<String, List> map = new HashMap<>();
+        System.out.println(p+"...............");
+        for (JsonNode edge : n.get("relationships")) {
+            edges.add(new Edge(edge.get("startNode").asLong(), edge.get("endNode").asLong()));
         }
-        System.out.println(nodes);
+        for (JsonNode node : n.get("nodes")) {
+            JsonNode properties = node.get("properties");
+            nodes.add(new Node(properties.get("authorName").asText(), properties.get("index").asLong()));
+        }
+        map.put("nodes", nodes);
+        map.put("edges", edges);
 
-        //TODO: Harsha, change the return type however suitable for your graph
-        return ok(views.html.author.render(collaborators));
+        String d  = Json.toJson(map).toString();
+        
+
+        return ok(views.html.author.render(d));
     }
 
     public Result getPath(String source, String destination) throws Exception {
@@ -121,14 +138,26 @@ public class AuthorController extends Controller {
       public Result getResearcherNetwork() throws Exception {
         Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
         String name = paperForm.get().journalName.replace(" ", "%20");
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/Collaboration" + "/" + name);
-        Gson gson = new Gson();
+        JsonNode p = apiCall.callAPI(Constants.BACKEND + "/collaborator" + "/" + name);
+        JsonNode n = p.get("data");
+        List<Node> nodes = new ArrayList<>();
+        List<Edge> edges = new ArrayList<>();
+        Map<String, List> map = new HashMap<>();
+        System.out.println(n.get("relationships")+"...............");
+        for (JsonNode edge : n.get("relationships")) {
+            edges.add(new Edge(edge.get("startNode").asLong(), edge.get("endNode").asLong()));
+        }
+        for (JsonNode node : n.get("nodes")) {
+            JsonNode properties = node.get("properties");
+            nodes.add(new Node(properties.get("authorName").asText(), properties.get("index").asLong()));
+        }
+        map.put("nodes", nodes);
+        map.put("edges", edges);
+
+        String d  = Json.toJson(map).toString();
         
-        String s = nodes.toString().replaceAll("\\\\","");
-        String d= gson.toJson(s);
 
-
-        return ok(views.html.researchesNetwork.render(nodes));
+        return ok(views.html.researchesNetwork.render(d));
     }
      public Result statsFollowers() {
         Form<Author> authorForm = formFactory.form(Author.class);

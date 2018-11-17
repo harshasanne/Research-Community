@@ -17,13 +17,18 @@ import com.typesafe.config.Config;
 
 import javax.inject.Inject;
 import java.io.*;
+import java.util.concurrent.CompletionStage;
+import services.Neo4jApiService;
 
 public class AuthorController extends Controller {
     private Config config;
+    private final Neo4jApiService neo4jApiService;
+
 
     @Inject
-    public AuthorController(Config config) {
+    public AuthorController(Neo4jApiService neo4jApiService,Config config) {
         this.config = config;
+        this.neo4jApiService = neo4jApiService;
     }
 
     public Result getPapers(String name) throws Exception{
@@ -91,29 +96,38 @@ public class AuthorController extends Controller {
             return ok(new Gson().toJson(authorObjects));
         }
     }
-    public Result getCollaborators(String name) throws Exception {
+    
+    public CompletionStage<Result> getCollaborators(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
-        String query = "match (a:Author)-[:WRITES]->(p:Paper)<-[:WRITES]-(b:Author) where a.authorName = '"
-          + name + "' return b.authorName";
-        Driver driver = DBDriver.getDriver(this.config);
-        try ( Session session = driver.session() )
-        {
-            List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
-            {
-                @Override
-                public List<String> execute( Transaction tx )
-                {
-                    return matchNodes( tx, query );
-                }
-            } );
+        String query = "match (author:Author{authorName:'" + name + "'})-[coauth:CO_AUTHOR]-(coauthor) return collect(distinct(author)),collect(coauth),collect(distinct(coauthor))";
 
-            List<Author> authorObjects = new ArrayList<Author>();
-            for (String a : authors) {
-                authorObjects.add(new Author(a));
-            }
-            return ok(new Gson().toJson(authorObjects));
-        }
+        return neo4jApiService.callNeo4jApi(query, true).thenApply((response) -> {
+            return ok(response).as("application/json");
+        });
     }
+    // public Result getCollaborators(String name) throws Exception {
+    //     name = URLDecoder.decode(name, "UTF-8");
+    //     String query = "match (author:Author{authorName:'" + authorName + "'})-[coauth:CO_AUTHOR]-(coauthor) return collect(distinct(author)),collect(coauth),collect(distinct(coauthor))";
+
+    //     Driver driver = DBDriver.getDriver(this.config);
+    //     try ( Session session = driver.session() )
+    //     {
+    //         List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
+    //         {
+    //             @Override
+    //             public List<String> execute( Transaction tx )
+    //             {
+    //                 return matchNodes( tx, query );
+    //             }
+    //         } );
+
+    //         List<Author> authorObjects = new ArrayList<Author>();
+    //         for (String a : authors) {
+    //             authorObjects.add(new Author(a));
+    //         }
+    //         return ok(new Gson().toJson(authorObjects));
+    //     }
+    // }
 
     private static List<String> matchNodes(Transaction tx, String query)
     {

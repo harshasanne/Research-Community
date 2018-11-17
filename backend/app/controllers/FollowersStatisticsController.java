@@ -11,8 +11,7 @@ import java.net.URLDecoder;
 import utils.*;
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
-// import utils.DBDriver;
-// import utils.Neo4jApiService;
+import services.Neo4jApiService;
 
 import javax.inject.Inject;
 import org.jsoup.Jsoup;
@@ -21,14 +20,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 import models.Evolution;
+import java.util.concurrent.CompletionStage;
 
 public class FollowersStatisticsController extends Controller {
     private Config config;
-    // private final Neo4jApiService neo4jApiService;
+    private final Neo4jApiService neo4jApiService;
 
     @Inject
-    public FollowersStatisticsController(Config config) {
-        // this.neo4jApiService = neo4jApiService;
+    public FollowersStatisticsController(Neo4jApiService neo4jApiService,Config config) {
+        this.neo4jApiService = neo4jApiService;
         this.config = config;
     }
 
@@ -102,29 +102,15 @@ public class FollowersStatisticsController extends Controller {
 
         return stat;
     }
-    public Result getCollaboration( String name) throws Exception {
+    public CompletionStage<Result> getCollaboration(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (author:Author{authorName:'"+name+"'})-[coauth:CO_AUTHOR*1..2]-(coauthor)Return collect(distinct author), collect(coauth) as relations, collect(distinct coauthor) as nodes";
-        System.out.println(query);
-        // String d = neo4jApiService.callNeo4jApi(query,true);
-        Driver driver = DBDriver.getDriver(this.config);
 
-        try ( Session session = driver.session() )
-        {
-            List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
-            {
-                @Override
-                public List<String> execute( Transaction tx )
-                {
-                    return findRecentPaper( tx, query );
-                }
-            } );
-
-            return ok(new Gson().toJson(papers));
-
-            // return ok(d).as("application/json");
-        }
+        return neo4jApiService.callNeo4jApi(query, true).thenApply((response) -> {
+            return ok(response).as("application/json");
+        });
     }
+
     
      private static List<String> findRecentPaper(Transaction tx, String query)
     {
