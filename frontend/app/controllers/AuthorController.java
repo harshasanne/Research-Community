@@ -138,7 +138,7 @@ public class AuthorController extends Controller {
       public Result getResearcherNetwork() throws Exception {
         Form<Paper> paperForm = formFactory.form(Paper.class).bindFromRequest();
         String name = paperForm.get().journalName.replace(" ", "%20");
-        JsonNode p = apiCall.callAPI(Constants.BACKEND + "/collaborator" + "/" + name);
+        JsonNode p = apiCall.callAPI(Constants.BACKEND + "/Collaboration" + "/" + name);
         JsonNode n = p.get("data");
         List<Node> nodes = new ArrayList<>();
         List<Edge> edges = new ArrayList<>();
