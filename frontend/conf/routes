@@ -78,3 +78,12 @@ GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
 
 GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
 GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
+
+
+# Adv 12
+GET     /map/author/form                            controllers.MapController.getAuthorForm()
+GET     /map/author/:country/:keyword               controllers.MapController.getAuthorLocations(country: String, keyword: String)
+
+# Adv 13
+GET     /map/paper/form                             controllers.MapController.getPaperForm()
+GET     /map/paper/:conference/:startYear/:endYear  controllers.MapController.getPaperLocations(conference: String, startYear: Integer, endYear: Integer)

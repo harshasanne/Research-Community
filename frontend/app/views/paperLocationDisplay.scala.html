@@ -1,0 +1,25 @@
+@(locations: List[PaperLocation])
+
+@import helper._
+
+@main("Paper Location Distribution") {
+    <body>
+        <div class="container">
+            <div id="map" style="width:560px !important; height:560px;"></div>
+            <div style="display: none">
+                <table>
+                @for(location <- locations) {
+                    <tr>
+                        <td class="title">@location.getTitle()</td>
+                        <td class="address">@location.getAddress()</td>
+                    </tr>
+                }
+                </table>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src='@routes.Assets.versioned("javascripts/map.js")'></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnmczszk6HGSsc4JPJD4nhQK8HUXMumcA&callback=loadMap" type="text/javascript"></script>
+    </body>
+}
+

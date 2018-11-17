@@ -63,3 +63,8 @@ GET     /Collaboration/:name           controllers.FollowersStatisticsController
 
 GET /evolution/:channel/:startYear/:endYear controllers.EvolutionController.getTopics(channel: String,startYear: Integer, endYear: Integer)
 
+# Adv 12
+GET     /map/author/:country/:keyword                  controllers.MapController.getAuthorLocations(country: String, keyword: String)
+
+# Adv 13
+GET     /map/paper/:conference/:startYear/:endYear    controllers.MapController.getPaperLocations(conference: String, startYear: Integer, endYear: Integer)

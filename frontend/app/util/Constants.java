@@ -1,7 +1,7 @@
 package util;
 
 public class Constants {
-    public final static String BACKEND = "http://localhost:9001";
+    public final static String BACKEND = "http://localhost:9000";
 
     public final static String getAuthorPapersURL = Constants.BACKEND + "/author/";
     public final static String postPaperURL = Constants.BACKEND + "/paper";
@@ -11,6 +11,4 @@ public class Constants {
     public final static String unfollowURL = Constants.BACKEND + "/unfollow";
     public final static String userProfileURL = Constants.BACKEND + "/userProfile";
     public final static String loginURL = Constants.BACKEND + "/loginResult";
-
-
 }
