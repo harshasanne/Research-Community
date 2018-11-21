@@ -27,6 +27,19 @@
                     </ul>
                 </li>
                 <li class="dropdown">
+                    <a href="#" class="dropdown-trigger" data-target="dropdown-Networks">Networks</a>
+                    <ul class="dropdown-content" id="dropdown-Networks">
+                        <li><a href="@routes.AuthorController.collaboratorForm()">
+                            Direct Collaboration Network</a>
+                        </li>
+                        <li><a href="@routes.AuthorController.getResearcherNetwork()">
+                            Multi­depth Collaboration Network</a>
+                        </li>
+                        <li><a href='@routes.PaperController.top_k_papers_form()' >Top K Related Papers</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
                     <a href="#" class="dropdown-trigger" data-target="dropdown-publication">Publication</a>
                     <ul class="dropdown-content" id="dropdown-publication">
                         <li><a href="@routes.PaperController.getForm">
@@ -40,6 +53,7 @@
                         </li>
                     </ul>
                 </li>
+
             </ul>
             <ul class="right hide-on-med-and-down">
                 <li><a href="@routes.HomeController.logout">Logout</a></li>

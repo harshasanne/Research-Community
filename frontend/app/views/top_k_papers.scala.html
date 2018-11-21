@@ -1,0 +1,20 @@
+@(data: String)
+
+@main("Top-k Related Papers") {
+    <div class="ui text container main">
+        <h1 class="ui header">Find top-k related papers</h1>
+
+        <div id="data">@data</div>
+
+        <div class="alchemy" id="alchemy"></div>
+    </div>
+
+    <script src="@routes.Assets.versioned("javascripts/vendor.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/alchemy.js")"></script>
+
+    <script type="text/javascript">
+
+        const data = $('#data').text();
+        if (data) alchemy.begin({dataSource: JSON.parse(data)});
+    </script>
+}

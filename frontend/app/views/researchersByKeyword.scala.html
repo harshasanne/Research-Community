@@ -1,5 +1,4 @@
-@import com.fasterxml.jackson.databind.JsonNode
-@(jsonNode: JsonNode, keyword: String)
+@(names: List[String], keyword: String)
 
 
 @main("Expert") {
@@ -7,17 +6,10 @@
         <div class="container">
             <div class="col s12 l10 offset-l1">
                 <div class="card-panel">
-                    <h4 class="form-signin-heading center">Showing researcher of keyword @keyword</h4>
-                    <h5 class="center">@jsonNode.get(0).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(1).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(2).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(3).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(4).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(5).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(6).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(7).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(8).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(9).get("name").asText()</h5>
+                    <h4 class="form-signin-heading center">Showing Ideal Team for research topic @keyword</h4>
+                    @for(name <- names){
+                            <h5 class="center">@name</h5>
+                        }
                 </div>
             </div>
         </div>

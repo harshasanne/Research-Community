@@ -112,5 +112,41 @@ public class PaperController extends Controller {
 
         return ok(views.html.top10.render(citeList));
     }
+    public Result top_k_papers() throws Exception {
+    Paper paperForm = formFactory.form(Paper.class).bindFromRequest().get();
+
+        JsonNode p = apiCall.callAPI(Constants.BACKEND + "/getKrelated" + "/"+paperForm.title
+                +"/"+ paperForm.journalName );
+        JsonNode v = p.get("data");
+
+        List<Node> nodes = new ArrayList<>();
+        List<Edge> edges = new ArrayList<>();
+        Map<String, List> map = new HashMap<>();
+
+        System.out.println(v+"''''''''''''''''''''''''");
+            for (JsonNode edge : v.get("relationships")) {
+                edges.add(new Edge(edge.get("startNode").asLong(), edge.get("endNode").asLong()));
+            }
+            for (JsonNode node : v.get("nodes")) {
+                JsonNode properties = node.get("properties");
+                String label = node.get("labels").get(0).asText();
+                if (label.equals("Author")) {
+                    nodes.add(new Node(properties.get("authorName").asText(), node.get("id").asLong()));
+                } else if (label.equals("Paper")) {
+                    nodes.add(new Node(properties.get("title").asText(), node.get("id").asLong()));
+                }
+            }
+            map.put("nodes", nodes);
+            map.put("edges", edges);
+
+            return ok(views.html.top_k_papers.render(Json.toJson(map).toString()));
+        
+    }
+    public Result top_k_papers_form() {
+        Form<Paper> paperForm = formFactory.form(Paper.class);
+        return ok(views.html.top_k_papers_form.render(paperForm));
+    }
+
+    
 
 }

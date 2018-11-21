@@ -13,6 +13,9 @@ GET     /path/:source/:destination      controllers.AuthorController.getPath(sou
 #Find Expert by keyword
 GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordController.getExpert(keyword: String)
 
+#Find Team by keyword
+GET     /teamByKeyword/:keyword           controllers.FindExpertByKeyWordController.getTeam(keyword: String)
+
 #Find topics by channel
 GET     /topicsByChannel/:channel/:year           controllers.FindTopicsByChannelController.getTopics(channel: String,year: String)
 
@@ -82,3 +85,6 @@ GET /top20years/:startYear/:endYear  controllers.FollowersStatisticsController.g
 # Adv 14&15
 
 GET /recommend/:keyword/:username controllers.RecommendController.getRecommend(keyword: String, username: String)
+
+# Adv 8
+GET /getKrelated/:startYear/:endYear  controllers.FollowersStatisticsController.getKRelatedPapers(startYear: String, endYear: Integer)

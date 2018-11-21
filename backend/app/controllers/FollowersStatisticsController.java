@@ -12,7 +12,8 @@ import utils.*;
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
 import services.Neo4jApiService;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -106,10 +107,49 @@ public class FollowersStatisticsController extends Controller {
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (author:Author{authorName:'"+name+"'})-[coauth:CO_AUTHOR*1..2]-(coauthor)Return collect(distinct author), collect(coauth) as relations, collect(distinct coauthor) as nodes";
 
-        return neo4jApiService.callNeo4jApi(query, true).thenApply((response) -> {
+        return neo4jApiService.callNeo4jApi(query).thenApply((response) -> {
             return ok(response).as("application/json");
         });
     }
+
+    public CompletionStage<Result> getKRelatedPapers(String keywords, Integer k) throws IOException {
+        String[] keyworsArray = keywords.split(",");
+        for (int i = 0; i < keyworsArray.length; i++)
+            keyworsArray[i] = "'" + keyworsArray[i] + "'";
+        keywords = String.join(",", keyworsArray);
+
+        String queryForPapers = "match (k:Keyword) -[h:HAS_KEYWORD] - (p:Paper) where k.keyword in [" + keywords + "]with p, count(h) as related order by related desc return p.title as title limit "+k;
+
+        Driver driver = DBDriver.getDriver(this.config);
+
+        try ( Session session = driver.session() )
+        {
+            List<String> papers =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    return listPaper( tx, queryForPapers );
+                }
+            } );
+        
+        ObjectMapper mapper = new ObjectMapper();
+
+        StringBuilder papersString = new StringBuilder();
+
+        for (String paper : papers) {
+            JsonNode jsonResult = mapper.readTree(paper);
+            papersString.append(jsonResult.get("title")).append(",");
+
+        }
+        String papersWithComma = papersString.substring(0, papersString.length()-1);
+        String query = "match(p:Paper)-[w:WRITES]-(a:Author) where p.title in ["+papersWithComma.replaceAll("\"", "\\\\\"")+"] return collect(distinct(p)), collect(w), collect(distinct(a))";
+        return neo4jApiService.callNeo4jApi(query).thenApply((response) -> {
+            return ok(response).as("application/json");
+        });
+    }
+    }
+
 
     
      private static List<String> findRecentPaper(Transaction tx, String query)
@@ -123,7 +163,6 @@ public class FollowersStatisticsController extends Controller {
             Record t = result.next();
             String d= gson.toJson(t.asMap());
             papers.add(d);
-            System.out.println(d);
         }
         return papers;
     }
@@ -230,6 +269,17 @@ public class FollowersStatisticsController extends Controller {
             papers.add(result.next().get(0).asString());
         }
         return papers;
+    }
+    private static List<String> listPaper(Transaction tx, String query)
+    {
+                Gson gson = new Gson();
+                    List<String> reqData = new ArrayList<>();
+                    StatementResult result = tx.run(query);
+                    while (result.hasNext()) {
+                        Record record = result.next();
+                        reqData.add(gson.toJson(record.asMap()));
+                    }
+                    return reqData;
     }
     public Result getTop20PapersWithYear(String start, String end) throws Exception {
 

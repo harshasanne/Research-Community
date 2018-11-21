@@ -9,8 +9,8 @@
          @for(evo <- citaions){
                     
     <li>
-      <div class="collapsible-header"><h5 style="display: inline;">@evo.getTitle()</h5>
-        <h5 style="display: inline;">@evo.getYear()</h5></div>
+      <div class="collapsible-header"><h6 style="display: inline;">@evo.getTitle()</h6>
+        <h6 style="display: inline;"> -@evo.getYear()</h6></div>
       <div class="collapsible-body">
                         <table>
                             <tr><th>Title</th><th>CitationCount</th></tr>
@@ -32,14 +32,15 @@
 
     <div class="container">
         <div class="col s12 l10 offset-l1">
+            
             <div class="card-panel ">
-                <h4 class="form-signin-heading center">Showing top 10 citations for each channel</h4>
+                <h4 class="form-signin-heading center">Tabular View of the Top Cited Papers</h4>
 
 
                 @for(evo <- citaions){
                     <div class= "card-panel ">
-                    <h5 style="display: inline;">@evo.getTitle()</h5>
-                    <h5 style="display: inline;">@evo.getYear()</h5>
+                    <h6 style="display: inline;">@evo.getTitle()</h6>
+                    <h6 style="display: inline;">@evo.getYear()</h6>
 
                     <table>
                         <tr><th>Title</th><th>CitationCount</th></tr>

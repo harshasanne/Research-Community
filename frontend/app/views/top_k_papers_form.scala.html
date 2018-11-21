@@ -1,0 +1,45 @@
+
+@(paperForm: Form[Paper])
+    @import helper._
+
+@main("top_k_papers"){       
+    @helper.form(routes.PaperController.top_k_papers()) {
+<body>
+  
+<div class="container">
+  <div class="row">
+     <div class="col s12 l10 offset-l1">
+        <div class="card-panel">
+            <h4 class="form-signin-heading center">Top 10 citations for each channel</h4>
+              <form class="form-signin" action="/autho/" method="GET">
+                   
+                   <div class="row">
+                      <div class="input-field col s12">
+                          <input type="text" name="title" id="title" value="@paperForm("title").value">
+                           <label for="title"class="active">Keywords</label>
+                      </div>
+                    </div>
+                   <div class="row">
+                      <div class="input-field col s12">
+                          <input type="text" name="journalName" id="journalName" value="@paperForm("journalName").value">
+                           <label for="journalName"class="active">Value of K</label>
+                      </div>
+                    </div>
+                      <div class="row center">
+                         <div class="input-field col s12">
+                           <button type="submit" class="btn waves-effect waves-light blue darken-2" id="create">
+                                            Submit</button>
+                         </div>
+                      </div>
+                  </div>
+                </form>
+          </div>
+      </div>
+  </div>
+</div>
+ </body>
+}
+     
+}
+
+

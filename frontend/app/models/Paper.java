@@ -1,7 +1,7 @@
 package models;
 
 public class Paper {
-    private String title;
+    public String title;
     public String journalName;
 
     public int startYear;
