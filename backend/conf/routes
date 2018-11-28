@@ -16,6 +16,9 @@ GET     /expertByKeyword/:keyword           controllers.FindExpertByKeyWordContr
 #Find Team by keyword
 GET     /teamByKeyword/:keyword           controllers.FindExpertByKeyWordController.getTeam(keyword: String)
 
+#Find Network by keyword
+GET     /networkByKeyword/:keyword        controllers.FindExpertByKeyWordController.getNetwork(keyword: String)
+
 #Find topics by channel
 GET     /topicsByChannel/:channel/:year           controllers.FindTopicsByChannelController.getTopics(channel: String,year: String)
 

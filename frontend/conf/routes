@@ -83,6 +83,9 @@ GET /evolution/form/         controllers.EvolutionByChannelController.getForm()
 GET /researchersByKeyword/:keyword controllers.FindResearcherByKeywordController.getResearchers(keyword: String)
 GET /researchersByKeyword/form/         controllers.FindResearcherByKeywordController.getResearchersForm()
 
+# Adv 3
+GET /networkByKeyword/:keyword                      controllers.FindExpertByKeyWordController.getNetwork(keyword: String)
+GET /networkByKeyword/network/form                          controllers.FindExpertByKeyWordController.getKeywordNetworkForm()
 
 # Adv 12
 GET     /map/author/form                            controllers.MapController.getAuthorForm()
