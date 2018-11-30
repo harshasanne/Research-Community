@@ -1,0 +1,1 @@
+Interacting with the SOA-Based Internet of Things: Discovery Query Selection and On-Demand Provisioning of Web Services.

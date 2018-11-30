@@ -1,0 +1,1 @@
+Automatic Web Service Composition Based on Logical Inference of Horn Clauses in Petri Net Models.

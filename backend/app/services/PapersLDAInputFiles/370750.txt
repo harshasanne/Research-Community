@@ -1,0 +1,1 @@
+Illustrating Conflict of Interest Assertions in WS-Policy with a Financial Application Example.

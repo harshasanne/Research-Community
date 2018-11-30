@@ -1,0 +1,1 @@
+Enabling re-negotiations of SLA by extending the WS-Agreement specification.

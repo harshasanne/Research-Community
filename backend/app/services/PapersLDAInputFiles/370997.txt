@@ -1,0 +1,1 @@
+Deriving Transactional Properties of CompositeWeb Services.

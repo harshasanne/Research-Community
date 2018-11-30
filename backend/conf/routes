@@ -49,7 +49,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /showKnowledgeCard/:title           controllers.ShowKnowledgeCardController.getCard(title: String)
 GET     /showAuthorCard/:name           controllers.ShowAuthorCardController.getCard(name: String)
 
-GET     /ResearcherByKeyword/:keyword           controllers.FindResearcherByKeywordController.getResearcher(keyword: String)
+GET     /ResearcherByKeyword/:keyword/:authorName         controllers.FindResearcherByKeywordController.getResearcher(keyword: String,authorName: String)
 
 POST    /loginResult                      controllers.UserLoginController.createUser()
 

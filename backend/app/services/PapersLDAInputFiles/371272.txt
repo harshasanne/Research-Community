@@ -1,0 +1,1 @@
+Specify and Compose Web Services by TLA.This paper introduces the concept of Temporal Logic of Actions (short for TLA), with which we can formally specify the behavior of a service, and compose Web services. The approach is demonstrated by an example. A services composition algorithm is presented.

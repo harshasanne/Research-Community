@@ -1,0 +1,1 @@
+Panel Session 3: Event-Driven Architectures and Complex Event Processing.

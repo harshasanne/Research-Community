@@ -1,0 +1,1 @@
+Probabilistic QoS and soft contracts for transaction based Web services.

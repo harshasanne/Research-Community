@@ -1,0 +1,1 @@
+On Service Orchestration in Mobile Computing Environments.In this paper, we present a realistic but high-level service orchestration model where services are dynamically orchestrated with respect to the mobile behavior of nodes that provide them.

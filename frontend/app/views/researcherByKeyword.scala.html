@@ -7,10 +7,16 @@
         <div class="container">
             <div class="col s12 l10 offset-l1">
                 <div class="card-panel z-depth-0">
-                    <h4 class="form-signin-heading center">Showing researcher of keyword @keyword</h4>
-                    <h5 class="center">@jsonNode.get(0).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(1).get("name").asText()</h5>
-                    <h5 class="center">@jsonNode.get(2).get("name").asText()</h5>
+                    <h4 class="form-signin-heading center">Showing researcher of keywords @keyword</h4>
+                    <h5 class="center">@jsonNode.get("authorNames").get(0).asText()</h5>
+                    <h5 class="center">@jsonNode.get("authorNames").get(1).asText()</h5>
+                    <h5 class="center">@jsonNode.get("authorNames").get(2).asText()</h5>
+
+                    <p class="form-signin-heading center">People who visited this item also visited
+                        @jsonNode.get("searchedKeys").get(0).asText(),
+                        @jsonNode.get("searchedKeys").get(1).asText(),
+                        @jsonNode.get("searchedKeys").get(2).asText()
+                    </p>
                 </div>
             </div>
         </div>

@@ -1,0 +1,1 @@
+Adaptive Service Agreement and Process Management.The ASAPM project aims at developing new techniques, mechanisms and software solutions for enablement of flexible, dynamic and robust management of serviceoriented application provision processes to ensure collective functionality, end-to-end QoS and stateful coordination of complex services.

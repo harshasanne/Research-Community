@@ -1,0 +1,1 @@
+A Hierarchical Model for TransactionalWeb Service Composition in P2P Networks.

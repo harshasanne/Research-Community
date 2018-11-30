@@ -1,0 +1,1 @@
+Grid Resource Specification Language based on XML and its usage in Resource Registry Meta-Service.
