@@ -1,1 +1,0 @@
-USDL: A Service-Semantics Description Language for Automatic Service Discovery and Composition.

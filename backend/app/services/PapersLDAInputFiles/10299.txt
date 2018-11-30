@@ -1,1 +1,0 @@
-Event-Driven Architectures and Complex Event Processing.

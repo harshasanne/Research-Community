@@ -1,1 +1,0 @@
-Workflow Execution History Data Management: A Framework.

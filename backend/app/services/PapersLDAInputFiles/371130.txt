@@ -1,1 +1,0 @@
-Towards automatic mediation of OWL-S process models.

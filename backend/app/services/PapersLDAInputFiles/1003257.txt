@@ -1,1 +1,0 @@
-Security System for Distributed Business Applications.

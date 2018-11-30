@@ -1,1 +1,0 @@
-ServiceJ A Java Extension for ProgrammingWeb Services Interactions.

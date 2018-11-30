@@ -1,1 +1,0 @@
-Extensible Architecture for High-Performance Scalable Reliable Publish-Subscribe Eventing and Notification.

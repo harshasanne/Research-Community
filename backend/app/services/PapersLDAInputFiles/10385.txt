@@ -1,1 +1,0 @@
-Consultation Model based Services Application Model and its Charging Algorithm.

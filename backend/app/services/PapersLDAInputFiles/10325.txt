@@ -1,1 +1,0 @@
-Checking e-service consistency using Description Logics.

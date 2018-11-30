@@ -1,1 +1,0 @@
-Merging overlapping orchestrations: an application to the Bronze Standard medical application.

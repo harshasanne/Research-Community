@@ -1,1 +1,0 @@
-Towards Web Services Standards for Fault Tolerance Capabilities in Inter-organizational Workflow Management Systems.

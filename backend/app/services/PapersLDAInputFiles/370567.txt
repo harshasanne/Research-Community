@@ -1,1 +1,0 @@
-A Peer to Peer (P2P) Dynamic Workflow Management System Based on Web Services.

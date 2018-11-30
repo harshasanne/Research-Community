@@ -1,1 +1,0 @@
-DoCoSOC- Domain Configurable Service-Oriented Computing.

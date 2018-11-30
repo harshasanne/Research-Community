@@ -1,1 +1,0 @@
-WSCE: A Crawler Engine for Large-Scale Discovery of Web Services.

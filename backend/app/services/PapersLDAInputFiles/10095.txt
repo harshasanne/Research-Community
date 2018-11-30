@@ -1,1 +1,0 @@
-Comparison of Continuous Flow Transmission Strategies over a Distributed Platform Based on Soap.

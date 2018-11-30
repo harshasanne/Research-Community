@@ -1,1 +1,0 @@
-A Framework for Discovering Web Services with Desired Quality of Services Attributes.

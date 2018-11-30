@@ -1,1 +1,0 @@
-A Mathematical Programming Approach for Server Consolidation Problems in Virtualized Data Centers.

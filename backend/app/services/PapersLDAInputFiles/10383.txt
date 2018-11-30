@@ -1,1 +1,0 @@
-BTx-Net: A Token Based Dynamic Model for Supporting Consistent Collaborative Business Transactions.

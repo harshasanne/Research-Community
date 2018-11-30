@@ -1,1 +1,0 @@
-A Dependable Infrastructure for Cooperative Web Services Coordination.

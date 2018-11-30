@@ -1,1 +1,0 @@
-From Web Services to Virtual Services - The Architecture and Patterns for 3D Services.

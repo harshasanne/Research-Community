@@ -1,1 +1,0 @@
-Editorial: Context-Aware Application Integration and Transactional Behaviors.

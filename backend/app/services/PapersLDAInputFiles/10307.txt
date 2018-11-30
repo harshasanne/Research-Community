@@ -1,1 +1,0 @@
-A Service-Oriented Analysis and Design Approach to Developing Adaptable Services.

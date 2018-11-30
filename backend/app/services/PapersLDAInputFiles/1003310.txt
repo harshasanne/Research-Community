@@ -1,1 +1,0 @@
-Automated Situation-Aware Service Composition in Service-Oriented Computing.

@@ -1,1 +1,0 @@
-Application of Linear Logic to Web Service Composition.

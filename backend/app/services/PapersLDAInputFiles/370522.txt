@@ -1,1 +1,0 @@
-Explicit Representation of Service Semantics: Towards Automated Composition Through a Dynamically Re-Configurable Architectural Style for On Demand Computing.

@@ -1,1 +1,0 @@
-Managing Semantic Metadata for Web/Grid Services.

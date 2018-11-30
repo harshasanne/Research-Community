@@ -1,1 +1,0 @@
-Describing Semantic Web Services: From UML to OWL-S.

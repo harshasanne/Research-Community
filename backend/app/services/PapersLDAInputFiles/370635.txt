@@ -1,1 +1,0 @@
-Proteus: A System for Dynamically Composing and Intelligently Executing Web Services.

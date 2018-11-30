@@ -1,1 +1,0 @@
-Pattern based Declarative Constraint Solution for Model-Driven Service Deployment.

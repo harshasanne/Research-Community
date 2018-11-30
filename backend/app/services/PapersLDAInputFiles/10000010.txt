@@ -1,1 +1,0 @@
-Managing the Replaceability of Web Services Using Underlying Semantics.

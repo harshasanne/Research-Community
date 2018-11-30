@@ -1,1 +1,0 @@
-Enforcing Integrity of Execution in Distributed Workflow Management Systems.

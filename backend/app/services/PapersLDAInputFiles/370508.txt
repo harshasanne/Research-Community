@@ -1,1 +1,0 @@
-A Web Service Composition and Deployment Framework for Scientific Workflows.This poster presents the web services framework in theKepler scientific workflow system and illustrates themwith a real-world example.

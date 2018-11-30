@@ -1,1 +1,0 @@
-A Semantic Web Services-based Infrastructure for Context-Adaptive Process Support.

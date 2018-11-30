@@ -1,1 +1,0 @@
-An Access Control System for Web Service Compositions.

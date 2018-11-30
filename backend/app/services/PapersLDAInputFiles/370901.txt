@@ -1,1 +1,0 @@
-Integration of SIP VoIP and Messaging Systems with AccessGrid and H.323.

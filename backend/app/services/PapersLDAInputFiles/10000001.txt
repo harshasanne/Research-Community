@@ -1,1 +1,0 @@
-Flexible Probabilistic QoS Management of Orchestrations.

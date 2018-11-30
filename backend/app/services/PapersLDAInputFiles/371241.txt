@@ -1,1 +1,0 @@
-WS-CDL+: An Extended WS-CDL Execution Engine for Web Service Collaboration.

@@ -1,1 +1,0 @@
-Learning Ontologies to Improve the Quality of Automatic Web Service Matching.This paper presents a novel technique that significantly improves the quality of semantic Web service matching by (1) automatically generating ontologies based on Web service descriptions and (2) using these ontologies to guide the mapping between Web services.

@@ -1,1 +1,0 @@
-Capacity Management and Demand Prediction for Next Generation Data Centers.

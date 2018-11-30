@@ -1,1 +1,0 @@
-Scalable Web Service Discovery on P2P Overlay Network.

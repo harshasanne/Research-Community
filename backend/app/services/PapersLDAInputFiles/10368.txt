@@ -1,1 +1,0 @@
-iPOJO: an Extensible Service-Oriented Component Framework.

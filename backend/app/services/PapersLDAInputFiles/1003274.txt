@@ -1,1 +1,0 @@
-Architectural Foundations of WSRF.NET.

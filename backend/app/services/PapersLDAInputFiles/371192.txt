@@ -1,1 +1,0 @@
-A Situation-aware Access Control based Privacy-Preserving Service Matchmaking Approach for Service-Oriented Architecture.

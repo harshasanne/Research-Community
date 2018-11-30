@@ -1,1 +1,0 @@
-A General Service-Oriented Grid Computing Framework for Global Optimization Problem Solving.
