@@ -42,6 +42,7 @@ private com.typesafe.config.Config config;
 
 
         String username = user.getUsername();
+        System.out.println("login Username:" + username);
         String pwd = user.getPassword();
 
         Long currentTime = System.currentTimeMillis();

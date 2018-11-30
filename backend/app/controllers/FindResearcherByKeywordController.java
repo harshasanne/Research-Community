@@ -30,7 +30,7 @@ public class FindResearcherByKeywordController extends Controller{
 
     public Result getResearcher(String keywords,String authorName) throws Exception{
         keywords = URLDecoder.decode(keywords, "UTF-8");
-
+System.out.println("queryAuthorName:" + authorName);
 
         String[] tempList= keywords.split(",");
         ArrayList<String> keyList = new ArrayList();
@@ -38,6 +38,9 @@ public class FindResearcherByKeywordController extends Controller{
         {
             keyList.add(k);
         }
+
+
+        String query0 = "MATCH(a:Author{authorName:'" + authorName +"'}) return a.RI";
 
         String query1 = "MATCH (author:Author)-[:WRITES]->(p:Paper)-[r:HAS_KEYWORD]->(key:Keyword) WHERE key.keyword IN {keyList} RETURN author.authorName as author,COUNT(p.title) as cnt  ORDER BY cnt DESC Limit 5";
 
@@ -55,12 +58,33 @@ public class FindResearcherByKeywordController extends Controller{
         Driver driver = DBDriver.getDriver(this.config);
         try ( Session session = driver.session() )
         {
+            List<String> RIList =  session.readTransaction( new TransactionWork<List<String>>()
+            {
+                @Override
+                public List<String> execute( Transaction tx )
+                {
+                    return findRI( tx, query0 );
+                }
+            } );
+
+            ArrayList<String> newKeyList = new ArrayList<>();
+            newKeyList.addAll(keyList);
+            if(RIList.get(0)== null) {
+                newKeyList.addAll(RIList);
+            }
+            Set<String> hsKey = new HashSet<>();
+            hsKey.addAll(newKeyList);
+            newKeyList.clear();
+            newKeyList.addAll(hsKey);
+            System.out.println("newKeyList: " + newKeyList);
+
+
             List<String> authors =  session.readTransaction( new TransactionWork<List<String>>()
             {
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return findResearcher( tx, query1, "keyList",keyList );
+                    return findResearcher( tx, query1, "keyList",newKeyList );
                 }
             } );
             System.out.println("reauthors:" + authors);
@@ -142,6 +166,24 @@ public class FindResearcherByKeywordController extends Controller{
 
             //return ok(new Gson().toJson(authorObjects));
         }
+    }
+
+    private static List<String> findRI(Transaction tx, String query)
+    {
+        List<String> RIs = new ArrayList<>();
+        StatementResult result = tx.run( query);
+
+
+        while ( result.hasNext() )
+        {
+
+            //System.out.println(result.next());
+            String resString = result.next().get(0).asString();
+            RIs.add(resString);
+            //System.out.println(resString);
+            //System.out.println(result.next().get(0).asString());
+        }
+        return RIs;
     }
 
     private static List<String> findResearcher(Transaction tx, String query, String paramsName, ArrayList keyList)
