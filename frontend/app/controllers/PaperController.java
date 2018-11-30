@@ -97,6 +97,7 @@ public class PaperController extends Controller {
         System.out.println(nodes);
 
         List<Citaion> citeList=new ArrayList<>();
+        if(nodes!=null){
         for (JsonNode data : nodes.get("data")) {
             title = data.get("Journal").asText();
             year = data.get("year").asText();
@@ -108,6 +109,7 @@ public class PaperController extends Controller {
             }
             citeList.add(new Citaion(title,year,keywordList));
         }
+    }
 
 
         return ok(views.html.top10.render(citeList));
@@ -122,8 +124,7 @@ public class PaperController extends Controller {
         List<Node> nodes = new ArrayList<>();
         List<Edge> edges = new ArrayList<>();
         Map<String, List> map = new HashMap<>();
-
-        System.out.println(v+"''''''''''''''''''''''''");
+        if(v!=null){
             for (JsonNode edge : v.get("relationships")) {
                 edges.add(new Edge(edge.get("startNode").asLong(), edge.get("endNode").asLong()));
             }
@@ -138,7 +139,7 @@ public class PaperController extends Controller {
             }
             map.put("nodes", nodes);
             map.put("edges", edges);
-
+        }
             return ok(views.html.top_k_papers.render(Json.toJson(map).toString()));
         
     }

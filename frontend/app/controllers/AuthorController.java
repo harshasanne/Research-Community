@@ -143,7 +143,7 @@ public class AuthorController extends Controller {
         List<Node> nodes = new ArrayList<>();
         List<Edge> edges = new ArrayList<>();
         Map<String, List> map = new HashMap<>();
-        System.out.println(n.get("relationships")+"...............");
+        if(n!=null){
         for (JsonNode edge : n.get("relationships")) {
             edges.add(new Edge(edge.get("startNode").asLong(), edge.get("endNode").asLong()));
         }
@@ -153,7 +153,7 @@ public class AuthorController extends Controller {
         }
         map.put("nodes", nodes);
         map.put("edges", edges);
-
+    }
         String d  = Json.toJson(map).toString();
         
 

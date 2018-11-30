@@ -44,9 +44,6 @@ public class DashboardController extends Controller {
     public Result getMyProfile() throws Exception {
 
         String username = session("username");
-        username = username == null ? "" : username;
-        username = "cxy";
-        System.out.println(username);
         System.out.println(Constants.getFollowingNewsURL + URLEncoder.encode(username, "UTF-8"));
 
         JsonNode nodes = apiCall.callAPI(Constants.getFollowingNewsURL + URLEncoder.encode(username, "UTF-8"));
