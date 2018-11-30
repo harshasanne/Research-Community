@@ -1,12 +1,12 @@
 @(data: String)
 
 @main("Top-k Related Papers") {
-    <div class="ui text container main">
-        <h1 class="ui header">Find top-k related papers</h1>
+    <div class="container ">
+        <h4 class="center">Find top-k related papers</h4>
 
-        <div id="data">@data</div>
+        <div id="data" style="display: none;">@data</div>
 
-        <div class="alchemy" id="alchemy"></div>
+        <div class="alchemy" id="alchemy" style="height: 700px;"></div>
     </div>
 
     <script src="@routes.Assets.versioned("javascripts/vendor.js")"></script>
