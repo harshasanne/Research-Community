@@ -26,7 +26,9 @@ public class FindResearcherByKeywordController extends Controller{
 
     public Result getResearcher(String keyword) throws Exception {
         // TODO: We shouldn't hard code url here. someone needs to refactor this code to Constants.java
-        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/ResearcherByKeyword" + "/" + URLEncoder.encode(keyword, "UTF-8"));
+        String username = session().get("username");
+        JsonNode nodes = apiCall.callAPI(Constants.BACKEND + "/ResearcherByKeyword" + "/" + URLEncoder.encode(keyword, "UTF-8")
+                + "/" + URLEncoder.encode(username, "UTF-8"));
         // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
         //String jstring = nodes.toString();
         System.out.println(nodes);

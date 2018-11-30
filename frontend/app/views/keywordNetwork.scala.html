@@ -1,0 +1,36 @@
+@( networkList: List[KeywordNetwork])
+@import helper._
+
+@main("Keywords Network"){
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 l10 offset-l1">
+            <div class="card-panel">
+                <h4 class="form-signin-heading center">Keywords linked by papers</h4>
+                <div class="row">
+                    <table>
+                        <tr>
+                            <th>paper</th>
+                            <th>authors</th>
+                        </tr>
+                        @for(i<- networkList) {
+
+                        <tr>
+                            <td>@i.getTitle()</td>
+                            <td>@i.getAuthors()</td>
+                        </tr>
+                        }
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+}
