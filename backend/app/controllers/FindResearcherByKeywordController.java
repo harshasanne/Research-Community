@@ -139,7 +139,7 @@ System.out.println("queryAuthorName:" + authorName);
             for (String a : authors) {
                 authorObjects.add(new Author(a));
             }
-            //System.out.println(authorObjects.get(0));
+
 
             JsonArray keysArray = new JsonArray();
             for(String k: searchedKeys)
