@@ -32,6 +32,8 @@ public class FindResearcherByKeywordController extends Controller{
                 + "/" + username);
         // TODO: Harsha, you may want to change the return value a bit to fit into your frontend UI
         //String jstring = nodes.toString();
+        System.out.println("exists:" + nodes.get("searchedKeys").size());
+
         System.out.println(nodes);
 
 

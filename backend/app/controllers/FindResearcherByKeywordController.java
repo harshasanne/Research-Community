@@ -45,7 +45,7 @@ System.out.println("queryAuthorName:" + authorName);
         String query1 = "MATCH (author:Author)-[:WRITES]->(p:Paper)-[r:HAS_KEYWORD]->(key:Keyword) WHERE key.keyword IN {keyList} RETURN author.authorName as author,COUNT(p.title) as cnt  ORDER BY cnt DESC Limit 5";
 
         String query3 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE sk.keyword IN {keyList} RETURN author.authorName";
-        String query4 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE author.authorName IN {keyAuthorList} RETURN sk.keyword, count(sk.keyword) as cnt  ORDER BY cnt DESC Limit 5";
+        String query4 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE author.authorName IN {keyAuthorList} RETURN sk.keyword, sk.cnt as cnt ORDER BY cnt DESC Limit 5";
 
         System.out.println(query1);
 
@@ -128,6 +128,11 @@ System.out.println("queryAuthorName:" + authorName);
                 }
             } );
 
+
+            Set<String> hsSearchedKey = new HashSet<>();
+            hsSearchedKey.addAll(searchedKeys);
+            searchedKeys.clear();
+            searchedKeys.addAll(hsSearchedKey);
             System.out.println(searchedKeys);
 
             List<Author> authorObjects = new ArrayList<Author>();
@@ -150,21 +155,19 @@ System.out.println("queryAuthorName:" + authorName);
                 authorsArray.add(element);
             }
 
-            // System.out.println("jarray:" + jArray);
+
             JsonParser parser = new JsonParser();
             JsonObject obj = new JsonObject();
 
-            //obj = parser.parse(authors.get(0)).getAsJsonObject();
             obj.add("searchedKeys", keysArray);
             obj.add("authorNames", authorsArray);
 
-            //System.out.println(obj.toString());
+
             System.out.println("jarray:" + keysArray);
             System.out.println("obj:" + obj);
-            //System.out.println("gson :" + gson);
+
             return ok(new Gson().toJson(obj)).as("applications/json");
 
-            //return ok(new Gson().toJson(authorObjects));
         }
     }
 
