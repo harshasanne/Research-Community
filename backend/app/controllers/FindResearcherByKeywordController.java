@@ -45,7 +45,7 @@ System.out.println("queryAuthorName:" + authorName);
         String query1 = "MATCH (author:Author)-[:WRITES]->(p:Paper)-[r:HAS_KEYWORD]->(key:Keyword) WHERE key.keyword IN {keyList} RETURN author.authorName as author,COUNT(p.title) as cnt  ORDER BY cnt DESC Limit 5";
 
         String query3 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE sk.keyword IN {keyList} RETURN author.authorName";
-        String query4 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE author.authorName IN {keyAuthorList} RETURN sk.keyword, sk.cnt as cnt ORDER BY cnt DESC Limit 5";
+        String query4 = "MATCH (author:Author)-[s:searched]->(sk:searchedKey) WHERE author.authorName IN {keyAuthorList} RETURN sk.keyword, sk.cnt as cnt ORDER BY cnt DESC";
 
         System.out.println(query1);
 
@@ -127,13 +127,14 @@ System.out.println("queryAuthorName:" + authorName);
                     return findSearchedKeys( tx, query4, "keyAuthorList",keyAuthorList );
                 }
             } );
+            System.out.println("sk:" + searchedKeys);
+
+            Set<String> setKeys = new LinkedHashSet(searchedKeys);
 
 
-            Set<String> hsSearchedKey = new HashSet<>();
-            hsSearchedKey.addAll(searchedKeys);
-            searchedKeys.clear();
-            searchedKeys.addAll(hsSearchedKey);
-            System.out.println(searchedKeys);
+            setKeys.removeAll(new HashSet<String>(newKeyList));
+
+           // System.out.println(searchedKeys);
 
             List<Author> authorObjects = new ArrayList<Author>();
             for (String a : authors) {
@@ -142,7 +143,7 @@ System.out.println("queryAuthorName:" + authorName);
 
 
             JsonArray keysArray = new JsonArray();
-            for(String k: searchedKeys)
+            for(String k: setKeys)
             {
                 JsonPrimitive element = new JsonPrimitive(k);
                 keysArray.add(element);
@@ -156,11 +157,12 @@ System.out.println("queryAuthorName:" + authorName);
             }
 
 
-            JsonParser parser = new JsonParser();
+            //JsonParser parser = new JsonParser();
             JsonObject obj = new JsonObject();
 
             obj.add("searchedKeys", keysArray);
             obj.add("authorNames", authorsArray);
+
 
 
             System.out.println("jarray:" + keysArray);
