@@ -1,0 +1,1 @@
+Logic-based Management of Security in Web Services.

@@ -18,7 +18,7 @@ public class FindTopicsByChannelController extends Controller {
                 "RETURN k.keyword, count(k.keyword) as c\n" +
                 "ORDER BY c desc";
         Driver driver = GraphDatabase.driver(
-          "bolt://localhost:7687", AuthTokens.basic("neo4j", "123456"));
+          "bolt://localhost:7687", AuthTokens.basic("neo4j", "12345"));
         try ( Session session = driver.session() )
         {
             List<Keyword> keywords =  session.readTransaction( new TransactionWork<List<Keyword>>()

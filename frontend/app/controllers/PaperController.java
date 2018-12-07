@@ -48,8 +48,8 @@ public class PaperController extends Controller {
         info.put("abstract_", paperInfo.getAbstract());
         info.put("journal", paperInfo.getJournal());
         info.put("year", String.valueOf(paperInfo.getYear()));
-        System.out.println("test from frontend" + info.get("title"));
-        System.out.println(apiString);
+        //System.out.println("test from frontend" + info.get("title"));
+        //System.out.println(apiString);
 
         return ws.url(apiString)
                 .addHeader("Content-Type", "application/json")
@@ -67,11 +67,14 @@ public class PaperController extends Controller {
         Integer count;
         String year;
         List<Evolution> citeList=new ArrayList<>();
+        //System.out.println("citationdt: " + nodes.get("data"));
         for (JsonNode data : nodes.get("data")) {
             year = data.get("journal").asText();
             List<Keyword> keywordList = new ArrayList<>();
             for (JsonNode cite : data.get("citaion")) {
                 name = cite.get("title").asText();
+                //System.out.println(               cite.get("citation").asInt());
+
                 count = cite.get("citation").asInt();
                 keywordList.add(new Keyword(name,count));
             }
@@ -94,7 +97,7 @@ public class PaperController extends Controller {
         Integer count;
         String year;
         String title;
-        System.out.println(nodes);
+//        System.out.println(nodes);
 
         List<Citaion> citeList=new ArrayList<>();
         if(nodes!=null){

@@ -38,7 +38,7 @@ public class ShowKnowledgeCardController extends Controller{
           JsonNode p = nodes;
 
         System.out.println(nodes.toString());
-        System.out.println(nodes.get("p").get("labels"));
+       // System.out.println(nodes.get("p").get("labels"));
 
         return ok(views.html.knowledgeCard.render(nodes));
     }

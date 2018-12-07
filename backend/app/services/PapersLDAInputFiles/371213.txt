@@ -1,0 +1,1 @@
+A Policy-Based Authorization Framework for Web Services: Integrating XGTRBAC and WS-Policy.

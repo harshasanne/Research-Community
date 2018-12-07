@@ -1,0 +1,1 @@
+MASC - .NET-Based Middleware for Adaptive Composite Web Services.

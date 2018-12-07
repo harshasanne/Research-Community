@@ -1,0 +1,1 @@
+XMl Compression for Web Services on Resource-Constrained Devices.

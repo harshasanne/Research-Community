@@ -20,7 +20,9 @@
                             <tr>
 
                                     <td>@jsonNode.get(index).get("p").get("properties").get("title").get("val").asText()</td>
-                                    <td>@jsonNode.get(index).get("p").get("properties").get("category").get("val").asText()</td>
+                                    @if(jsonNode.get(index).get("p").get("properties").has("category")) {
+                                        <td>@jsonNode.get(index).get("p").get("properties").get("category").get("val").asText()</td>
+                                    }
                             </tr>
                         }
 

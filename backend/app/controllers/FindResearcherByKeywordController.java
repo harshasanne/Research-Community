@@ -130,7 +130,7 @@ System.out.println("queryAuthorName:" + authorName);
             System.out.println("sk:" + searchedKeys);
 
             Set<String> setKeys = new LinkedHashSet(searchedKeys);
-
+    System.out.println("nothing");
 
             setKeys.removeAll(new HashSet<String>(newKeyList));
 

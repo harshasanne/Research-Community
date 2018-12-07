@@ -1,0 +1,1 @@
+Enabling Runtime Adaptation ofWorkflows to External Events in Enterprise Environments.

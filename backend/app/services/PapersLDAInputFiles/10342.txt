@@ -1,0 +1,1 @@
+Variation Oriented Service Composition and Adaptation (VOSCA): A Work in Progress.

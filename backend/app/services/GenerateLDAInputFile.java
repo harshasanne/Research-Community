@@ -52,10 +52,13 @@ public class GenerateLDAInputFile {
             } );
 
             JsonParser parser = new JsonParser();
-
+            int i = 0;
             for(String p:papers)
             {
+                System.out.println(i);
+                i++;
                 JsonObject obj = parser.parse(p).getAsJsonObject();
+
                 String filename = obj.getAsJsonObject("p").getAsJsonObject("properties").getAsJsonObject("index").get("val").getAsString() + ".txt";
                 System.out.println(filename);
                 String title = obj.getAsJsonObject("p").getAsJsonObject("properties").getAsJsonObject("title").get("val").getAsString();

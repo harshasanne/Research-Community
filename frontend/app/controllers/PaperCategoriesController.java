@@ -51,6 +51,11 @@ public class PaperCategoriesController extends Controller {
         JsonNode p = nodes;
 
         System.out.println(nodes.size());
+        for(int i = 0; i < nodes.size(); i++)
+        {
+            System.out.println(nodes.get(i).get("p").get("properties").get("title").get("val").asText());
+            System.out.println(nodes.get(i).get("p").get("properties").has("category"));
+        }
         //System.out.println(nodes.get("p").get("labels"));
 
         return ok(simplePaperCategories.render(nodes));

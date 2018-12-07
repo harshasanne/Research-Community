@@ -100,7 +100,7 @@ public class AuthorController extends Controller {
     public CompletionStage<Result> getCollaborators(String name) throws Exception{
         name = URLDecoder.decode(name, "UTF-8");
         String query = "match (author:Author{authorName:'" + name + "'})-[coauth:CO_AUTHOR]-(coauthor) return collect(distinct(author)),collect(coauth),collect(distinct(coauthor))";
-
+        System.out.println("query"+ query);
         return neo4jApiService.callNeo4jApi(query).thenApply((response) -> {
             return ok(response).as("application/json");
         });

@@ -16,6 +16,8 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.neo4j.driver.v1.Values.parameters;
+
 public class PaperCategoriesController extends Controller {
 
     private com.typesafe.config.Config config;
@@ -44,7 +46,7 @@ System.out.println(query);
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return matchPaperNodes( tx, query );
+                    return matchPaperNodes1( tx, query );
                 }
             } );
 
@@ -57,8 +59,16 @@ System.out.println(query);
 
 
 
+        String[] tempList= keywords.split(",");
+        ArrayList<String> keyList = new ArrayList();
+        for(String k:tempList)
+        {
+            keyList.add(k);
+        }
+
+
         String query = "MATCH(p:Paper)-[:HAS_KEYWORD]->(k:Keyword) where p.year >= '" + startYear + "' and p.year <= '" + endYear + "' and p.journal = '" + channels +
-                "' and k.keyword = '" + keywords +"' return p";
+                "' and k.keyword IN {keyList}  return p";
         System.out.println(query);
 //3D Medical Volume Reconstruction Using Web Services.
         Driver driver = DBDriver.getDriver(this.config);
@@ -69,7 +79,7 @@ System.out.println(query);
                 @Override
                 public List<String> execute( Transaction tx )
                 {
-                    return matchPaperNodes( tx, query );
+                    return matchPaperNodes2( tx, query, "keyList", keyList);
                 }
             } );
 
@@ -80,10 +90,29 @@ System.out.println(query);
     }
 
 
-    private static List<String> matchPaperNodes(Transaction tx, String query)
+
+    private static List<String> matchPaperNodes1(Transaction tx, String query)
     {
         List<String> metaDatas = new ArrayList<>();
-        StatementResult result = tx.run( query );
+        StatementResult result = tx.run( query);
+
+        Gson gson = new Gson();
+        while ( result.hasNext() )
+        {
+
+            Record record = result.next();
+            String recordString = gson.toJson(record.asMap());
+
+            metaDatas.add(recordString);
+        }
+        return metaDatas;
+    }
+
+    private static List<String> matchPaperNodes2(Transaction tx, String query, String paramsName, ArrayList keyList)
+    {
+        List<String> metaDatas = new ArrayList<>();
+        StatementResult result = tx.run( query,parameters( paramsName, keyList));
+
         Gson gson = new Gson();
         while ( result.hasNext() )
         {

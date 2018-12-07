@@ -1,0 +1,1 @@
+DIA: A Web Services-based Infrastructure for Semantic Integration in Geoinformatics.

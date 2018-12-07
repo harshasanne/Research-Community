@@ -1,0 +1,1 @@
+On the method for realizing globally and locally accessible resource management for WS-GRAM.

@@ -1,0 +1,1 @@
+A protocol for QoS contract negotiation and its implementation using Web Services.

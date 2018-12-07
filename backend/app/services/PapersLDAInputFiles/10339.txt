@@ -1,0 +1,1 @@
+Advanced Verification of Distributed WS-BPEL Business Processes Incorporating CSSA-based Data Flow Analysis.

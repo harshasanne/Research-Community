@@ -1,0 +1,1 @@
+AutomatedWeb Service Composition at Work: the Amazon/MPS Case Study.

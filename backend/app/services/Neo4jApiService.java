@@ -10,7 +10,7 @@ import java.util.concurrent.CompletionStage;
 public class Neo4jApiService implements WSBodyReadables, WSBodyWritables {
 
     private static final String username = "neo4j";
-    private static final String password = "123456";
+    private static final String password = "12345";
     private static String neo4jhostUrl = "http://localhost:7474";
 
     private final WSClient ws;

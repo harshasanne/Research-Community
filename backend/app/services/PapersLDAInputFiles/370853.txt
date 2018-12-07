@@ -1,0 +1,1 @@
+WSOL - A Language for the Formal Specification of Classes of Service for Web Services.

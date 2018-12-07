@@ -113,6 +113,7 @@ public class StoreTopics2DB {
     public static void main(String[] args) {
         try {
             StoreTopics2DB.setCategories("app/services/PapersLDAResults/papersLDAResultsComposition.txt");
+            System.out.println("end");
         }catch (Exception e)
         {
             e.printStackTrace();

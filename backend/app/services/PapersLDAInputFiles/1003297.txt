@@ -1,0 +1,1 @@
+A Dynamic Two-Phase Commit Protocol for Adaptive Composite Services.
