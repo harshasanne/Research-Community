@@ -1,1 +1,0 @@
-Designing Privacy Policies for Adopting RFID in the Retail Industry.Radio Frequency Identification (RFID) technologies can potentially improve the productivity of retailers. In this paper, we propose a role-based, enterprise-level, RFID-oriented privacy authorization model for supporting the privacy policies in utilizing RFID in retail industry.

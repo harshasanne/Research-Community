@@ -1,1 +1,0 @@
-An Operational Model and Language Support for Securing Web Services.

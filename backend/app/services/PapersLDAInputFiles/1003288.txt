@@ -1,1 +1,0 @@
-A Reservation-based Extended Transaction Protocol for Coordination of Web Services.

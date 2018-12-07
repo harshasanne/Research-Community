@@ -1,1 +1,0 @@
-Temporal Aggregates for Web Services on the Semantic Web.In this paper we describe how we encode our temporal aggregatesontology in OWL for Web services on the Semantic Web. We alsopresent one example to show how to use the ontology to represent temporal aggregates information.

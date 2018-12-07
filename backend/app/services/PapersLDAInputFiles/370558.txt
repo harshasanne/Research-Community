@@ -1,1 +1,0 @@
-A Flexible Authentication Method for UDDI Registries.

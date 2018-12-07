@@ -1,1 +1,0 @@
-An Agent-based Resource Allocation Model for Grid Computing.

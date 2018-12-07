@@ -1,1 +1,0 @@
-A Flexible Directory Query Language for the Efficient Processing of Service Composition Queries.

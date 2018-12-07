@@ -1,1 +1,0 @@
-Architecture-Driven Service Discovery for Service Centric Systems.

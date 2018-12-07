@@ -1,1 +1,0 @@
-The Study of Home Networking Resource Sharing Using OSGi.

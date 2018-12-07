@@ -1,1 +1,0 @@
-A policy-based evaluation framework for Quality and Security in Service Oriented Architectures.

@@ -1,1 +1,0 @@
-Automatic Assertion of Actor State in Service Oriented Architectures.

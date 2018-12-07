@@ -1,1 +1,0 @@
-Authorization Service for Web Services and its Application in a Health Care Domain.

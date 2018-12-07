@@ -1,1 +1,0 @@
-Performance Evaluations of Geospatial Web Services Composition and Invocation.

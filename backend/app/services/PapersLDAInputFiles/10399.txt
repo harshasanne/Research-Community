@@ -1,1 +1,0 @@
-Public Administration Domain Ontology for a Semantic Web Services EGovernment Framework.

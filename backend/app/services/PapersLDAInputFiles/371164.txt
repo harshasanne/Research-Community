@@ -1,1 +1,0 @@
-OWL-T: A Task Ontology Language for Automatic Service Composition.

@@ -1,1 +1,0 @@
-Using DAML-S for P2P Discovery.

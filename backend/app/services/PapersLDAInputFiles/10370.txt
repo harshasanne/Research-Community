@@ -1,1 +1,0 @@
-Coupling RDF/RSS WSRP and AJAX for Dynamic Reusable Portlets: An Approach and a Use Case.

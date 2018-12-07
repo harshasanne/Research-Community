@@ -1,1 +1,0 @@
-Automatic Message Flow Analyses for Web Services Based on WSDL.

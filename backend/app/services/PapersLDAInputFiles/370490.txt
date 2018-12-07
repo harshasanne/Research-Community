@@ -1,1 +1,0 @@
-Providing Taxonomy Browsing in UDDI.

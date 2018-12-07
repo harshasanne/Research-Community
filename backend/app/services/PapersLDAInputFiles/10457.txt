@@ -1,1 +1,0 @@
-RMI: A Framework for Modeling and Evaluating the Resiliency Maturity of IT Service Organizations.

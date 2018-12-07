@@ -1,1 +1,0 @@
-Using Concept Lattices to Support Service Selection.

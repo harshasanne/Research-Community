@@ -1,1 +1,0 @@
-An Infrastructure Virtualisation SOA for VNO-based Business Models.

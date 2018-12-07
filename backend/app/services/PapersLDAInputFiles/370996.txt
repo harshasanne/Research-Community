@@ -1,1 +1,0 @@
-Dependency-aware Service Oriented Architecture and Service Composition.

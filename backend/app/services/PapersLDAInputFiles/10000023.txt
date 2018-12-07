@@ -1,1 +1,0 @@
-DiALog: A Distributed Model for Capturing Provenance and Auditing Information.

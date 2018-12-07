@@ -1,1 +1,0 @@
-Content Grid Architecture for Pervasive Content Delivery.

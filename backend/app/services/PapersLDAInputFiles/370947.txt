@@ -1,1 +1,0 @@
-An Integrated Development Environment for Web Service Composition.

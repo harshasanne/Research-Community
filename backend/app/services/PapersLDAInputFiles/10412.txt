@@ -1,1 +1,0 @@
-Automating Service Matchmaking using Type Theory.

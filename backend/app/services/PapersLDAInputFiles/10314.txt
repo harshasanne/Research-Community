@@ -1,1 +1,0 @@
-A Grid-Oriented Platform for Software Component Repository Based on Domain Ontology.

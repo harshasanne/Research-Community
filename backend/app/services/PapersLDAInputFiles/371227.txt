@@ -1,1 +1,0 @@
-A Semantic Framework for Identifying Events in a Service Oriented Architecture.

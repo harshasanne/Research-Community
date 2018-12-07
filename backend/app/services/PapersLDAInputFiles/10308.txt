@@ -1,1 +1,0 @@
-An Enterprise Electronic Contract Management System Based on Service-Oriented Architecture.

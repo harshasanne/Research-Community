@@ -1,1 +1,0 @@
-The DeltaGrid Service Composition and Recovery Model.

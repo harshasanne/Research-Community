@@ -1,1 +1,0 @@
-Securing Web Services with SOAP Security Proxies.

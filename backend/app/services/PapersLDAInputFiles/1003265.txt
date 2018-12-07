@@ -1,1 +1,0 @@
-Pattern-Based Design of an Asynchronous Invocation Framework for Web Services.

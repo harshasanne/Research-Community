@@ -1,1 +1,0 @@
-Integration of Business Event and Rule Management With the Web Services Model.

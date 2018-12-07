@@ -1,1 +1,0 @@
-Automated Choreographer Synthesis for Web Services Composition Using I/O Automata.

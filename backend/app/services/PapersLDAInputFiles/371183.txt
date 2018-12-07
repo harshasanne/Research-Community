@@ -1,1 +1,0 @@
-QoS-aware Service Composition in Service Overlay Networks.

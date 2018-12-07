@@ -1,1 +1,0 @@
-A Service Discovery Framework based on Linear Composition.

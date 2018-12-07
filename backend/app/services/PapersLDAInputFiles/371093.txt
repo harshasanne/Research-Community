@@ -1,1 +1,0 @@
-Using the Functional Model for Customizable Web Services Specification.

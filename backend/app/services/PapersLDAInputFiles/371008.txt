@@ -1,1 +1,0 @@
-Improving the Performance of Web Services Using Deployment-Time Binding Selection.

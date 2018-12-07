@@ -1,1 +1,0 @@
-Using Scenario Oriented Response-time Management for Composite Web Services.

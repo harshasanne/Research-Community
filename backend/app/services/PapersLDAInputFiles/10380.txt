@@ -1,1 +1,0 @@
-Verifying Semantic Business Process Models in Inter-operation.

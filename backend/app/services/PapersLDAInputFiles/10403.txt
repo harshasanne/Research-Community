@@ -1,1 +1,0 @@
-WS-Policy4MASC - A WS-Policy Extension Used in the MASC Middleware.

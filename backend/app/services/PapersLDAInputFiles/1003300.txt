@@ -1,1 +1,0 @@
-Development of Distance Measures for Process Mining Discovery and Integration.

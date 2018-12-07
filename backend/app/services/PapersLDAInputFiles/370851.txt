@@ -1,1 +1,0 @@
-Quality of Service Specification and Management for XML Web Services.

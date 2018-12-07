@@ -1,1 +1,0 @@
-A Platform for Context Aware Runtime Web Service Discovery.

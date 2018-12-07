@@ -1,1 +1,0 @@
-Improving Web Services Interoperability with Binding Extensions.

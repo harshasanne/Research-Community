@@ -1,1 +1,0 @@
-Axis2-based Replication Middleware forWeb Services.

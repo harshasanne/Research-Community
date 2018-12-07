@@ -1,1 +1,0 @@
-Alert-Driven Process Integration in a Web Services Environment.

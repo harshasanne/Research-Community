@@ -1,1 +1,0 @@
-Behavioral Attestation for Web Services Based Business Processes.

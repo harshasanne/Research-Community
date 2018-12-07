@@ -1,1 +1,0 @@
-Web Service Architectures for Text Mining: An Exploration of the Issues via an E-Science Demonstrator.

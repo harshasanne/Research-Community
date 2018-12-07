@@ -1,1 +1,0 @@
-Early Capacity Testing of an Enterprise Service Bus.

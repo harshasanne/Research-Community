@@ -1,1 +1,0 @@
-A Stateful Web Service Firewall for BPEL.

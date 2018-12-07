@@ -1,1 +1,0 @@
-Delivering Promises for Web Services Applications.

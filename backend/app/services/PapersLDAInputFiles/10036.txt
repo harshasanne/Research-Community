@@ -1,1 +1,0 @@
-A Secure Model for Network-Attached Storage on the Grid.

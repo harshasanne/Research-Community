@@ -1,1 +1,0 @@
-Using Web Services to Exchange Security Tokens for Federated Trust Management.

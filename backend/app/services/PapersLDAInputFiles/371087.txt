@@ -1,1 +1,0 @@
-Applying Abduction in Semantic Web Service Composition.

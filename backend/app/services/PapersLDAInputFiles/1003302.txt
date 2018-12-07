@@ -1,1 +1,0 @@
-A Metamorphic Testing Approach for Online Testing of Service-Oriented Software Applications.

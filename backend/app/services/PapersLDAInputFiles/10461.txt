@@ -1,1 +1,0 @@
-A Meta-Model Approach for the Deployment of Services-oriented Applications.

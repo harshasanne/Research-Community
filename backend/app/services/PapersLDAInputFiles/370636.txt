@@ -1,1 +1,0 @@
-Designing and Implementing Enterprise Service Bus (ESB) and SOA Solutions.

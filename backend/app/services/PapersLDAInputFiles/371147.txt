@@ -1,1 +1,0 @@
-An Approach to Debugging Grid or Web Services.

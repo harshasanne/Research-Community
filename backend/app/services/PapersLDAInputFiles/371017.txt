@@ -1,1 +1,0 @@
-A Version-aware Approach for Web Service Directory.
